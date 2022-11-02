@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "jy8jDUXKr6hl87Fj/xckcgIOL2IIiD6W1B3KsgRcUX8wYoX30J/I+uGRmQttYUxoo3sPT7CKrqEl/QjXXgAHtw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Asus\\source\\repos\\Web\\WEB-PROJECT\\ExpressEaglesCourier\\Services\\ExpressEaglesCourier.Services.Messaging\\ExpressEaglesCourier.Services.Messaging.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Asus\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Asus\\.nuget\\packages\\sendgrid\\9.28.0\\sendgrid.9.28.0.nupkg.sha512",
+    "C:\\Users\\Asus\\.nuget\\packages\\starkbank-ecdsa\\1.3.3\\starkbank-ecdsa.1.3.3.nupkg.sha512",
+    "C:\\Users\\Asus\\.nuget\\packages\\stylecop.analyzers\\1.2.0-beta.435\\stylecop.analyzers.1.2.0-beta.435.nupkg.sha512",
+    "C:\\Users\\Asus\\.nuget\\packages\\stylecop.analyzers.unstable\\1.2.0.435\\stylecop.analyzers.unstable.1.2.0.435.nupkg.sha512"
+  ],
+  "logs": []
+}

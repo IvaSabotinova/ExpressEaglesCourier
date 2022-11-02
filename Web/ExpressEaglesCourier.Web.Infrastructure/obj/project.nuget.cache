@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Cr7cMknHS4DjGw/9Xiz28OnmGQlSPJxDUKwuAoUlThplColZi700DzGI25qiWEwTdv3/5ByZm1KSk7jUX4jXxQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Asus\\source\\repos\\Web\\WEB-PROJECT\\ExpressEaglesCourier\\Web\\ExpressEaglesCourier.Web.Infrastructure\\ExpressEaglesCourier.Web.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Asus\\.nuget\\packages\\stylecop.analyzers\\1.2.0-beta.435\\stylecop.analyzers.1.2.0-beta.435.nupkg.sha512",
+    "C:\\Users\\Asus\\.nuget\\packages\\stylecop.analyzers.unstable\\1.2.0.435\\stylecop.analyzers.unstable.1.2.0.435.nupkg.sha512"
+  ],
+  "logs": []
+}
