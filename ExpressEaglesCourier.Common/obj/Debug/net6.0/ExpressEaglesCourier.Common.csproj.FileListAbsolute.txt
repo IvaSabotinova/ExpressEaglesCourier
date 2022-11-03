@@ -1,0 +1,12 @@
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\bin\Debug\net6.0\ExpressEaglesCourier.Common.deps.json
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\bin\Debug\net6.0\ExpressEaglesCourier.Common.dll
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\bin\Debug\net6.0\ExpressEaglesCourier.Common.pdb
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\obj\Debug\net6.0\ExpressEaglesCourier.Common.csproj.AssemblyReference.cache
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\obj\Debug\net6.0\ExpressEaglesCourier.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\obj\Debug\net6.0\ExpressEaglesCourier.Common.AssemblyInfoInputs.cache
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\obj\Debug\net6.0\ExpressEaglesCourier.Common.AssemblyInfo.cs
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\obj\Debug\net6.0\ExpressEaglesCourier.Common.csproj.CoreCompileInputs.cache
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\obj\Debug\net6.0\ExpressEaglesCourier.Common.dll
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\obj\Debug\net6.0\refint\ExpressEaglesCourier.Common.dll
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\obj\Debug\net6.0\ExpressEaglesCourier.Common.pdb
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\ExpressEaglesCourier.Common\obj\Debug\net6.0\ref\ExpressEaglesCourier.Common.dll

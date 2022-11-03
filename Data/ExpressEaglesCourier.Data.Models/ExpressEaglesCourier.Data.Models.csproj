@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ExpressEaglesCourier.Common\ExpressEaglesCourier.Common.csproj" />
     <ProjectReference Include="..\ExpressEaglesCourier.Data.Common\ExpressEaglesCourier.Data.Common.csproj" />
   </ItemGroup>
   

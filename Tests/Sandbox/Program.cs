@@ -5,6 +5,7 @@
     using System.IO;
     using System.Threading.Tasks;
 
+    using CommandLine;
     using ExpressEaglesCourier.Data;
     using ExpressEaglesCourier.Data.Common;
     using ExpressEaglesCourier.Data.Common.Repositories;
@@ -13,9 +14,6 @@
     using ExpressEaglesCourier.Data.Seeding;
     using ExpressEaglesCourier.Services.Data;
     using ExpressEaglesCourier.Services.Messaging;
-
-    using CommandLine;
-
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;

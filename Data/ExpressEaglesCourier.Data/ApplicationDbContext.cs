@@ -1,8 +1,10 @@
 ﻿namespace ExpressEaglesCourier.Data
 {
     using System;
+    using System.Diagnostics.Metrics;
     using System.Linq;
     using System.Reflection;
+    using System.Reflection.Emit;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -25,6 +27,8 @@
         }
 
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -48,6 +52,16 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             // Needed for Identity models configuration
+            builder.Entity<Customer>()
+            .HasOne(c => c.ApplicationUser)
+            .WithOne(c => c.Customer)
+            .HasForeignKey<ApplicationUser>(a => a.CustomerId);
+
+            builder.Entity<Employee>()
+           .HasOne(e => e.ApplicationUser)
+           .WithOne(e => e.Employee)
+           .HasForeignKey<ApplicationUser>(e => e.EmployeeId);
+
             base.OnModelCreating(builder);
 
             this.ConfigureUserIdentityRelations(builder);
