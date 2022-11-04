@@ -6,7 +6,7 @@
 
         public const string AdministratorRoleName = "Administrator";
 
-        public static class EntityConstants
+        public static class EntitiesConstants
         {
             public const string HomeAddress = "Home address";
 
@@ -48,6 +48,12 @@
 
             public const int OfficeCityNameMaxLength = 28;
 
+            public const int PhoneNumberMaxLenght = 20;
+
+            public const int FaxNumberMaxLenght = 20;
+
+            public const int EmailMaxLenght = 330;
+
             public const int CityCodeMaxLength = 16;
 
             public const int CountryNameMaxLength = 56;
@@ -61,6 +67,8 @@
             public const int VehicleModelNameMaxLenght = 30;
 
             public const int VehiclePlateNumberMaxLenght = 21;
+
+            public const double ShipmentMaxWeightInGrams = 70000;
         }
     }
 }

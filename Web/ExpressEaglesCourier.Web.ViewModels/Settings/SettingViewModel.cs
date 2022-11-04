@@ -1,9 +1,8 @@
 ﻿namespace ExpressEaglesCourier.Web.ViewModels.Settings
 {
+    using AutoMapper;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

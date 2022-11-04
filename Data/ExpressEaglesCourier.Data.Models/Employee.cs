@@ -17,34 +17,33 @@ namespace ExpressEaglesCourier.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.Shipments = new HashSet<Shipment>();
-            this.Customers = new HashSet<Customer>();
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntityConstants.EmployeeFirstNameMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.EmployeeFirstNameMaxLength)]
         public string FirstName { get; set; }
 
-        [MaxLength(GlobalConstants.EntityConstants.EmployeeMiddleNameMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.EmployeeMiddleNameMaxLength)]
         public string MiddleName { get; set; }
 
         [Required]
-        [MaxLength(GlobalConstants.EntityConstants.EmployeeLastNameMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.EmployeeLastNameMaxLength)]
         public string LastName { get; set; }
 
         /// <summary>
         /// Gets or sets the home address of the employee.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntityConstants.CustomerAddressMaxLength)]
-        [Comment(GlobalConstants.EntityConstants.HomeAddress)]
+        [MaxLength(GlobalConstants.EntitiesConstants.CustomerAddressMaxLength)]
+        [Comment(GlobalConstants.EntitiesConstants.HomeAddress)]
         public string Address { get; set; }
 
         /// <summary>
         /// Gets or sets the home city of the employee.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntityConstants.CustomerCityMaxLength)]
-        [Comment(GlobalConstants.EntityConstants.HomeCity)]
+        [MaxLength(GlobalConstants.EntitiesConstants.CustomerCityMaxLength)]
+        [Comment(GlobalConstants.EntitiesConstants.HomeCity)]
 
         public string City { get; set; }
 
@@ -52,25 +51,30 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the home country of the employee.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntityConstants.CustomerCountryMaxLength)]
-        [Comment(GlobalConstants.EntityConstants.HomeCountry)]
+        [MaxLength(GlobalConstants.EntitiesConstants.CustomerCountryMaxLength)]
+        [Comment(GlobalConstants.EntitiesConstants.HomeCountry)]
         public string Country { get; set; }
 
+        /// <summary>
+        /// Gets or sets the date on which the employee was hired.
+        /// </summary>
+        [Comment("The date on which the employee was hired.")]
         public DateTime HiredOn { get; set; }
 
         /// <summary>
         /// Gets or sets the employee's salary.
         /// </summary>
-        [Column(TypeName = GlobalConstants.EntityConstants.DecimalType)]
+        [Column(TypeName = GlobalConstants.EntitiesConstants.DecimalType)]
         public decimal Salary { get; set; }
 
-       /// <summary>
-       /// Gets or sets the date on which the employee resigns / retires.
-       /// </summary>
+        /// <summary>
+        /// Gets or sets the date on which the employee resigns / retires.
+        /// </summary>
+        [Comment("The date on which the employee resigns / retires.")]
         public DateTime? ResignOn { get; set; }
 
         /// <summary>
-        /// Gets or sets the office where the employees works.
+        /// Gets or sets the office attended by the employee.
         /// </summary>
         [Required]
         public string OfficeId { get; set; }
@@ -86,25 +90,23 @@ namespace ExpressEaglesCourier.Data.Models
         public virtual Position Position { get; set; }
 
         /// <summary>
-        /// Gets or sets collection of shipments that the employee was responsible for.
+        /// Gets or sets collection of shipments that the employee was involved in.
         /// </summary>
+        [Comment("Collection of shipments that the employee was involved in.")]
         public virtual ICollection<Shipment> Shipments { get; set; }
 
         /// <summary>
-        /// Gets or sets collection of customers served by the employee.
+        /// Gets or sets the id of the Employee when he/she becomes user of the site.
         /// </summary>
-        public virtual ICollection<Customer> Customers { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Id of the Employee when he/she becomes user of the site.
-        /// </summary>
+        [Comment("The id of the Employee when he/she becomes user of the site.")]
         public string ApplicationUserId { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         /// <summary>
-        /// Gets or sets the Id of a company's vehicle should employee's position requires usage of one.
+        /// Gets or sets the company's vehicle assigned to the employee.
         /// </summary>
+        [Comment("The company's vehicle assigned to the employee.")]
         public string VehicleId { get; set; }
 
         public virtual Vehicle Vehicle { get; set; }

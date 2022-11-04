@@ -27,8 +27,30 @@
         }
 
         public DbSet<Setting> Settings { get; set; }
-        public DbSet<Customer> Customer { get; set; }
+
+        public DbSet<Customer> Customers { get; set; }
+
         public DbSet<Employee> Employees { get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<Feedback> Feedbacks { get; set; }
+
+        public DbSet<Office> Offices { get; set; }
+
+        public DbSet<Position> Positions { get; set; }
+
+        public DbSet<Shipment> Shipments { get; set; }
+
+        public DbSet<Vehicle> Vehicles { get; set; }
+
+        public DbSet<ShipmentTrackingPath> ShipmentsTrackingPaths { get; set; }
+
+        public DbSet<ShipmentVehicle> ShipmentsVehicles { get; set; }
+
+        public DbSet<ShipmentEmployee> ShipmentsEmployees { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -52,17 +74,28 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             // Needed for Identity models configuration
+            base.OnModelCreating(builder);
+
             builder.Entity<Customer>()
             .HasOne(c => c.ApplicationUser)
-            .WithOne(c => c.Customer)
+            .WithOne(a => a.Customer)
             .HasForeignKey<ApplicationUser>(a => a.CustomerId);
 
             builder.Entity<Employee>()
-           .HasOne(e => e.ApplicationUser)
-           .WithOne(e => e.Employee)
-           .HasForeignKey<ApplicationUser>(e => e.EmployeeId);
+            .HasOne(e => e.ApplicationUser)
+            .WithOne(a => a.Employee)
+            .HasForeignKey<ApplicationUser>(a => a.EmployeeId);
 
-            base.OnModelCreating(builder);
+            builder.Entity<ShipmentEmployee>()
+            .HasKey(k => new { k.ShipmentId, k.EmployeeId });
+
+            builder.Entity<ShipmentVehicle>()
+               .HasKey(k => new { k.ShipmentId, k.VehicleId });
+
+            builder.Entity<Shipment>()
+           .HasOne(s => s.ShipmentTrackingPath)
+           .WithOne(st => st.Shipment)
+           .HasForeignKey<ShipmentTrackingPath>(st => st.ShipmentId);
 
             this.ConfigureUserIdentityRelations(builder);
 

@@ -7,6 +7,7 @@ namespace ExpressEaglesCourier.Data.Models
 
     using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class Office : BaseDeletableModel<string>
     {
@@ -14,27 +15,29 @@ namespace ExpressEaglesCourier.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.Employees = new HashSet<Employee>();
-            this.ReceivedFeedbacks = new HashSet<Feedback>();
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntityConstants.OfficeAddressMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.OfficeAddressMaxLength)]
         public string Address { get; set; }
 
         /// <summary>
         /// Gets or sets the phone number of the office.
         /// </summary>
         [Required]
+        [MaxLength(GlobalConstants.EntitiesConstants.PhoneNumberMaxLenght)]
         [Phone]
         public string PhoneNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the fax number of the office.
         /// </summary>
+        [MaxLength(GlobalConstants.EntitiesConstants.FaxNumberMaxLenght)]
         [Phone]
         public string FaxNumber { get; set; }
 
         [Required]
+        [MaxLength(GlobalConstants.EntitiesConstants.EmailMaxLenght)]
         [EmailAddress]
         public string Email { get; set; }
 
@@ -46,11 +49,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// <summary>
         /// Gets or sets collection of employees working in the office.
         /// </summary>
+        [Comment("Collection of employees working in the office.")]
         public virtual ICollection<Employee> Employees { get; set; }
-
-        /// <summary>
-        /// Gets or sets collection of received feedback from customer.
-        /// </summary>
-        public virtual ICollection<Feedback> ReceivedFeedbacks { get; set; }
     }
 }

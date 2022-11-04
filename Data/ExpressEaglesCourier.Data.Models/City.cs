@@ -17,10 +17,10 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntityConstants.OfficeCityNameMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.OfficeCityNameMaxLength)]
         public string Name { get; set; }
 
-        [MaxLength(GlobalConstants.EntityConstants.CityCodeMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.CityCodeMaxLength)]
         public string CityCode { get; set; }
 
         /// <summary>

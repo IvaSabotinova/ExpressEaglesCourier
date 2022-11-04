@@ -16,39 +16,42 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         /// <summary>
-        /// Gets or sets customer's feedback, complaints or recommendations regarding a particular shipment.
+        /// Gets or sets the content of customer's feedback, complaints or recommendations regarding a particular shipment.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntityConstants.FeedbackLengthMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.FeedbackLengthMaxLength)]
         [Comment("Content of the feedback of a customer concerning particular shipment.")]
         public string Text { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether customer's feedback is positive.
         /// </summary>
+        [Comment("A value indicating whether customer's feedback is positive.")]
         public bool IsPositive { get; set; }
 
         /// <summary>
         /// Gets or sets the shipment that the feedback refers to.
         /// </summary>
+        [Comment("The id of the shipment that the feedback refers to.")]
         [Required]
         public string ShipmentId { get; set; }
 
         public virtual Shipment Shipment { get; set; }
 
         /// <summary>
-        /// Gets or sets the customer that provided his/her feedback.
+        /// Gets or sets the shipment's sender that provided his/her feedback.
         /// </summary>
-        [Required]
-        public string CustomerId { get; set; }
+        [Comment("The id of the shipment's sender that provided his/her feedback.")]
+        public string SenderId { get; set; }
 
-        public virtual Customer Customer { get; set; }
+        public virtual Customer Sender { get; set; }
 
         /// <summary>
-        /// Gets or sets the office that serviced the customer who has provided his/her feedback.
+        /// Gets or sets the shipment's receiver that provided his/her feedback.
         /// </summary>
-        public string OfficeId { get; set; }
+        [Comment("The id of the shipment's receiver that provided his/her feedback.")]
+        public string ReceiverId { get; set; }
 
-        public virtual Office Office { get; set; }
+        public virtual Customer Receiver { get; set; }
     }
 }

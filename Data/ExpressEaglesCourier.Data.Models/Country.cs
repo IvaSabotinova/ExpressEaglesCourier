@@ -16,12 +16,15 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntityConstants.CountryNameMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.CountryNameMaxLength)]
         public string Name { get; set; }
 
-        [MaxLength(GlobalConstants.EntityConstants.CountryCodeMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.CountryCodeMaxLength)]
         public string CountryCode { get; set; }
 
-        public virtual ICollection<Office> Offices { get; set; }
+        /// <summary>
+        /// Gets or sets collection of cities with courier offices.
+        /// </summary>
+        public virtual ICollection<City> Cities { get; set; }
     }
 }

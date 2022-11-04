@@ -7,6 +7,7 @@ namespace ExpressEaglesCourier.Data.Models
 
     using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class Position : BaseDeletableModel<string>
     {
@@ -17,12 +18,13 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntityConstants.JobTitleMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.JobTitleMaxLength)]
         public string JobTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets collection of employees working in the office.
+        /// Gets or sets collection of employees working on that position.
         /// </summary>
+        [Comment("Collection of employees working on that position.")]
         public virtual ICollection<Employee> Employees { get; set; }
     }
 }
