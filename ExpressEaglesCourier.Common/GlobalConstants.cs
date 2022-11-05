@@ -42,7 +42,7 @@
 
             public const int CompanyNameMaxLength = 100;
 
-            public const int FeedbackLengthMaxLength = 800;
+            public const int FeedbackLengthMaxLength = 7000;
 
             public const int OfficeAddressMaxLength = 120;
 

@@ -23,7 +23,7 @@
         public virtual Shipment Shipment { get; set; }
 
         /// <summary>
-        /// Gets or sets the local time and time of picking up shipment from customer.
+        /// Gets or sets the date and time of picking up shipment from customer.
         /// </summary>
         [Comment("Date and time of picking up shipment from customer.")]
         public DateTime? PickedUpByCourier { get; set; }
@@ -32,18 +32,18 @@
         /// Gets or sets the date and time of sending shipment from dispatching office.
         /// </summary>
         [Comment("Date and time of sending shipment from dispatching office.")]
-        public DateTime? SentFromOffice { get; set; }
+        public DateTime? SentFromDispatchingOffice { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of shipment arrival in receiving office.
         /// </summary>
         [Comment("Date and time of shipment arrival in receiving office.")]
-        public DateTime? ArrivalAtOffice { get; set; }
+        public DateTime? ArrivalInReceivingOffice { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of shipment final processing / preparation for final delivery to customer.
         /// </summary>
-        [Comment("Date and time of shipment final processing / preparation in office for final delivery to customer.")]
+        [Comment("Date and time of shipment final processing / preparation for final delivery to customer.")]
         public DateTime? FinalDeliveryPreparation { get; set; }
 
         /// <summary>

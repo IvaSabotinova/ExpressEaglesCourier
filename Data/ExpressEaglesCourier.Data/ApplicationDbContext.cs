@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Reflection;
     using System.Reflection.Emit;
+    using System.Reflection.Metadata;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -46,11 +48,7 @@
 
         public DbSet<Vehicle> Vehicles { get; set; }
 
-        public DbSet<ShipmentTrackingPath> ShipmentsTrackingPaths { get; set; }
-
-        public DbSet<ShipmentVehicle> ShipmentsVehicles { get; set; }
-
-        public DbSet<ShipmentEmployee> ShipmentsEmployees { get; set; }
+        public DbSet<ShipmentTrackingPath> ShipmentsTrackingPath { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -76,26 +74,25 @@
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
-            builder.Entity<Customer>()
-            .HasOne(c => c.ApplicationUser)
-            .WithOne(a => a.Customer)
-            .HasForeignKey<ApplicationUser>(a => a.CustomerId);
+            builder.Entity<ApplicationUser>()
+           .HasOne(x => x.Customer)
+           .WithOne(x => x.ApplicationUser)
+           .HasForeignKey<Customer>(x => x.ApplicationUserId);
 
-            builder.Entity<Employee>()
-            .HasOne(e => e.ApplicationUser)
-            .WithOne(a => a.Employee)
-            .HasForeignKey<ApplicationUser>(a => a.EmployeeId);
-
-            builder.Entity<ShipmentEmployee>()
-            .HasKey(k => new { k.ShipmentId, k.EmployeeId });
-
-            builder.Entity<ShipmentVehicle>()
-               .HasKey(k => new { k.ShipmentId, k.VehicleId });
+            builder.Entity<ApplicationUser>()
+            .HasOne(x => x.Employee)
+            .WithOne(x => x.ApplicationUser)
+            .HasForeignKey<Employee>(x => x.ApplicationUserId);
 
             builder.Entity<Shipment>()
            .HasOne(s => s.ShipmentTrackingPath)
            .WithOne(st => st.Shipment)
            .HasForeignKey<ShipmentTrackingPath>(st => st.ShipmentId);
+
+            builder.Entity<Shipment>()
+            .HasMany(p => p.Feedbacks)
+            .WithOne(p => p.Shipment)
+            .IsRequired(false);
 
             this.ConfigureUserIdentityRelations(builder);
 

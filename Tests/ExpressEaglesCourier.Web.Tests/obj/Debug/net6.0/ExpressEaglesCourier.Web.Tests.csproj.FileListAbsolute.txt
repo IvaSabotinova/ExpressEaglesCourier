@@ -121,7 +121,6 @@ C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEag
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.UserSecrets.dll
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.Xml.dll
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\bin\Debug\net6.0\refs\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\bin\Debug\net6.0\refs\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\bin\Debug\net6.0\refs\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\bin\Debug\net6.0\refs\Microsoft.Extensions.Diagnostics.HealthChecks.dll
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\bin\Debug\net6.0\refs\Microsoft.Extensions.Features.dll
@@ -676,3 +675,5 @@ C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEag
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\obj\Debug\net6.0\ExpressEaglesCourier.Web.Tests.pdb
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\obj\Debug\net6.0\ExpressEaglesCourier.Web.Tests.genruntimeconfig.cache
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\obj\Debug\net6.0\ref\ExpressEaglesCourier.Web.Tests.dll
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\ExpressEaglesCourier.Web.Tests\obj\Debug\net6.0\ExpressEaglesCourier.Web.Tests.MvcApplicationPartsAssemblyInfo.cs

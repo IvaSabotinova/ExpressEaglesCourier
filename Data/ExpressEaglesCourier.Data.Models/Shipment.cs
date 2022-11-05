@@ -30,7 +30,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the customer that sends the shipment.
         /// </summary>
         [Required]
-        public string CustomerSenderId { get; set; }
+        public string SenderId { get; set; }
 
         public virtual Customer Sender { get; set; }
 
@@ -38,7 +38,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the receiver of the shipment.
         /// </summary>
         [Required]
-        public string CustomerReceiverId { get; set; }
+        public string ReceiverId { get; set; }
 
         public virtual Customer Receiver { get; set; }
 
@@ -48,7 +48,7 @@ namespace ExpressEaglesCourier.Data.Models
 
         public double Weight { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = GlobalConstants.EntitiesConstants.DecimalType)]
         public decimal Price { get; set; }
 
         /// <summary>

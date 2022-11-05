@@ -21,7 +21,7 @@ namespace ExpressEaglesCourier.Data.Models
         [Required]
         [MaxLength(GlobalConstants.EntitiesConstants.FeedbackLengthMaxLength)]
         [Comment("Content of the feedback of a customer concerning particular shipment.")]
-        public string Text { get; set; }
+        public string Content { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether customer's feedback is positive.
@@ -39,19 +39,11 @@ namespace ExpressEaglesCourier.Data.Models
         public virtual Shipment Shipment { get; set; }
 
         /// <summary>
-        /// Gets or sets the shipment's sender that provided his/her feedback.
+        /// Gets or sets the customer that provided his/her feedback.
         /// </summary>
-        [Comment("The id of the shipment's sender that provided his/her feedback.")]
-        public string SenderId { get; set; }
+        [Comment("The id of the customer that provided his/her feedback.")]
+        public string CustomerId { get; set; }
 
-        public virtual Customer Sender { get; set; }
-
-        /// <summary>
-        /// Gets or sets the shipment's receiver that provided his/her feedback.
-        /// </summary>
-        [Comment("The id of the shipment's receiver that provided his/her feedback.")]
-        public string ReceiverId { get; set; }
-
-        public virtual Customer Receiver { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

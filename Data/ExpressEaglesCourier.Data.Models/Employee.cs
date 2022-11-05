@@ -104,9 +104,9 @@ namespace ExpressEaglesCourier.Data.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         /// <summary>
-        /// Gets or sets the company's vehicle assigned to the employee.
+        /// Gets or sets the vehicle used by the employee courier.
         /// </summary>
-        [Comment("The company's vehicle assigned to the employee.")]
+        [Comment("The vehicle used by the employee courier.")]
         public string VehicleId { get; set; }
 
         public virtual Vehicle Vehicle { get; set; }

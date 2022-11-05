@@ -78,3 +78,4 @@ C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\Sandbox\ob
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\Sandbox\obj\Debug\net6.0\Sandbox.pdb
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\Sandbox\obj\Debug\net6.0\Sandbox.genruntimeconfig.cache
 C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\Sandbox\obj\Debug\net6.0\ref\Sandbox.dll
+C:\Users\Asus\source\repos\Web\WEB-PROJECT\ExpressEaglesCourier\Tests\Sandbox\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll

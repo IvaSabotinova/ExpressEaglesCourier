@@ -47,9 +47,9 @@ namespace ExpressEaglesCourier.Data.Models
         public virtual City City { get; set; }
 
         /// <summary>
-        /// Gets or sets collection of employees working in the office.
+        /// Gets or sets collection of employees attending the office.
         /// </summary>
-        [Comment("Collection of employees working in the office.")]
+        [Comment("Collection of employees attending the office.")]
         public virtual ICollection<Employee> Employees { get; set; }
     }
 }

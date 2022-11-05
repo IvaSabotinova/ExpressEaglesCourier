@@ -3972,7 +3972,8 @@
         "dependencies": {
           "ExpressEaglesCourier.Common": "1.0.0",
           "ExpressEaglesCourier.Data.Common": "1.0.0",
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.5"
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.5",
+          "Microsoft.EntityFrameworkCore": "6.0.10"
         },
         "compile": {
           "bin/placeholder/ExpressEaglesCourier.Data.Models.dll": {}

@@ -33,11 +33,11 @@ namespace ExpressEaglesCourier.Data.Models
         public string PlateNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets the employees the vehicle was assigned to.
+        /// Gets or sets the employee that uses the vehicle.
         /// </summary>
         [Required]
         [ForeignKey(nameof(Employee))]
-        [Comment("The employees the vehicle was assigned to.")]
+        [Comment("The employee that uses the vehicle.")]
         public string EmployeeId { get; set; }
 
         public virtual Employee Employee { get; set; }
