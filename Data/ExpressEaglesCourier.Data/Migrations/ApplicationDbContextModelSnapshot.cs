@@ -34,7 +34,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("ShipmentsId");
 
-                    b.ToTable("EmployeeShipment");
+                    b.ToTable("EmployeeShipment", (string)null);
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.ApplicationRole", b =>
@@ -199,7 +199,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Country", b =>
@@ -232,7 +232,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Customer", b =>
@@ -301,7 +301,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Employee", b =>
@@ -392,7 +392,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("PositionId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Feedback", b =>
@@ -431,7 +431,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("ShipmentId");
 
-                    b.ToTable("Feedbacks");
+                    b.ToTable("Feedbacks", (string)null);
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Office", b =>
@@ -480,7 +480,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Offices");
+                    b.ToTable("Offices", (string)null);
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Position", b =>
@@ -509,7 +509,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Positions");
+                    b.ToTable("Positions", (string)null);
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Setting", b =>
@@ -542,7 +542,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Settings");
+                    b.ToTable("Settings", (string)null);
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Shipment", b =>
@@ -599,7 +599,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Shipments");
+                    b.ToTable("Shipments", (string)null);
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.ShipmentTrackingPath", b =>
@@ -651,7 +651,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.HasIndex("ShipmentId")
                         .IsUnique();
 
-                    b.ToTable("ShipmentsTrackingPath");
+                    b.ToTable("ShipmentsTrackingPath", (string)null);
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Vehicle", b =>
@@ -693,7 +693,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Vehicles");
+                    b.ToTable("Vehicles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -814,7 +814,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.HasIndex("VehiclesId");
 
-                    b.ToTable("ShipmentVehicle");
+                    b.ToTable("ShipmentVehicle", (string)null);
                 });
 
             modelBuilder.Entity("EmployeeShipment", b =>
