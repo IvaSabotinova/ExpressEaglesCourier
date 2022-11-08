@@ -32,12 +32,12 @@ namespace ExpressEaglesCourier.Data.Models
         public string LastName { get; set; }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CustomerAddressMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.AddressMaxLength)]
         [Comment(GlobalConstants.EntitiesConstants.HomeAddress)]
         public string Address { get; set; }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CustomerCityMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.CityNameMaxLength)]
         [Comment(GlobalConstants.EntitiesConstants.HomeCity)]
         public string City { get; set; }
 
@@ -52,6 +52,9 @@ namespace ExpressEaglesCourier.Data.Models
         [MaxLength(GlobalConstants.EntitiesConstants.CompanyNameMaxLength)]
         [Comment("The name of the company should shipment is ordered by a company")]
         public string CompanyName { get; set; }
+
+        [MaxLength(GlobalConstants.EntitiesConstants.PhoneNumberMaxLenght)]
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// Gets or sets collection of customer's sent shipments.
@@ -68,9 +71,9 @@ namespace ExpressEaglesCourier.Data.Models
         public virtual ICollection<Shipment> ReceivedShipments { get; set; }
 
         /// <summary>
-        /// Gets or sets collection of cutomer's feedback, recommendations, complains.
+        /// Gets or sets collection of customer's feedback, recommendations, complains.
         /// </summary>
-        [Comment("Collection of cutomer's feedback, recommendations, complains.")]
+        [Comment("Collection of customer's feedback, recommendations, complains.")]
         public virtual ICollection<Feedback> Feedbacks { get; set; }
 
         /// <summary>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpressEaglesCourier.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221105132208_IncreaseFeedbackContentMaxLength")]
-    partial class IncreaseFeedbackContentMaxLength
+    [Migration("20221108204050_CreateTables")]
+    partial class CreateTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,6 @@ namespace ExpressEaglesCourier.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("EmployeeShipment", b =>
-                {
-                    b.Property<string>("EmployeesId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ShipmentsId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("EmployeesId", "ShipmentsId");
-
-                    b.HasIndex("ShipmentsId");
-
-                    b.ToTable("EmployeeShipment");
-                });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.ApplicationRole", b =>
                 {
@@ -295,6 +280,10 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId")
@@ -367,6 +356,10 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("PositionId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -395,6 +388,21 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.HasIndex("PositionId");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("ExpressEaglesCourier.Data.Models.EmployeeShipment", b =>
+                {
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ShipmentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("EmployeeId", "ShipmentId");
+
+                    b.HasIndex("ShipmentId");
+
+                    b.ToTable("EmployeesShipments");
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Feedback", b =>
@@ -561,11 +569,27 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<int>("DeliveryType")
                         .HasColumnType("int");
 
+                    b.Property<string>("DestinationAddress")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("DestinationTown")
+                        .HasMaxLength(28)
+                        .HasColumnType("nvarchar(28)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("PickUpTown")
+                        .HasMaxLength(28)
+                        .HasColumnType("nvarchar(28)");
+
+                    b.Property<string>("PickupAddress")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -582,7 +606,6 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ShipmentTrackingPathId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrackingNumber")
@@ -656,6 +679,21 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.ToTable("ShipmentsTrackingPath");
                 });
 
+            modelBuilder.Entity("ExpressEaglesCourier.Data.Models.ShipmentVehicle", b =>
+                {
+                    b.Property<string>("ShipmentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VehicleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ShipmentId", "VehicleId");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("ShipmentsVehicles");
+                });
+
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Vehicle", b =>
                 {
                     b.Property<string>("Id")
@@ -670,7 +708,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<string>("EmployeeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasComment("The employee that uses the vehicle.");
+                        .HasComment("The employee assigned with the vehicle.");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -804,36 +842,6 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ShipmentVehicle", b =>
-                {
-                    b.Property<string>("ShipmentsId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("VehiclesId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ShipmentsId", "VehiclesId");
-
-                    b.HasIndex("VehiclesId");
-
-                    b.ToTable("ShipmentVehicle");
-                });
-
-            modelBuilder.Entity("EmployeeShipment", b =>
-                {
-                    b.HasOne("ExpressEaglesCourier.Data.Models.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ExpressEaglesCourier.Data.Models.Shipment", null)
-                        .WithMany()
-                        .HasForeignKey("ShipmentsId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.City", b =>
                 {
                     b.HasOne("ExpressEaglesCourier.Data.Models.Country", "Country")
@@ -877,6 +885,25 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Navigation("Office");
 
                     b.Navigation("Position");
+                });
+
+            modelBuilder.Entity("ExpressEaglesCourier.Data.Models.EmployeeShipment", b =>
+                {
+                    b.HasOne("ExpressEaglesCourier.Data.Models.Employee", "Employee")
+                        .WithMany("EmployeesShipments")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ExpressEaglesCourier.Data.Models.Shipment", "Shipment")
+                        .WithMany("EmployeesShipments")
+                        .HasForeignKey("ShipmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Shipment");
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Feedback", b =>
@@ -933,6 +960,25 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Shipment");
+                });
+
+            modelBuilder.Entity("ExpressEaglesCourier.Data.Models.ShipmentVehicle", b =>
+                {
+                    b.HasOne("ExpressEaglesCourier.Data.Models.Shipment", "Shipment")
+                        .WithMany("ShipmentsVehicles")
+                        .HasForeignKey("ShipmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ExpressEaglesCourier.Data.Models.Vehicle", "Vehicle")
+                        .WithMany("ShipmentsVehicles")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Shipment");
+
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Vehicle", b =>
@@ -997,21 +1043,6 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ShipmentVehicle", b =>
-                {
-                    b.HasOne("ExpressEaglesCourier.Data.Models.Shipment", null)
-                        .WithMany()
-                        .HasForeignKey("ShipmentsId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ExpressEaglesCourier.Data.Models.Vehicle", null)
-                        .WithMany()
-                        .HasForeignKey("VehiclesId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Claims");
@@ -1046,6 +1077,8 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Employee", b =>
                 {
+                    b.Navigation("EmployeesShipments");
+
                     b.Navigation("Vehicle");
                 });
 
@@ -1061,9 +1094,18 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Shipment", b =>
                 {
+                    b.Navigation("EmployeesShipments");
+
                     b.Navigation("Feedbacks");
 
                     b.Navigation("ShipmentTrackingPath");
+
+                    b.Navigation("ShipmentsVehicles");
+                });
+
+            modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Vehicle", b =>
+                {
+                    b.Navigation("ShipmentsVehicles");
                 });
 #pragma warning restore 612, 618
         }

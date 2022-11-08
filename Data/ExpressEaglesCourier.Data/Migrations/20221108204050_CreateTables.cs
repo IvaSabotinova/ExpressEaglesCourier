@@ -1,11 +1,10 @@
-﻿#nullable disable
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace ExpressEaglesCourier.Data.Migrations
 {
-    using System;
-
-    using Microsoft.EntityFrameworkCore.Migrations;
-
     public partial class CreateTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,7 +31,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,11 +50,12 @@ namespace ExpressEaglesCourier.Data.Migrations
                     City = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: false, comment: "Home city"),
                     Country = table.Column<string>(type: "nvarchar(56)", maxLength: 56, nullable: false, comment: "Home country"),
                     CompanyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "The name of the company should shipment is ordered by a company"),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "The Id of the Customer should he/she become user of the site"),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,7 +76,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,7 +94,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -115,15 +115,19 @@ namespace ExpressEaglesCourier.Data.Migrations
                     TrackingNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     SenderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReceiverId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PickupAddress = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
+                    PickUpTown = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: true),
+                    DestinationAddress = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
+                    DestinationTown = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: true),
                     DeliveryType = table.Column<int>(type: "int", nullable: false),
                     ProductType = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ShipmentTrackingPathId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShipmentTrackingPathId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -155,7 +159,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -173,12 +177,12 @@ namespace ExpressEaglesCourier.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(800)", maxLength: 800, nullable: false, comment: "Content of the feedback of a customer concerning particular shipment."),
+                    Content = table.Column<string>(type: "nvarchar(max)", maxLength: 7000, nullable: false, comment: "Content of the feedback of a customer concerning particular shipment."),
                     IsPositive = table.Column<bool>(type: "bit", nullable: false, comment: "A value indicating whether customer's feedback is positive."),
                     ShipmentId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "The id of the shipment that the feedback refers to."),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "The id of the customer that provided his/her feedback."),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -209,7 +213,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -233,6 +237,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     Address = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false, comment: "Home address"),
                     City = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: false, comment: "Home city"),
                     Country = table.Column<string>(type: "nvarchar(56)", maxLength: 56, nullable: false, comment: "Home country"),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     HiredOn = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "The date on which the employee was hired."),
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ResignOn = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "The date on which the employee resigns / retires."),
@@ -243,7 +248,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -268,24 +273,24 @@ namespace ExpressEaglesCourier.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmployeeShipment",
+                name: "EmployeesShipments",
                 columns: table => new
                 {
-                    EmployeesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ShipmentsId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ShipmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeShipment", x => new { x.EmployeesId, x.ShipmentsId });
+                    table.PrimaryKey("PK_EmployeesShipments", x => new { x.EmployeeId, x.ShipmentId });
                     table.ForeignKey(
-                        name: "FK_EmployeeShipment_Employees_EmployeesId",
-                        column: x => x.EmployeesId,
+                        name: "FK_EmployeesShipments_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_EmployeeShipment_Shipments_ShipmentsId",
-                        column: x => x.ShipmentsId,
+                        name: "FK_EmployeesShipments_Shipments_ShipmentId",
+                        column: x => x.ShipmentId,
                         principalTable: "Shipments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -298,11 +303,11 @@ namespace ExpressEaglesCourier.Data.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Model = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     PlateNumber = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "The employee that uses the vehicle."),
+                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "The employee assigned with the vehicle."),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -316,24 +321,24 @@ namespace ExpressEaglesCourier.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShipmentVehicle",
+                name: "ShipmentsVehicles",
                 columns: table => new
                 {
-                    ShipmentsId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    VehiclesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ShipmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    VehicleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShipmentVehicle", x => new { x.ShipmentsId, x.VehiclesId });
+                    table.PrimaryKey("PK_ShipmentsVehicles", x => new { x.ShipmentId, x.VehicleId });
                     table.ForeignKey(
-                        name: "FK_ShipmentVehicle_Shipments_ShipmentsId",
-                        column: x => x.ShipmentsId,
+                        name: "FK_ShipmentsVehicles_Shipments_ShipmentId",
+                        column: x => x.ShipmentId,
                         principalTable: "Shipments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ShipmentVehicle_Vehicles_VehiclesId",
-                        column: x => x.VehiclesId,
+                        name: "FK_ShipmentsVehicles_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
                         principalTable: "Vehicles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -389,9 +394,9 @@ namespace ExpressEaglesCourier.Data.Migrations
                 column: "PositionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeShipment_ShipmentsId",
-                table: "EmployeeShipment",
-                column: "ShipmentsId");
+                name: "IX_EmployeesShipments_ShipmentId",
+                table: "EmployeesShipments",
+                column: "ShipmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Feedbacks_CustomerId",
@@ -445,9 +450,9 @@ namespace ExpressEaglesCourier.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShipmentVehicle_VehiclesId",
-                table: "ShipmentVehicle",
-                column: "VehiclesId");
+                name: "IX_ShipmentsVehicles_VehicleId",
+                table: "ShipmentsVehicles",
+                column: "VehicleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_EmployeeId",
@@ -464,7 +469,7 @@ namespace ExpressEaglesCourier.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EmployeeShipment");
+                name: "EmployeesShipments");
 
             migrationBuilder.DropTable(
                 name: "Feedbacks");
@@ -473,7 +478,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                 name: "ShipmentsTrackingPath");
 
             migrationBuilder.DropTable(
-                name: "ShipmentVehicle");
+                name: "ShipmentsVehicles");
 
             migrationBuilder.DropTable(
                 name: "Shipments");

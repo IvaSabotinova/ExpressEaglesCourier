@@ -17,9 +17,9 @@ namespace ExpressEaglesCourier.Data.Models
         public Shipment()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Employees = new HashSet<Employee>();
+            this.EmployeesShipments = new HashSet<EmployeeShipment>();
             this.Feedbacks = new HashSet<Feedback>();
-            this.Vehicles = new HashSet<Vehicle>();
+            this.ShipmentsVehicles = new HashSet<ShipmentVehicle>();
         }
 
         [Required]
@@ -42,6 +42,18 @@ namespace ExpressEaglesCourier.Data.Models
 
         public virtual Customer Receiver { get; set; }
 
+        [MaxLength(GlobalConstants.EntitiesConstants.AddressMaxLength)]
+        public string PickupAddress { get; set; }
+
+        [MaxLength(GlobalConstants.EntitiesConstants.CityNameMaxLength)]
+        public string PickUpTown { get; set; }
+
+        [MaxLength(GlobalConstants.EntitiesConstants.AddressMaxLength)]
+        public string DestinationAddress { get; set; }
+
+        [MaxLength(GlobalConstants.EntitiesConstants.CityNameMaxLength)]
+        public string DestinationTown { get; set; }
+
         public DeliveryType DeliveryType { get; set; }
 
         public ProductType ProductType { get; set; }
@@ -55,7 +67,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets collection of employees who handled the shipment.
         /// </summary>
         [Comment("Collection of employees who handled the shipment.")]
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<EmployeeShipment> EmployeesShipments { get; set; }
 
         /// <summary>
         /// Gets or sets collection of feedbacks received from the shipment's sender or receiver.
@@ -63,7 +75,6 @@ namespace ExpressEaglesCourier.Data.Models
         [Comment("Feedback received from the shipment's sender or receiver.")]
         public virtual ICollection<Feedback> Feedbacks { get; set; }
 
-        [Required]
         public string ShipmentTrackingPathId { get; set; }
 
         public virtual ShipmentTrackingPath ShipmentTrackingPath { get; set; }
@@ -72,6 +83,6 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets collection of vehicles used to deliver the shipment.
         /// </summary>
         [Comment("Collection of vehicles used to deliver the shipment.")]
-        public virtual ICollection<Vehicle> Vehicles { get; set; }
+        public virtual ICollection<ShipmentVehicle> ShipmentsVehicles { get; set; }
     }
 }

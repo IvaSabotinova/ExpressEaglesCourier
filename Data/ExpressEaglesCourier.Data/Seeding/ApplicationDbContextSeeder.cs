@@ -27,6 +27,18 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
+
+                              // new CountrySeeder(),
+                              // new CitySeeder(),
+                              // new OfficeSeeder(),
+                              // new PositionSeeder(),
+                              // new EmployeeSeeder(),
+                              // new VehicleSeeder(),
+                              // new CustomerSeeder(),
+                              // new ShipmentSeeder(),
+                              // new ShipmentTrackingPathSeeder(),
+                              // new EmployeeShipmentSeeder(),
+                              // new ShipmentVehicleSeeder(),
                           };
 
             foreach (var seeder in seeders)

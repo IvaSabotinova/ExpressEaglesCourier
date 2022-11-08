@@ -15,7 +15,7 @@ namespace ExpressEaglesCourier.Data.Models
         public Vehicle()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Shipments = new HashSet<Shipment>();
+            this.ShipmentsVehicles = new HashSet<ShipmentVehicle>();
         }
 
         /// <summary>
@@ -33,11 +33,11 @@ namespace ExpressEaglesCourier.Data.Models
         public string PlateNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets the employee that uses the vehicle.
+        /// Gets or sets the employee assigned with the vehicle.
         /// </summary>
         [Required]
         [ForeignKey(nameof(Employee))]
-        [Comment("The employee that uses the vehicle.")]
+        [Comment("The employee assigned with the vehicle.")]
         public string EmployeeId { get; set; }
 
         public virtual Employee Employee { get; set; }
@@ -46,6 +46,6 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets collection of shipments delivered with the vehicle.
         /// </summary>
         [Comment("Collection of shipments delivered with the vehicle.")]
-        public virtual ICollection<Shipment> Shipments { get; set; }
+        public virtual ICollection<ShipmentVehicle> ShipmentsVehicles { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace ExpressEaglesCourier.Data.Models
         public Employee()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Shipments = new HashSet<Shipment>();
+            this.EmployeesShipments = new HashSet<EmployeeShipment>();
         }
 
         [Required]
@@ -34,7 +34,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the home address of the employee.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CustomerAddressMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.AddressMaxLength)]
         [Comment(GlobalConstants.EntitiesConstants.HomeAddress)]
         public string Address { get; set; }
 
@@ -42,7 +42,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the home city of the employee.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CustomerCityMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.CityNameMaxLength)]
         [Comment(GlobalConstants.EntitiesConstants.HomeCity)]
 
         public string City { get; set; }
@@ -54,6 +54,9 @@ namespace ExpressEaglesCourier.Data.Models
         [MaxLength(GlobalConstants.EntitiesConstants.CustomerCountryMaxLength)]
         [Comment(GlobalConstants.EntitiesConstants.HomeCountry)]
         public string Country { get; set; }
+
+        [MaxLength(GlobalConstants.EntitiesConstants.PhoneNumberMaxLenght)]
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the date on which the employee was hired.
@@ -93,7 +96,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets collection of shipments that the employee was involved in.
         /// </summary>
         [Comment("Collection of shipments that the employee was involved in.")]
-        public virtual ICollection<Shipment> Shipments { get; set; }
+        public virtual ICollection<EmployeeShipment> EmployeesShipments { get; set; }
 
         /// <summary>
         /// Gets or sets the id of the Employee when he/she becomes user of the site.

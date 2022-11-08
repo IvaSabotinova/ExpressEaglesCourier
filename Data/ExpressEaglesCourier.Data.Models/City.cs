@@ -17,7 +17,7 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.OfficeCityNameMaxLength)]
+        [MaxLength(GlobalConstants.EntitiesConstants.CityNameMaxLength)]
         public string Name { get; set; }
 
         [MaxLength(GlobalConstants.EntitiesConstants.CityCodeMaxLength)]

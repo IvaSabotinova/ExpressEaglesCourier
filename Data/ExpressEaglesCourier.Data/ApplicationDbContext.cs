@@ -14,6 +14,7 @@
     using ExpressEaglesCourier.Data.Models;
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
@@ -50,6 +51,10 @@
 
         public DbSet<ShipmentTrackingPath> ShipmentsTrackingPath { get; set; }
 
+        public DbSet<EmployeeShipment> EmployeesShipments { get; set; }
+
+        public DbSet<ShipmentVehicle> ShipmentsVehicles { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -72,27 +77,47 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             // Needed for Identity models configuration
-            base.OnModelCreating(builder);
+            builder.Entity<EmployeeShipment>()
+                .HasKey(x => new { x.EmployeeId, x.ShipmentId });
 
-            builder.Entity<ApplicationUser>()
-           .HasOne(x => x.Customer)
-           .WithOne(x => x.ApplicationUser)
-           .HasForeignKey<Customer>(x => x.ApplicationUserId);
-
-            builder.Entity<ApplicationUser>()
-            .HasOne(x => x.Employee)
-            .WithOne(x => x.ApplicationUser)
-            .HasForeignKey<Employee>(x => x.ApplicationUserId);
+            builder.Entity<ShipmentVehicle>()
+               .HasKey(x => new { x.ShipmentId, x.VehicleId });
 
             builder.Entity<Shipment>()
-           .HasOne(s => s.ShipmentTrackingPath)
-           .WithOne(st => st.Shipment)
-           .HasForeignKey<ShipmentTrackingPath>(st => st.ShipmentId);
+            .HasOne(x => x.ShipmentTrackingPath)
+            .WithOne(x => x.Shipment)
+            .HasForeignKey<ShipmentTrackingPath>(st => st.ShipmentId);
 
             builder.Entity<Shipment>()
-            .HasMany(p => p.Feedbacks)
-            .WithOne(p => p.Shipment)
+            .HasMany(x => x.Feedbacks)
+            .WithOne(x => x.Shipment)
             .IsRequired(false);
+
+            builder.Entity<EmployeeShipment>()
+            .HasOne<Employee>(x => x.Employee)
+            .WithMany(x => x.EmployeesShipments)
+            .HasForeignKey(x => x.EmployeeId)
+            .IsRequired(false);
+
+            builder.Entity<EmployeeShipment>()
+            .HasOne<Shipment>(x => x.Shipment)
+            .WithMany(x => x.EmployeesShipments)
+            .HasForeignKey(x => x.ShipmentId)
+            .IsRequired(false);
+
+            builder.Entity<ShipmentVehicle>()
+           .HasOne<Shipment>(x => x.Shipment)
+           .WithMany(x => x.ShipmentsVehicles)
+           .HasForeignKey(x => x.ShipmentId)
+           .IsRequired(false);
+
+            builder.Entity<ShipmentVehicle>()
+            .HasOne<Vehicle>(x => x.Vehicle)
+            .WithMany(x => x.ShipmentsVehicles)
+            .HasForeignKey(x => x.VehicleId)
+            .IsRequired(false);
+
+            base.OnModelCreating(builder);
 
             this.ConfigureUserIdentityRelations(builder);
 
