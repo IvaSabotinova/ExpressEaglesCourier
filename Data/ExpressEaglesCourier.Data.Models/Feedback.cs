@@ -8,13 +8,8 @@ namespace ExpressEaglesCourier.Data.Models
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
 
-    public class Feedback : BaseModel<string>
+    public class Feedback : BaseModel<int>
     {
-        public Feedback()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
-
         /// <summary>
         /// Gets or sets the content of customer's feedback, complaints or recommendations regarding a particular shipment.
         /// </summary>
@@ -34,7 +29,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// </summary>
         [Comment("The id of the shipment that the feedback refers to.")]
         [Required]
-        public string ShipmentId { get; set; }
+        public int ShipmentId { get; set; }
 
         public virtual Shipment Shipment { get; set; }
 

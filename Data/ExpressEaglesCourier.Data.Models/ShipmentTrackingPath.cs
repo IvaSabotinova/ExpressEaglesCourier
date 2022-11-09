@@ -6,19 +6,14 @@
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
 
-    public class ShipmentTrackingPath : BaseDeletableModel<string>
+    public class ShipmentTrackingPath : BaseDeletableModel<int>
     {
-        public ShipmentTrackingPath()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
-
         /// <summary>
         /// Gets or sets the shipment that tracking path is related to.
         /// </summary>
         [Required]
         [Comment("The shipment that tracking path is related to.")]
-        public string ShipmentId { get; set; }
+        public int ShipmentId { get; set; }
 
         public virtual Shipment Shipment { get; set; }
 

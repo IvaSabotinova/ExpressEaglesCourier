@@ -2,21 +2,23 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Models.Enums;
+    using Microsoft.EntityFrameworkCore;
 
     public class ShipmentSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            Customer customer1 = dbContext.Customers.Find("433b2d5c-4886-4069-a54d-3adec39187f0");
-            Customer customer2 = dbContext.Customers.Find("6cb47b02-d240-4a69-a8b6-1bd5c74c69c7");
-            Customer customer3 = dbContext.Customers.Find("bbe661fb-331c-4e43-ba3f-bc9c4b194c89");
-            Customer customer4 = dbContext.Customers.Find("891d9904-b5f6-4756-aeed-4ec702d97599");
-            Customer customer5 = dbContext.Customers.Find("a21b27c3-c52b-40c8-9145-085e9f430801");
-            Customer customer6 = dbContext.Customers.Find("d3945efc-878f-4224-983b-48769370cf7c");
+            Customer customer1 = await dbContext.Customers.FirstOrDefaultAsync(x => x.PhoneNumber == "00359 877 111111");
+            Customer customer2 = await dbContext.Customers.FirstOrDefaultAsync(x => x.PhoneNumber == "00359 877 334334");
+            Customer customer3 = await dbContext.Customers.FirstOrDefaultAsync(x => x.PhoneNumber == "00359 877 222222");
+            Customer customer4 = await dbContext.Customers.FirstOrDefaultAsync(x => x.PhoneNumber == "00359 898 554554");
+            Customer customer5 = await dbContext.Customers.FirstOrDefaultAsync(x => x.PhoneNumber == "00359 899 555555");
+            Customer customer6 = await dbContext.Customers.FirstOrDefaultAsync(x => x.PhoneNumber == "00359 888 556556");
             List<Shipment> shipments = new List<Shipment>()
             {
             new Shipment()

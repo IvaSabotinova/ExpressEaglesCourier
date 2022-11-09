@@ -12,11 +12,10 @@ namespace ExpressEaglesCourier.Data.Models
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-    public class Shipment : BaseDeletableModel<string>
+    public class Shipment : BaseDeletableModel<int>
     {
         public Shipment()
         {
-            this.Id = Guid.NewGuid().ToString();
             this.EmployeesShipments = new HashSet<EmployeeShipment>();
             this.Feedbacks = new HashSet<Feedback>();
             this.ShipmentsVehicles = new HashSet<ShipmentVehicle>();
@@ -75,7 +74,7 @@ namespace ExpressEaglesCourier.Data.Models
         [Comment("Feedback received from the shipment's sender or receiver.")]
         public virtual ICollection<Feedback> Feedbacks { get; set; }
 
-        public string ShipmentTrackingPathId { get; set; }
+        public int ShipmentTrackingPathId { get; set; }
 
         public virtual ShipmentTrackingPath ShipmentTrackingPath { get; set; }
 

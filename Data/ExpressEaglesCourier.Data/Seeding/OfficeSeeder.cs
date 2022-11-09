@@ -16,7 +16,7 @@
                 PhoneNumber = "00359 56 122112",
                 FaxNumber = "00359 56 122113",
                 Email = "expressEaglesBourgas@gmail.com",
-                CityId = dbContext.Cities.FirstOrDefault(x => x.Name == "Bourgas").Id,
+                CityId = 1,
             };
 
             Office office2Bs = new Office()
@@ -25,7 +25,7 @@
                 PhoneNumber = "00359 56 122114",
                 FaxNumber = "00359 56 122115",
                 Email = "expressEaglesBourgas@gmail.com",
-                CityId = office1Bs.CityId,
+                CityId = 1,
             };
 
             Office office1Vn = new Office()
@@ -34,7 +34,7 @@
                 PhoneNumber = "00359 52 122116",
                 FaxNumber = "00359 52 122117",
                 Email = "expressEaglesVarna@gmail.com",
-                CityId = dbContext.Cities.FirstOrDefault(x => x.Name == "Varna").Id,
+                CityId = 2,
             };
             await dbContext.Offices.AddRangeAsync(office1Bs, office2Bs, office1Vn);
         }

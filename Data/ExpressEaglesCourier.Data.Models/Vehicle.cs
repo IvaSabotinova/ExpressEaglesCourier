@@ -10,11 +10,10 @@ namespace ExpressEaglesCourier.Data.Models
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
 
-    public class Vehicle : BaseDeletableModel<string>
+    public class Vehicle : BaseDeletableModel<int>
     {
         public Vehicle()
         {
-            this.Id = Guid.NewGuid().ToString();
             this.ShipmentsVehicles = new HashSet<ShipmentVehicle>();
         }
 

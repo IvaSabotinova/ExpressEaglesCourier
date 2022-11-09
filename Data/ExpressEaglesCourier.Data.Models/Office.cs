@@ -9,11 +9,10 @@ namespace ExpressEaglesCourier.Data.Models
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
 
-    public class Office : BaseDeletableModel<string>
+    public class Office : BaseDeletableModel<int>
     {
         public Office()
         {
-            this.Id = Guid.NewGuid().ToString();
             this.Employees = new HashSet<Employee>();
         }
 
@@ -42,7 +41,7 @@ namespace ExpressEaglesCourier.Data.Models
         public string Email { get; set; }
 
         [Required]
-        public string CityId { get; set; }
+        public int CityId { get; set; }
 
         public virtual City City { get; set; }
 

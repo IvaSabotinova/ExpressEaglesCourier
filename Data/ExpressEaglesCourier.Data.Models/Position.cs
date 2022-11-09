@@ -9,11 +9,10 @@ namespace ExpressEaglesCourier.Data.Models
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
 
-    public class Position : BaseDeletableModel<string>
+    public class Position : BaseDeletableModel<int>
     {
         public Position()
         {
-            this.Id = Guid.NewGuid().ToString();
             this.Employees = new HashSet<Employee>();
         }
 

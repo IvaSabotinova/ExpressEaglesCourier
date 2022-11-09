@@ -8,13 +8,8 @@ namespace ExpressEaglesCourier.Data.Models
     using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
 
-    public class Country : BaseDeletableModel<string>
+    public class Country : BaseDeletableModel<int>
     {
-        public Country()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
-
         [Required]
         [MaxLength(GlobalConstants.EntitiesConstants.CountryNameMaxLength)]
         public string Name { get; set; }

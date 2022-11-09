@@ -80,7 +80,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the office attended by the employee.
         /// </summary>
         [Required]
-        public string OfficeId { get; set; }
+        public int OfficeId { get; set; }
 
         public virtual Office Office { get; set; }
 
@@ -88,7 +88,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the position of the employee in the company.
         /// </summary>
         [Required]
-        public string PositionId { get; set; }
+        public int PositionId { get; set; }
 
         public virtual Position Position { get; set; }
 
@@ -110,7 +110,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the vehicle used by the employee courier.
         /// </summary>
         [Comment("The vehicle used by the employee courier.")]
-        public string VehicleId { get; set; }
+        public int VehicleId { get; set; }
 
         public virtual Vehicle Vehicle { get; set; }
     }

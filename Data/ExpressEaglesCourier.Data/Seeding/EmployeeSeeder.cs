@@ -13,7 +13,7 @@
         {
             List<Employee> employees = new List<Employee>()
             {
-                // Bourgas
+                 // Bourgas
                 new Employee() // driver courier
                 {
                     FirstName = "Petar",
@@ -25,8 +25,8 @@
                     PhoneNumber = "00359 888 121210",
                     HiredOn = DateTime.ParseExact("02-02-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                     Salary = 1200,
-                    OfficeId = "70d49f24-f37f-41d1-b017-96f12c2f3821",
-                    PositionId = "315a7888-8e02-4e70-8aa9-32b1e257643d",
+                    OfficeId = 1,
+                    PositionId = 10,
                 },
                 new Employee() // customer front desk service
                 {
@@ -39,8 +39,8 @@
                     PhoneNumber = "00359 898 331456",
                     HiredOn = DateTime.ParseExact("06-06-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                     Salary = 1350,
-                    OfficeId = "70d49f24-f37f-41d1-b017-96f12c2f3821",
-                    PositionId = "a5379d11-01be-4f6c-995a-7efcdac340dc",
+                    OfficeId = 2,
+                    PositionId = 3,
                 },
                 new Employee() // data entry operator
                 {
@@ -53,8 +53,8 @@
                     PhoneNumber = "00359 888 658974",
                     HiredOn = DateTime.ParseExact("06-06-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                     Salary = 1300,
-                    OfficeId = "061b9367-aa25-4a41-98b6-81d7eb6cb71e",
-                    PositionId = "a156ebfd-02d5-416c-b430-73520065f509",
+                    OfficeId = 1,
+                    PositionId = 5,
                 },
 
                 // Varna
@@ -69,8 +69,8 @@
                     PhoneNumber = "00359 888 656565",
                     HiredOn = DateTime.ParseExact("08-06-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                     Salary = 1200,
-                    OfficeId = "05f0b246-02f7-4e49-a21e-41723df5ed35",
-                    PositionId = "315a7888-8e02-4e70-8aa9-32b1e257643d",
+                    OfficeId = 3,
+                    PositionId = 10,
                 },
                 new Employee() // customer front desk service
                 {
@@ -83,8 +83,8 @@
                     PhoneNumber = "00359 899 313131",
                     HiredOn = DateTime.ParseExact("08-06-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                     Salary = 1350,
-                    OfficeId = "05f0b246-02f7-4e49-a21e-41723df5ed35",
-                    PositionId = "a5379d11-01be-4f6c-995a-7efcdac340dc",
+                    OfficeId = 3,
+                    PositionId = 3,
                 },
                 new Employee() // data entry operator
                 {
@@ -97,8 +97,8 @@
                     PhoneNumber = "00359 888 333333",
                     HiredOn = DateTime.ParseExact("08-06-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                     Salary = 1300,
-                    OfficeId = "05f0b246-02f7-4e49-a21e-41723df5ed35",
-                    PositionId = "a156ebfd-02d5-416c-b430-73520065f509",
+                    OfficeId = 3,
+                    PositionId = 5,
                 },
             };
 

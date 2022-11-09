@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpressEaglesCourier.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221108212417_FluentApiMappingTables")]
-    partial class FluentApiMappingTables
+    [Migration("20221109085744_CreateTables")]
+    partial class CreateTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,16 +152,18 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.City", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CityCode")
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
 
-                    b.Property<string>("CountryId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -191,8 +193,11 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Country", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CountryCode")
                         .HasMaxLength(16)
@@ -352,17 +357,15 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OfficeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("OfficeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("PositionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("PositionId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("ResignOn")
                         .HasColumnType("datetime2")
@@ -371,8 +374,8 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("VehicleId")
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int")
                         .HasComment("The vehicle used by the employee courier.");
 
                     b.HasKey("Id");
@@ -395,8 +398,8 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<string>("EmployeeId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ShipmentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ShipmentId")
+                        .HasColumnType("int");
 
                     b.HasKey("EmployeeId", "ShipmentId");
 
@@ -407,8 +410,11 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Feedback", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -430,9 +436,8 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ShipmentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<int>("ShipmentId")
+                        .HasColumnType("int")
                         .HasComment("The id of the shipment that the feedback refers to.");
 
                     b.HasKey("Id");
@@ -446,17 +451,19 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Office", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<string>("CityId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -495,8 +502,11 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Position", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -557,8 +567,11 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Shipment", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -605,8 +618,8 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ShipmentTrackingPathId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ShipmentTrackingPathId")
+                        .HasColumnType("int");
 
                     b.Property<string>("TrackingNumber")
                         .IsRequired()
@@ -629,8 +642,11 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.ShipmentTrackingPath", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("ArrivalInReceivingOffice")
                         .HasColumnType("datetime2")
@@ -664,9 +680,8 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasComment("Date and time of sending shipment from dispatching office.");
 
-                    b.Property<string>("ShipmentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<int>("ShipmentId")
+                        .HasColumnType("int")
                         .HasComment("The shipment that tracking path is related to.");
 
                     b.HasKey("Id");
@@ -681,11 +696,11 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.ShipmentVehicle", b =>
                 {
-                    b.Property<string>("ShipmentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ShipmentId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("VehicleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
 
                     b.HasKey("ShipmentId", "VehicleId");
 
@@ -696,8 +711,11 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Vehicle", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");

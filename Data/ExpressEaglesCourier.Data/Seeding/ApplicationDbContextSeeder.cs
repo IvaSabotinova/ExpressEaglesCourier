@@ -33,12 +33,14 @@
                               // new OfficeSeeder(),
                               // new PositionSeeder(),
                               // new EmployeeSeeder(),
-                              // new VehicleSeeder(),
+                               // new VehicleSeeder(),
                               // new CustomerSeeder(),
-                              // new ShipmentSeeder(),
+                               // new ShipmentSeeder(),
                               // new ShipmentTrackingPathSeeder(),
                               // new EmployeeShipmentSeeder(),
                               // new ShipmentVehicleSeeder(),
+                              // new EmployeeVehicleSeeder(),
+                              // new ShipmentShipmentTrackingPathSeeder(),
                           };
 
             foreach (var seeder in seeders)
