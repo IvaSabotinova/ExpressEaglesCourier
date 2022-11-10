@@ -1,13 +1,13 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
 namespace ExpressEaglesCourier.Data.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
+
+    using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
     public class Office : BaseDeletableModel<int>
     {
@@ -17,26 +17,26 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.AddressMaxLength)]
+        [MaxLength(AddressMaxLength)]
         public string Address { get; set; }
 
         /// <summary>
         /// Gets or sets the phone number of the office.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.PhoneNumberMaxLenght)]
+        [MaxLength(PhoneNumberMaxLenght)]
         [Phone]
         public string PhoneNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the fax number of the office.
         /// </summary>
-        [MaxLength(GlobalConstants.EntitiesConstants.FaxNumberMaxLenght)]
+        [MaxLength(FaxNumberMaxLenght)]
         [Phone]
         public string FaxNumber { get; set; }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.EmailMaxLenght)]
+        [MaxLength(EmailMaxLenght)]
         [EmailAddress]
         public string Email { get; set; }
 

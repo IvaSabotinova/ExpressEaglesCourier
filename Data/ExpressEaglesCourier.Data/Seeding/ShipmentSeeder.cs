@@ -107,7 +107,6 @@
             },
             };
 
-            // TODO: Shipment tracking path add
             await dbContext.Shipments.AddRangeAsync(shipments);
         }
     }

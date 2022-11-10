@@ -5,8 +5,9 @@ namespace ExpressEaglesCourier.Data.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
+
+    using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
     public class City : BaseDeletableModel<int>
     {
@@ -16,10 +17,10 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CityNameMaxLength)]
+        [MaxLength(CityNameMaxLength)]
         public string Name { get; set; }
 
-        [MaxLength(GlobalConstants.EntitiesConstants.CityCodeMaxLength)]
+        [MaxLength(CityCodeMaxLength)]
         public string CityCode { get; set; }
 
         /// <summary>

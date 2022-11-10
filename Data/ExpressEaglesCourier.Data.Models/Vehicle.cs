@@ -1,14 +1,14 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
 namespace ExpressEaglesCourier.Data.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
+
+    using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
     public class Vehicle : BaseDeletableModel<int>
     {
@@ -21,14 +21,14 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets model of the vehicle.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.VehicleModelNameMaxLenght)]
+        [MaxLength(VehicleModelNameMaxLenght)]
         public string Model { get; set; }
 
         /// <summary>
         /// Gets or sets the registration / plate number of the vehicle.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.VehiclePlateNumberMaxLenght)]
+        [MaxLength(VehiclePlateNumberMaxLenght)]
         public string PlateNumber { get; set; }
 
         /// <summary>

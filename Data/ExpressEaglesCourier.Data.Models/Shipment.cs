@@ -1,16 +1,16 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
 namespace ExpressEaglesCourier.Data.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
     using ExpressEaglesCourier.Data.Models.Enums;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+    using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
     public class Shipment : BaseDeletableModel<int>
     {
@@ -22,7 +22,7 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.TrackingNumberMaxLength)]
+        [MaxLength(TrackingNumberMaxLength)]
         public string TrackingNumber { get; set; }
 
         /// <summary>
@@ -41,16 +41,16 @@ namespace ExpressEaglesCourier.Data.Models
 
         public virtual Customer Receiver { get; set; }
 
-        [MaxLength(GlobalConstants.EntitiesConstants.AddressMaxLength)]
+        [MaxLength(AddressMaxLength)]
         public string PickupAddress { get; set; }
 
-        [MaxLength(GlobalConstants.EntitiesConstants.CityNameMaxLength)]
+        [MaxLength(CityNameMaxLength)]
         public string PickUpTown { get; set; }
 
-        [MaxLength(GlobalConstants.EntitiesConstants.AddressMaxLength)]
+        [MaxLength(AddressMaxLength)]
         public string DestinationAddress { get; set; }
 
-        [MaxLength(GlobalConstants.EntitiesConstants.CityNameMaxLength)]
+        [MaxLength(CityNameMaxLength)]
         public string DestinationTown { get; set; }
 
         public DeliveryType DeliveryType { get; set; }
@@ -59,7 +59,7 @@ namespace ExpressEaglesCourier.Data.Models
 
         public double Weight { get; set; }
 
-        [Column(TypeName = GlobalConstants.EntitiesConstants.DecimalType)]
+        [Column(TypeName = DecimalType)]
         public decimal Price { get; set; }
 
         /// <summary>

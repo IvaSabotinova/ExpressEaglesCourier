@@ -1,20 +1,20 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
 namespace ExpressEaglesCourier.Data.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
+
+    using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
     public class Country : BaseDeletableModel<int>
     {
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CountryNameMaxLength)]
+        [MaxLength(CountryNameMaxLength)]
         public string Name { get; set; }
 
-        [MaxLength(GlobalConstants.EntitiesConstants.CountryCodeMaxLength)]
+        [MaxLength(CountryCodeMaxLength)]
         public string CountryCode { get; set; }
 
         /// <summary>

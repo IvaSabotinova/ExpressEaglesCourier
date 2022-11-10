@@ -42,9 +42,13 @@
 
             public const int PhoneNumberMaxLenght = 20;
 
+            public const int PhoneNumberMinLenght = 6;
+
             public const int FaxNumberMaxLenght = 20;
 
             public const int EmailMaxLenght = 330;
+
+            public const int EmailMinLength = 5;
 
             public const int CityCodeMaxLength = 16;
 
@@ -61,6 +65,19 @@
             public const int VehiclePlateNumberMaxLenght = 21;
 
             public const double ShipmentMaxWeightInGrams = 70000;
+        }
+
+        public static class ViewModelConstants
+        {
+            public const int UserNameMaxLength = 50;
+
+            public const int UserNameMinLength = 5;
+
+            public const int PasswordMaxLength = 50;
+
+            public const int PasswordMinLength = 5;
+
+            public const string UserErrorMessage = "Invalid data!";
         }
     }
 }

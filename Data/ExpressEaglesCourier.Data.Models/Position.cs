@@ -1,13 +1,13 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
 namespace ExpressEaglesCourier.Data.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
+
+    using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
     public class Position : BaseDeletableModel<int>
     {
@@ -17,7 +17,7 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.JobTitleMaxLength)]
+        [MaxLength(JobTitleMaxLength)]
         public string JobTitle { get; set; }
 
         /// <summary>

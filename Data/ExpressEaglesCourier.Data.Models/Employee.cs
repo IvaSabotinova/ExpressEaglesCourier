@@ -6,10 +6,11 @@ namespace ExpressEaglesCourier.Data.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+    using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
     public class Employee : BaseDeletableModel<string>
     {
@@ -20,30 +21,30 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.EmployeeFirstNameMaxLength)]
+        [MaxLength(EmployeeFirstNameMaxLength)]
         public string FirstName { get; set; }
 
-        [MaxLength(GlobalConstants.EntitiesConstants.EmployeeMiddleNameMaxLength)]
+        [MaxLength(EmployeeMiddleNameMaxLength)]
         public string MiddleName { get; set; }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.EmployeeLastNameMaxLength)]
+        [MaxLength(EmployeeLastNameMaxLength)]
         public string LastName { get; set; }
 
         /// <summary>
         /// Gets or sets the home address of the employee.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.AddressMaxLength)]
-        [Comment(GlobalConstants.EntitiesConstants.HomeAddress)]
+        [MaxLength(AddressMaxLength)]
+        [Comment(HomeAddress)]
         public string Address { get; set; }
 
         /// <summary>
         /// Gets or sets the home city of the employee.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CityNameMaxLength)]
-        [Comment(GlobalConstants.EntitiesConstants.HomeCity)]
+        [MaxLength(CityNameMaxLength)]
+        [Comment(HomeCity)]
 
         public string City { get; set; }
 
@@ -51,11 +52,11 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the home country of the employee.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CustomerCountryMaxLength)]
-        [Comment(GlobalConstants.EntitiesConstants.HomeCountry)]
+        [MaxLength(CustomerCountryMaxLength)]
+        [Comment(HomeCountry)]
         public string Country { get; set; }
 
-        [MaxLength(GlobalConstants.EntitiesConstants.PhoneNumberMaxLenght)]
+        [MaxLength(PhoneNumberMaxLenght)]
         public string PhoneNumber { get; set; }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// <summary>
         /// Gets or sets the employee's salary.
         /// </summary>
-        [Column(TypeName = GlobalConstants.EntitiesConstants.DecimalType)]
+        [Column(TypeName = DecimalType)]
         public decimal Salary { get; set; }
 
         /// <summary>

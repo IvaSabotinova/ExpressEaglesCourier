@@ -1,12 +1,12 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
 namespace ExpressEaglesCourier.Data.Models
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
 
-    using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
+
+    using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
     public class Feedback : BaseModel<int>
     {
@@ -14,7 +14,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the content of customer's feedback, complaints or recommendations regarding a particular shipment.
         /// </summary>
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.FeedbackLengthMaxLength)]
+        [MaxLength(FeedbackLengthMaxLength)]
         [Comment("Content of the feedback of a customer concerning particular shipment.")]
         public string Content { get; set; }
 

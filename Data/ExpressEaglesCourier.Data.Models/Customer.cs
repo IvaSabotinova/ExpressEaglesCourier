@@ -6,9 +6,10 @@ namespace ExpressEaglesCourier.Data.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
+
+    using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
     public class Customer : BaseDeletableModel<string>
     {
@@ -21,39 +22,39 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CustomerFirstNameMaxLength)]
+        [MaxLength(CustomerFirstNameMaxLength)]
         public string FirstName { get; set; }
 
-        [MaxLength(GlobalConstants.EntitiesConstants.CustomerMiddleNameMaxLength)]
+        [MaxLength(CustomerMiddleNameMaxLength)]
         public string MiddleName { get; set; }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CustomerLastNameMaxLength)]
+        [MaxLength(CustomerLastNameMaxLength)]
         public string LastName { get; set; }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.AddressMaxLength)]
-        [Comment(GlobalConstants.EntitiesConstants.HomeAddress)]
+        [MaxLength(AddressMaxLength)]
+        [Comment(HomeAddress)]
         public string Address { get; set; }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CityNameMaxLength)]
-        [Comment(GlobalConstants.EntitiesConstants.HomeCity)]
+        [MaxLength(CityNameMaxLength)]
+        [Comment(HomeCity)]
         public string City { get; set; }
 
         [Required]
-        [MaxLength(GlobalConstants.EntitiesConstants.CustomerCountryMaxLength)]
-        [Comment(GlobalConstants.EntitiesConstants.HomeCountry)]
+        [MaxLength(CustomerCountryMaxLength)]
+        [Comment(HomeCountry)]
         public string Country { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the company should shipment is ordered by a company.
         /// </summary>
-        [MaxLength(GlobalConstants.EntitiesConstants.CompanyNameMaxLength)]
+        [MaxLength(CompanyNameMaxLength)]
         [Comment("The name of the company should shipment is ordered by a company")]
         public string CompanyName { get; set; }
 
-        [MaxLength(GlobalConstants.EntitiesConstants.PhoneNumberMaxLenght)]
+        [MaxLength(PhoneNumberMaxLenght)]
         public string PhoneNumber { get; set; }
 
         /// <summary>

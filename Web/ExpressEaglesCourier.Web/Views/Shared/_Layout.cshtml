@@ -18,15 +18,14 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">                    
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">                
             <div class="container">
                 <img src="~/img/gallery/net.png" height="45" alt="logo" />
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>
-                
+                </button>                
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
@@ -38,7 +37,8 @@
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
-                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
+                <div class="dropdown d-none d-lg-block">                    
+                </div><a class="btn btn-outline-primary order-1 order-lg-0 ms-lg-3" asp-area="" asp-controller="Home" asp-action="FindUs">Contact Us</a>
             </div>
         </nav>
     </header>
@@ -86,27 +86,12 @@
         </nav>*@
 
 
-        <section class="py-xxl-10 pb-0" id="home">
-            <div class="bg-holder bg-size" style="background-image:url(~/img/gallery/hero-header-bg.png);background-position:top center;background-size:cover;">
-            </div>
-            <!--/.bg-holder-->
-
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-5 col-xl-6 col-xxl-7 order-0 order-md-1 text-end"><img class="pt-7 pt-md-0 w-100" src="~/img/illustrations/hero.png" alt="hero-header" /></div>
-                    <div class="col-md-75 col-xl-6 col-xxl-5 text-md-start text-center py-8">
-                        <h1 class="fw-normal fs-6 fs-xxl-7">A trusted provider of </h1>
-                        <h1 class="fw-bolder fs-6 fs-xxl-7 mb-2">courier services.</h1>
-                        <p class="fs-1 mb-5">We deliver your products safely to <br />your home in a reasonable time. </p><a class="btn btn-primary me-2" href="#!" role="button">Get started<i class="fas fa-arrow-right ms-2"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
+       
 
 
         <!-- ============================================-->
         <!-- <section> begin ============================-->
-        <section class="py-7" id="services" container-xl="container-xl">
+       @* <section class="py-7" id="services" container-xl="container-xl">
 
             <div class="container">
                 <div class="row justify-content-center">
@@ -201,12 +186,12 @@
             </div>
             <!-- end of .container-->
 
-        </section>
+        </section>*@
         <!-- <section> close ============================-->
         <!-- ============================================-->
         <!-- ============================================-->
         <!-- <section> begin ============================-->
-        <section class="pt-7 pb-0">
+        @*<section class="pt-7 pb-0">
 
             <div class="container">
                 <div class="row">
@@ -249,12 +234,12 @@
             </div>
             <!-- end of .container-->
 
-        </section>
+        </section>*@
         <!-- <section> close ============================-->
         <!-- ============================================-->
         <!-- ============================================-->
         <!-- <section> begin ============================-->
-        <section>
+        @*<section>
 
             <div class="container">
                 <div class="row">
@@ -286,12 +271,12 @@
             </div>
             <!-- end of .container-->
 
-        </section>
+        </section>*@
         <!-- <section> close ============================-->
         <!-- ============================================-->
         <!-- ============================================-->
         <!-- <section> begin ============================-->
-        <section class="py-7">
+        @*<section class="py-7">
 
             <div class="container-fluid">
                 <div class="row flex-center">
@@ -534,48 +519,7 @@
 
         </section>
         <!-- <section> close ============================-->
-        <!-- ============================================-->
-        <!-- ============================================-->
-        <!-- <section> begin ============================-->
-        <section id="findUs">
-
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-5 mb-6 text-center">
-                        <h5 class="text-danger">FIND US</h5>
-                        <h2>Access us easily</h2>
-                    </div>
-                    <div class="col-12">
-                        <div class="card card-span rounded-2 mb-3">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-7 d-flex"><img class="w-100 fit-cover rounded-md-start rounded-top rounded-md-top-0" src="~/img/gallery/map.svg" alt="map" /></div>
-                                <div class="col-md-6 col-lg-5 d-flex flex-center">
-                                    <div class="card-body">
-                                        <h5>Contact with us</h5>
-                                        <p class="text-700 my-4"> <i class="fas fa-map-marker-alt text-warning me-3"></i><span>2277 Lorem Ave, San Diego, CA 22553</span></p>
-                                        <p><i class="fas fa-phone-alt text-warning me-3"></i><span class="text-700">Monday - Friday: 10 am - 10pm<br /><span class="ps-4">Sunday: 11 am - 9pm  </span></span></p>
-                                        <p><i class="fas fa-envelope text-warning me-3"> </i><a class="text-700" href="mailto:vctung@outlook.com"> info@quriarbox.com</a></p>
-                                        <ul class="list-unstyled list-inline mt-5">
-                                            <li class="list-inline-item"><a class="text-decoration-none" href="#!"><i class="fab fa-facebook-square fs-2"></i></a></li>
-                                            <li class="list-inline-item"><a class="text-decoration-none" href="#!"><i class="fab fa-instagram-square fs-2"></i></a></li>
-                                            <li class="list-inline-item"><a class="text-decoration-none" href="#!"><i class="fab fa-twitter-square fs-2"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-primary px-5" type="submit"><i class="fas fa-phone-alt me-2"></i><i class="text-light" href="tel:123-456789">Call us to delivery 123-456789</i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end of .container-->
-
-        </section>
-        <!-- <section> close ============================-->
-        <!-- ============================================-->
-        <!-- ============================================-->
+       
         <!-- <section> begin ============================-->
         <section class="bg-1000">
 
@@ -607,13 +551,13 @@
         <!-- <section> close ============================-->
         <!-- ============================================-->
         <!-- ============================================-->
-        <!-- <section> begin ============================-->
+        <!-- <section> begin ============================-->*@
         <section class="bg-900 pb-0 pt-5">
 
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0">
-                        <a class="text-decoration-none" href="#"><img src="~/img/gallery/footer-logo.png" height="51" alt="" /></a>
+                        <a class="text-decoration-none" href="#"><img src="~/img/gallery/net.png" height="51" alt="" /></a>
                         <p class="text-500 my-4">The most trusted Courier<br />company in your area.</p>
                     </div>
                     <div class="col-6 col-sm-4 col-lg-2 mb-3 order-2 order-sm-1">
@@ -654,15 +598,16 @@
             <div class="container">
                 <div class="row justify-content-md-between justify-content-evenly py-4">
                     <div class="col-12 col-sm-8 col-md-6 col-lg-auto text-center text-md-start">
-                        <p class="fs--1 my-2 fw-bold text-200">All rights Reserved &copy; Your Company, 2021</p>
+                        <p class="fs--1 my-2 fw-bold text-200">All rights Reserved &copy; Your Company, 2022</p>
                     </div>
                     <div class="col-12 col-sm-8 col-md-6">
-                        <p class="fs--1 my-2 text-center text-md-end text-200">
-                            Made with&nbsp;
-                            <svg class="bi bi-suit-heart-fill" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#F95C19" viewBox="0 0 16 16">
-                                <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
-                            </svg>&nbsp;by&nbsp;<a class="fw-bold text-primary" href="https://themewagon.com/" target="_blank">ThemeWagon </a>
-                        </p>
+                    <p class="fw-bold text-primary fs--1 my-2 text-center text-md-end ">
+                            EEC&nbsp;
+                        <svg class="bi bi-suit-heart-fill" width="12" height="12" fill="#F95C19" viewBox="0 0 16 16">
+                            <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
+                        </svg>&nbsp;
+                        <a class="fw-bold text-primary">Express Eagles Courier </a>
+                        
                     </div>
                 </div>
             </div>
