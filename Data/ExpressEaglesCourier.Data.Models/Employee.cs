@@ -21,14 +21,14 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(EmployeeFirstNameMaxLength)]
+        [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; }
 
-        [MaxLength(EmployeeMiddleNameMaxLength)]
+        [MaxLength(MiddleNameMaxLength)]
         public string MiddleName { get; set; }
 
         [Required]
-        [MaxLength(EmployeeLastNameMaxLength)]
+        [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the home country of the employee.
         /// </summary>
         [Required]
-        [MaxLength(CustomerCountryMaxLength)]
+        [MaxLength(CountryNameMaxLength)]
         [Comment(HomeCountry)]
         public string Country { get; set; }
 

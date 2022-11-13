@@ -22,14 +22,14 @@ namespace ExpressEaglesCourier.Data.Models
         }
 
         [Required]
-        [MaxLength(CustomerFirstNameMaxLength)]
+        [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; }
 
-        [MaxLength(CustomerMiddleNameMaxLength)]
+        [MaxLength(MiddleNameMaxLength)]
         public string MiddleName { get; set; }
 
         [Required]
-        [MaxLength(CustomerLastNameMaxLength)]
+        [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; }
 
         [Required]
@@ -43,7 +43,7 @@ namespace ExpressEaglesCourier.Data.Models
         public string City { get; set; }
 
         [Required]
-        [MaxLength(CustomerCountryMaxLength)]
+        [MaxLength(CountryNameMaxLength)]
         [Comment(HomeCountry)]
         public string Country { get; set; }
 

@@ -28,12 +28,12 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control" placeholder="Must match the password field" />
+                <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                 <label asp-for="TelephoneNumber" ></label>
-                <input asp-for="TelephoneNumber" class="form-control" placeholder="Your phonenumber in format 00359 8xx xxxxxx" />
+                <input asp-for="TelephoneNumber" class="form-control" placeholder="Your phonenumber including country and city code" />
                     <span asp-validation-for="TelephoneNumber" class="text-danger"></span>
                 </div>
                 <button type="submit" class="btn btn-primary mt-2">Register</button>            

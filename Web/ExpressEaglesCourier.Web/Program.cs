@@ -9,6 +9,7 @@
     using ExpressEaglesCourier.Data.Repositories;
     using ExpressEaglesCourier.Data.Seeding;
     using ExpressEaglesCourier.Services.Data;
+    using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Services.Messaging;
     using ExpressEaglesCourier.Web.ViewModels;
@@ -65,6 +66,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<ICustomerService, CustomerService>();
         }
 
         private static void Configure(WebApplication app)
