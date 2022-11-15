@@ -1,7 +1,6 @@
 ﻿namespace ExpressEaglesCourier.Data.Seeding
 {
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
@@ -11,8 +10,8 @@
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            Employee driverBs = await dbContext.Employees.FirstOrDefaultAsync(x => x.PhoneNumber == "00359 888 121210");
-            Employee driverVn = await dbContext.Employees.FirstOrDefaultAsync(x => x.PhoneNumber == "00359 888 656565");
+            Employee driverBs = await dbContext.Employees.FirstOrDefaultAsync(x => x.PhoneNumber == "00359888121210");
+            Employee driverVn = await dbContext.Employees.FirstOrDefaultAsync(x => x.PhoneNumber == "00359888656565");
 
             Vehicle vehicle1 = new Vehicle()
             {

@@ -17,7 +17,7 @@
                 Address = "Vasil Levski Street 42, floor 1",
                 City = "Bourgas",
                 Country = "Bulgaria",
-                PhoneNumber = "00359 877 222222",
+                PhoneNumber = "00359877222222",
             };
             Customer customer2 = new Customer()
             {
@@ -27,7 +27,7 @@
                 Address = "Macedonia Street No. 21",
                 City = "Bourgas",
                 Country = "Bulgaria",
-                PhoneNumber = "00359 877 111111",
+                PhoneNumber = "00359877111111",
             };
             Customer customer3 = new Customer()
             {
@@ -37,7 +37,7 @@
                 Address = "Vasil Levski Street 12, floor 1",
                 City = "Bourgas",
                 Country = "Bulgaria",
-                PhoneNumber = "00359 877 334334",
+                PhoneNumber = "00359877334334",
             };
             Customer customer4 = new Customer()
             {
@@ -47,7 +47,7 @@
                 Address = "Hristo Smirnenski Street 5",
                 City = "Varna",
                 Country = "Bulgaria",
-                PhoneNumber = "00359 888 556556",
+                PhoneNumber = "00359888556556",
             };
             Customer customer5 = new Customer()
             {
@@ -57,7 +57,7 @@
                 Address = "Nikola Kozlev Street No. 2",
                 City = "Varna",
                 Country = "Bulgaria",
-                PhoneNumber = "00359 899 555555",
+                PhoneNumber = "00359899555555",
             };
             Customer customer6 = new Customer()
             {
@@ -67,7 +67,7 @@
                 Address = "Bozhur Street No. 3",
                 City = "Varna",
                 Country = "Bulgaria",
-                PhoneNumber = "00359 898 554554",
+                PhoneNumber = "00359898554554",
             };
             await dbContext.Customers.AddRangeAsync(customer1, customer2, customer3, customer4, customer5, customer6);
         }

@@ -10,12 +10,12 @@
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            string employee1BsId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359 898 331456").Id;
-            string employee2BsId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359 888 658974").Id;
-            string driverBsId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359 888 121210").Id;
-            string employee1VnId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359 888 333333").Id;
-            string employee2VnId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359 899 313131").Id;
-            string driverVnId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359 888 656565").Id;
+            string employee1BsId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359898331456").Id;
+            string employee2BsId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359888658974").Id;
+            string driverBsId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359888121210").Id;
+            string employee1VnId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359888333333").Id;
+            string employee2VnId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359899313131").Id;
+            string driverVnId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359888656565").Id;
             await dbContext.EmployeesShipments.AddAsync(new EmployeeShipment
             {
                 ShipmentId = 1,

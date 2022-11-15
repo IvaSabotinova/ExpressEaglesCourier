@@ -60,11 +60,15 @@
 
             public const int TrackingNumberMaxLength = 15;
 
+            public const int TrackingNumberMinLength = 11;
+
             public const int VehicleModelNameMaxLenght = 30;
 
             public const int VehiclePlateNumberMaxLenght = 21;
 
-            public const double ShipmentMaxWeightInGrams = 70000;
+            public const double ShipmentMaxWeightInKg = 70.00;
+
+            public const double ShipmentMinWeightInKg = 0.00;
         }
 
         public static class ViewModelConstants
@@ -88,6 +92,32 @@
             public const string CompanyName = "Company Name (optional)";
 
             public const string PhoneNumber = "Phone Number";
+
+            public const string TrackingNumber = "Tracking Number";
+
+            public const string SenderFirstName = "Sender First Name";
+
+            public const string SenderLastName = "Sender Last Name";
+
+            public const string SenderPhoneNumber = "Sender Phone Number";
+
+            public const string ReceiverFirstName = "Receiver First Name";
+
+            public const string ReceiverLastName = "Receiver Last Name";
+
+            public const string ReceiverPhoneNumber = "Receiver Phone Number";
+
+            public const string PickUpAddress = "Pick-up Address";
+
+            public const string PickUpTown = "Pick-up Town";
+
+            public const string PickUpCountry = "Pick-up Country";
+
+            public const string DestinationAddress = "Destination Address";
+
+            public const string DestinationTown = "Destination Town";
+
+            public const string DestinationCountry = "Destination Country";
         }
 
         public static class ServicesConstants
@@ -97,6 +127,18 @@
             public const string InvalidClientDetails = "Invalid client's details!";
 
             public const string ClientNotExist = "Client does not exist!";
+
+            public const string InvalidShipmentDetails = "Invalid shipment's details!";
+
+            public const string Message = "Message";
+
+            public const string ShipmentCreated = "Shipment created successfully!";
+
+            public const string TrackingNumberExistsInDB = "Shipment with this tracking number already exists!";
+
+            public const string SenderWithPhoneNumberDoesNotExit = "Sender with this phone number does not exist! Please register as customer first or amend where necessary!";
+
+            public const string ReceiverWithPhoneNumberDoesNotExit = "Receiver with this phone number does not exist! Please register as customer first or amend where necessary!!";
         }
     }
 }

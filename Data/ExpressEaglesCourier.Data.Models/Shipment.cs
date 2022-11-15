@@ -41,24 +41,40 @@ namespace ExpressEaglesCourier.Data.Models
 
         public virtual Customer Receiver { get; set; }
 
+        [Required]
         [MaxLength(AddressMaxLength)]
         public string PickupAddress { get; set; }
 
+        [Required]
         [MaxLength(CityNameMaxLength)]
         public string PickUpTown { get; set; }
 
+        [Required]
+        [MaxLength(CountryNameMaxLength)]
+        public string PickUpCountry { get; set; }
+
+        [Required]
         [MaxLength(AddressMaxLength)]
         public string DestinationAddress { get; set; }
 
+        [Required]
         [MaxLength(CityNameMaxLength)]
         public string DestinationTown { get; set; }
 
+        [Required]
+        [MaxLength(CountryNameMaxLength)]
+        public string DestinationCountry { get; set; }
+
+        [Required]
         public DeliveryType DeliveryType { get; set; }
 
+        [Required]
         public ProductType ProductType { get; set; }
 
+        [Required]
         public double Weight { get; set; }
 
+        [Required]
         [Column(TypeName = DecimalType)]
         public decimal Price { get; set; }
 

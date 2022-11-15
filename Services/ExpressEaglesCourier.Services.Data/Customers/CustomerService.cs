@@ -49,7 +49,7 @@
 
         public async Task<EditCustomerModel> GetCustomerForEditAsync(string id)
         {
-            Customer customer = await this.customerRepo.All().FirstOrDefaultAsync();
+            Customer customer = await this.customerRepo.All().FirstOrDefaultAsync(x => x.Id == id);
             if (customer == null)
             {
                 throw new ArgumentException(ClientNotExist);

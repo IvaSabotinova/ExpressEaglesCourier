@@ -11,11 +11,11 @@
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
     [Authorize]
-    public class CustomersController : BaseController
+    public class CustomerController : BaseController
     {
         private readonly ICustomerService customerService;
 
-        public CustomersController(ICustomerService customerService)
+        public CustomerController(ICustomerService customerService)
         {
             this.customerService = customerService;
         }
@@ -50,19 +50,20 @@
             }
         }
 
+        // TO CHECK FURTHER
         [HttpGet]
         [AllowAnonymous]
-
-        public async Task<IActionResult> Edit(string customerId)
+        [Route("Customer/Edit/{customerId}")]
+        public async Task<IActionResult> Edit([FromRoute] string customerId)
         {
             EditCustomerModel editCustomerModel = await this.customerService.GetCustomerForEditAsync(customerId);
 
             return this.View(editCustomerModel);
         }
 
+        // TO CHECK FURTHER
         [HttpPost]
         [AllowAnonymous]
-
         public async Task<IActionResult> Edit(EditCustomerModel editCustomerModel)
         {
             if (!this.ModelState.IsValid)

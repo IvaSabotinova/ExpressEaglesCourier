@@ -4,6 +4,7 @@ using ExpressEaglesCourier.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpressEaglesCourier.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221115081056_RequiredFieldsToShipment")]
+    partial class RequiredFieldsToShipment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -585,11 +587,6 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<string>("DestinationCountry")
-                        .IsRequired()
-                        .HasMaxLength(56)
-                        .HasColumnType("nvarchar(56)");
-
                     b.Property<string>("DestinationTown")
                         .IsRequired()
                         .HasMaxLength(28)
@@ -600,11 +597,6 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PickUpCountry")
-                        .IsRequired()
-                        .HasMaxLength(56)
-                        .HasColumnType("nvarchar(56)");
 
                     b.Property<string>("PickUpTown")
                         .IsRequired()
