@@ -1,6 +1,5 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Shipments
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
@@ -13,6 +12,10 @@
 
         Task<bool> CustomerWithPhoneNumberExists(string firstName, string lastName, string phoneNumber);
 
-        Task CreateShipmentAsync(AddNewShipmentModel addNewShipmentModel);
+        Task<int> CreateShipmentAsync(AddNewShipmentModel addNewShipmentModel);
+
+        Task<bool> ShipmentExists(int id);
+
+        Task<ShipmentDetailsViewModel> GetShipmentDetails(int id);
     }
 }

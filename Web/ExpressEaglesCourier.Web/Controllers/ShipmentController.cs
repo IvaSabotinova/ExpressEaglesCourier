@@ -37,9 +37,11 @@
                 return this.View(model);
             }
 
+            int id;
+
             try
             {
-                await this.shipmentService.CreateShipmentAsync(model);
+                id = await this.shipmentService.CreateShipmentAsync(model);
             }
             catch (Exception ex)
             {
@@ -51,7 +53,21 @@
 
             this.TempData[Message] = ShipmentCreated;
 
-            return this.RedirectToAction(nameof(this.Add));
+            return this.RedirectToAction(nameof(this.Details), new { id });
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(int id)
+        {
+            if (!await this.shipmentService.ShipmentExists(id))
+            {
+                return this.BadRequest();
+            }
+
+            ShipmentDetailsViewModel model = await this.shipmentService.GetShipmentDetails(id);
+
+            return this.View(model);
         }
     }
 }

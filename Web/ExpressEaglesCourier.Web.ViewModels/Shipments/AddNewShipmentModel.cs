@@ -83,6 +83,9 @@
         public ProductType ProductType { get; set; }
 
         [Required]
+        public DeliveryWay DeliveryWay { get; set; }
+
+        [Required]
         [Range(ShipmentMinWeightInKg, ShipmentMaxWeightInKg)]
         public double Weight { get; set; }
 

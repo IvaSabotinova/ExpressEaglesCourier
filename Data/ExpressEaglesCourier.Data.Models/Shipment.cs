@@ -72,6 +72,9 @@ namespace ExpressEaglesCourier.Data.Models
         public ProductType ProductType { get; set; }
 
         [Required]
+        public DeliveryWay DeliveryWay { get; set; }
+
+        [Required]
         public double Weight { get; set; }
 
         [Required]

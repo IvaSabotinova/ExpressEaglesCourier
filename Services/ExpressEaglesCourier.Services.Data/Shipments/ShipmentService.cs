@@ -24,7 +24,7 @@
             this.customerRepo = customerRepo;
         }
 
-        public async Task CreateShipmentAsync(AddNewShipmentModel model)
+        public async Task<int> CreateShipmentAsync(AddNewShipmentModel model)
         {
             if (await this.TrackingNumberExists(model.TrackingNumber))
             {
@@ -58,12 +58,15 @@
                 DestinationCountry = model.DestinationCountry,
                 DeliveryType = model.DeliveryType,
                 ProductType = model.ProductType,
+                DeliveryWay = model.DeliveryWay,
                 Weight = model.Weight,
                 Price = model.Price,
             };
 
             await this.shipmentRepo.AddAsync(newShipment);
             await this.shipmentRepo.SaveChangesAsync();
+
+            return newShipment.Id;
         }
 
         public async Task<bool> TrackingNumberExists(string trackingNumber)
@@ -87,5 +90,30 @@
 
             return customer.Id;
         }
+
+        public async Task<ShipmentDetailsViewModel> GetShipmentDetails(int id)
+        {
+            return await this.shipmentRepo.AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .Select(x => new ShipmentDetailsViewModel()
+                {
+                    Id = x.Id,
+                    TrackingNumber = x.TrackingNumber,
+                    SenderFullName = $"{x.Sender.FirstName} {x.Sender.LastName}",
+                    SenderPhoneNumber = x.Sender.PhoneNumber,
+                    ReceiverFullName = $"{x.Receiver.FirstName} {x.Receiver.LastName}",
+                    ReceiverPhoneNumber = x.Receiver.PhoneNumber,
+                    FullPickUpAddress = $"{x.PickupAddress}, {x.PickUpTown}, {x.PickUpCountry}",
+                    FullDestinationAddress = $"{x.DestinationAddress}, {x.DestinationTown}, {x.DestinationCountry}",
+                    DeliveryWay = x.DeliveryWay.ToString(),
+                    DeliveryType = x.DeliveryType.ToString(),
+                    ProductType = x.ProductType.ToString(),
+                    Weight = x.Weight,
+                    Price = x.Price,
+                }).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> ShipmentExists(int id)
+        => await this.shipmentRepo.AllAsNoTracking().AnyAsync(x => x.Id == id);
     }
 }
