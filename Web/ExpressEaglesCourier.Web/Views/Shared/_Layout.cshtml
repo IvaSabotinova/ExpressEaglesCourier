@@ -31,21 +31,31 @@
                         <li class="nav-item dropdown me-3">
                             <a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Customers</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" asp-controller="Customer" asp-action="Add">Add Customer</a>
-                                <a class="dropdown-item" asp-controller="Customer" asp-action="Search">Search Customers</a></>
-                                <a class="dropdown-item" asp-controller="Customer" asp-action="Edit">Edit Customer</a>
-                                <a class="dropdown-item" asp-controller="Customers" asp-action="Delete">Delete Customer</a>
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Customer" asp-action="Add">Add Customer</a>
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Customer" asp-action="Search">Search Customers</a></>
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Customer" asp-action="Edit">Edit Customer</a>
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Customers" asp-action="Delete">Delete Customer</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
+                    <li class="nav-item dropdown me-3">
                             <a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Shipments</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" asp-controller="Shipment" asp-action="Add">Create Shipment</a>
-                                <a class="dropdown-item" asp-controller="Shipment" asp-action="SearchShipment">Search Shipment</a></>
-                                <a class="dropdown-item" asp-controller="Shipment" asp-action="EditShipment">Edit Shipment</a>
-                                <a class="dropdown-item" asp-controller="Shipment" asp-action="DeleteShipment">Delete Shipment</a>
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Shipment" asp-action="Add">Create Shipment</a>
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Shipment" asp-action="SearchShipment">Search Shipment</a></>
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Shipment" asp-action="EditShipment">Edit Shipment</a>
+                                <a class="dropdown-item" asp-area="Administration"  asp-controller="Shipment" asp-action="DeleteShipment">Delete Shipment</a>
                             </div>
-                        </li>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Employees</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Employee" asp-action="Add">Add New Employee</a>
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Employee" asp-action="SearchEmployee">Search Employee</a></>
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Employee" asp-action="EditShipment">Edit Employee</a>
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Employee" asp-action="DeleteShipment">Delete Employee</a>
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Employee" asp-action="GetAll">Get All Employee</a>
+                        </div>
+                    </li>
                     </ul>                    
                     <partial name="_LoginPartial" />
                 </div>

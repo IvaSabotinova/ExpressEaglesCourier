@@ -1,5 +1,10 @@
 ﻿namespace ExpressEaglesCourier.Web.ViewModels.Shipments
+
 {
+    using System.Collections.Generic;
+
+    using ExpressEaglesCourier.Data.Models;
+
     public class ShipmentDetailsViewModel
     {
         public int Id { get; set; }
@@ -27,5 +32,7 @@
         public double Weight { get; set; }
 
         public decimal Price { get; set; }
+
+        public IEnumerable<EmployeeShipmentViewModel> EmployeesShipments { get; set; }
     }
 }

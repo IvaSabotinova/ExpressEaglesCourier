@@ -1,9 +1,12 @@
-﻿namespace ExpressEaglesCourier.Web.Controllers
+﻿namespace ExpressEaglesCourier.Web.Areas.Administration.Controllers
 {
     using System;
     using System.Threading.Tasks;
 
+    using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
+    using ExpressEaglesCourier.Web.Controllers;
+    using ExpressEaglesCourier.Web.ViewModels.Employee;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -11,17 +14,23 @@
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
     [Authorize]
+    [Area("Administration")]
     public class ShipmentController : BaseController
     {
         private readonly IShipmentService shipmentService;
+        private readonly IEmployeeService employeeService;
 
-        public ShipmentController(IShipmentService shipmentService)
+        public ShipmentController(
+            IShipmentService shipmentService,
+            IEmployeeService employeeService)
         {
             this.shipmentService = shipmentService;
+            this.employeeService = employeeService;
         }
 
         [HttpGet]
         [AllowAnonymous]
+
         public IActionResult Add()
         {
             AddNewShipmentModel model = new AddNewShipmentModel();
@@ -68,6 +77,25 @@
             ShipmentDetailsViewModel model = await this.shipmentService.GetShipmentDetails(id);
 
             return this.View(model);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> AddEmployee(int shipmentId, string employeeId)
+        {
+            try
+            {
+                await this.shipmentService.AddEmployeeToShipment(shipmentId, employeeId);
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError(string.Empty, CannotAddEmployeeToShipment);
+
+                this.TempData[Message] = ex.Message;
+                return this.RedirectToAction(nameof(EmployeeController.GetAll), "Employee");
+            }
+
+            return this.RedirectToAction(nameof(this.Details), new { shipmentId });
         }
     }
 }

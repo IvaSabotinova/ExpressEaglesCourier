@@ -1,11 +1,13 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Shipments
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Web.ViewModels.Employee;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using Microsoft.EntityFrameworkCore;
 
@@ -15,13 +17,16 @@
     {
         private readonly IDeletableEntityRepository<Shipment> shipmentRepo;
         private readonly IDeletableEntityRepository<Customer> customerRepo;
+        private readonly IDeletableEntityRepository<Employee> employeeRepo;
 
         public ShipmentService(
             IDeletableEntityRepository<Shipment> shipmentRepo,
-            IDeletableEntityRepository<Customer> customerRepo)
+            IDeletableEntityRepository<Customer> customerRepo,
+            IDeletableEntityRepository<Employee> employeeRepo)
         {
             this.shipmentRepo = shipmentRepo;
             this.customerRepo = customerRepo;
+            this.employeeRepo = employeeRepo;
         }
 
         public async Task<int> CreateShipmentAsync(AddNewShipmentModel model)
@@ -115,5 +120,30 @@
 
         public async Task<bool> ShipmentExists(int id)
         => await this.shipmentRepo.AllAsNoTracking().AnyAsync(x => x.Id == id);
+
+        public async Task AddEmployeeToShipment(int shipmentId, string employeeId)
+        {
+            Shipment shipment = await this.shipmentRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentId);
+
+            if (shipment.Id < 1)
+            {
+                throw new ArgumentException(ShipmentNotExist);
+            }
+
+            Employee employee = await this.employeeRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == employeeId);
+
+            if (employee == null)
+            {
+                throw new ArgumentException(ShipmentNotExist);
+            }
+
+            shipment.EmployeesShipments.Add(new EmployeeShipment
+            {
+                ShipmentId = shipment.Id,
+                EmployeeId = employee.Id,
+            });
+
+            await this.shipmentRepo.SaveChangesAsync();
+        }
     }
 }

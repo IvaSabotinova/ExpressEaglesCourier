@@ -1,9 +1,10 @@
-﻿namespace ExpressEaglesCourier.Web.Controllers
+﻿namespace ExpressEaglesCourier.Web.Areas.Administration.Controllers
 {
     using System;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Services.Data.Customers;
+    using ExpressEaglesCourier.Web.Controllers;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
     [Authorize]
+    [Area("Administration")]
     public class CustomerController : BaseController
     {
         private readonly ICustomerService customerService;
@@ -41,7 +43,7 @@
             try
             {
                 await this.customerService.CreateCustomerAsync(newCustomerModel);
-                return this.RedirectToAction("Index", "Home");
+                return this.RedirectToAction("Index", "Home", new { area = string.Empty });
             }
             catch (Exception)
             {
@@ -53,7 +55,6 @@
         // TO CHECK FURTHER
         [HttpGet]
         [AllowAnonymous]
-        [Route("Customer/Edit/{customerId}")]
         public async Task<IActionResult> Edit([FromRoute] string customerId)
         {
             EditCustomerModel editCustomerModel = await this.customerService.GetCustomerForEditAsync(customerId);
@@ -72,7 +73,7 @@
             }
 
             await this.customerService.EditCustomerAsync(editCustomerModel);
-            return this.RedirectToAction("Index", "Home");
+            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
         }
     }
 }

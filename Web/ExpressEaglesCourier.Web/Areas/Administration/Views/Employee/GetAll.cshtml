@@ -1,0 +1,35 @@
+﻿@model IEnumerable<EmployeeAllViewModel>
+
+@{
+    ViewBag.Title = "All Employees";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<form method="post">
+    @foreach (EmployeeAllViewModel employee in Model)
+    {
+        <div class="container" style="display:inline">
+            <div class="row">
+                <div class="card bg-soft-warning" style="width: 30rem;">
+                    <div class="card-body">
+                        <input type="hidden" asp-for="@employee.Id" />
+                        <p style="font-size:20px;"><u>@employee.OfficeCity</u></p>
+                        <p class="card-title"><b>Employee Name: </b>@employee.FullName</p>
+                        <p class="card-text"><b>Position: </b>@employee.Position</p>
+                        <p class="card-text"><b>Phone Number: </b>@employee.PhoneNumber</p>
+                        @if (employee.Vehicle.Id != 0 && employee.Vehicle.Model != null && employee.Vehicle.PlateNumber != null)
+                        {
+                            <p><b>Car Model:</b> @employee.Vehicle.Model</p>
+                            <p><b>Car Plate Number:</b>@employee.Vehicle.PlateNumber</p>
+                        }
+                        <input type="submit" class="btn btn-primary" value="AddToShipment" asp-area="Administration" asp-controller="Shipment" asp-action="AddEmployee" asp-route-employeeId="@employee.Id"/>
+
+                    </div>
+                </div>
+                </div>
+        </div>
+        }
+</form>
+ 

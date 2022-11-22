@@ -17,5 +17,7 @@
         Task<bool> ShipmentExists(int id);
 
         Task<ShipmentDetailsViewModel> GetShipmentDetails(int id);
+
+        Task AddEmployeeToShipment(int shipmentId, string employeeId);
     }
 }

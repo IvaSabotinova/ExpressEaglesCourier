@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\ExpressEaglesCourier.Data.Models\ExpressEaglesCourier.Data.Models.csproj" />
+    <ProjectReference Include="..\..\ExpressEaglesCourier.Common\ExpressEaglesCourier.Common.csproj" />
     <ProjectReference Include="..\..\Services\ExpressEaglesCourier.Services.Mapping\ExpressEaglesCourier.Services.Mapping.csproj" />
   </ItemGroup>
 

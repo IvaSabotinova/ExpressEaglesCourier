@@ -69,6 +69,22 @@
             public const double ShipmentMaxWeightInKg = 70.00;
 
             public const double ShipmentMinWeightInKg = 0.00;
+
+            public const string SameDayCourier = "Same-day Courier";
+
+            public const string OvernightShipping = "Overnight Shipping";
+
+            public const string StandardDeliveryService = "Standard-Delivery";
+
+            public const string DoorToDoor = "Door-To-Door";
+
+            public const string DoorToOffice = "Door-To-Office";
+
+            public const string OfficeToDoor = "Office-To-Door";
+
+            public const string OfficeToOffice = "Office-To-Office";
+
+            public const string CarParts = "Car Parts";
         }
 
         public static class ViewModelConstants
@@ -139,6 +155,12 @@
             public const string SenderWithPhoneNumberDoesNotExit = "Sender with this phone number does not exist! Please register as customer first or amend where necessary!";
 
             public const string ReceiverWithPhoneNumberDoesNotExit = "Receiver with this phone number does not exist! Please register as customer first or amend where necessary!!";
+
+            public const string ShipmentNotExist = "Shipment not found!";
+
+            public const string EmployeeNotExist = "Employee not found!";
+
+            public const string CannotAddEmployeeToShipment = "Cannot add employee to shipment!";
         }
     }
 }

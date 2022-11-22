@@ -11,7 +11,7 @@
 
     using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
-    public class UserController : Controller
+    public class UserController : BaseController
     {
             private readonly UserManager<ApplicationUser> userManager;
             private readonly SignInManager<ApplicationUser> signInManager;

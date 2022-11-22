@@ -10,6 +10,7 @@
     using ExpressEaglesCourier.Data.Seeding;
     using ExpressEaglesCourier.Services.Data;
     using ExpressEaglesCourier.Services.Data.Customers;
+    using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Services.Messaging;
@@ -69,6 +70,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IShipmentService, ShipmentService>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
         }
 
         private static void Configure(WebApplication app)
