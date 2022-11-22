@@ -1,5 +1,4 @@
 ﻿namespace ExpressEaglesCourier.Web.ViewModels.Shipments
-
 {
     using System.Collections.Generic;
 
@@ -33,6 +32,6 @@
 
         public decimal Price { get; set; }
 
-        public IEnumerable<EmployeeShipmentViewModel> EmployeesShipments { get; set; }
+        public ICollection<EmployeeShipmentViewModel> EmployeesShipments { get; set; }
     }
 }

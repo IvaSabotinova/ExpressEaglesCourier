@@ -161,6 +161,8 @@
             public const string EmployeeNotExist = "Employee not found!";
 
             public const string CannotAddEmployeeToShipment = "Cannot add employee to shipment!";
+
+            public const string EmployeeWithShipmentAlreadyExists = "Employee with this shipment already exists!";
         }
     }
 }

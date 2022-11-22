@@ -95,7 +95,7 @@
                 return this.RedirectToAction(nameof(EmployeeController.GetAll), "Employee");
             }
 
-            return this.RedirectToAction(nameof(this.Details), new { shipmentId });
+            return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
         }
     }
 }

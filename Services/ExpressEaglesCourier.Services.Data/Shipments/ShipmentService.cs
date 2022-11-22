@@ -125,7 +125,7 @@
         {
             Shipment shipment = await this.shipmentRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentId);
 
-            if (shipment.Id < 1)
+            if (shipment == null)
             {
                 throw new ArgumentException(ShipmentNotExist);
             }
@@ -134,7 +134,12 @@
 
             if (employee == null)
             {
-                throw new ArgumentException(ShipmentNotExist);
+                throw new ArgumentException(EmployeeNotExist);
+            }
+
+            if (shipment.EmployeesShipments.Any(x => x.EmployeeId == employee.Id && x.ShipmentId == shipment.Id))
+            {
+                throw new ArgumentException(EmployeeWithShipmentAlreadyExists);
             }
 
             shipment.EmployeesShipments.Add(new EmployeeShipment

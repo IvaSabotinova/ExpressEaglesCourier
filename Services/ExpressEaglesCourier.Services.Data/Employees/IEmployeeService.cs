@@ -7,6 +7,6 @@
 
     public interface IEmployeeService
     {
-        Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync();
+        Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId);
     }
 }

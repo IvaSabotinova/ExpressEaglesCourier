@@ -1,5 +1,6 @@
 ﻿namespace ExpressEaglesCourier.Web.Areas.Administration.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -8,6 +9,8 @@
     using ExpressEaglesCourier.Web.ViewModels.Employee;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
+    using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
     [Area("Administration")]
     [Authorize]
@@ -22,9 +25,14 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int id)
         {
-            IEnumerable<EmployeeAllViewModel> model = await this.employeeService.GetAllAsync();
+            if (id < 1)
+            {
+                throw new ArgumentException(ShipmentNotExist);
+            }
+
+            IEnumerable<EmployeeAllViewModel> model = await this.employeeService.GetAllAsync(id);
             return this.View(model);
         }
     }

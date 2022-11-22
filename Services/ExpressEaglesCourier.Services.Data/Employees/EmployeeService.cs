@@ -19,7 +19,7 @@
             this.employeeRepo = employeeRepo;
         }
 
-        public async Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync()
+        public async Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId)
         {
             List<Employee> employees = await this.employeeRepo.AllAsNoTracking()
                 .Include(x => x.Position)
@@ -35,6 +35,7 @@
                 Position = x.Position.JobTitle,
                 PhoneNumber = x.PhoneNumber,
                 OfficeCity = x.Office.City.Name,
+                ShipmentId = shipmentId,
                 Vehicle = new VehicleEmployeeViewModel()
                 {
                     Id = x.Vehicle?.Id ?? 0,
