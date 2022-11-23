@@ -97,5 +97,13 @@
 
             return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
         }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> RemoveEmployee(int shipmentId, string employeeId)
+        {
+            await this.shipmentService.RemoveEmployeeFromShipmentAsync(shipmentId, employeeId);
+
+            return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
+        }
     }
 }

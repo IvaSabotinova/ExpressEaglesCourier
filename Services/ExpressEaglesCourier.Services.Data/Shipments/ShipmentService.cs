@@ -115,6 +115,15 @@
                     ProductType = x.ProductType.ToString(),
                     Weight = x.Weight,
                     Price = x.Price,
+                    EmployeesShipments = x.EmployeesShipments.Select(es =>
+                    new EmployeeShipmentViewModel()
+                    {
+                        ShipmentId = es.ShipmentId,
+                        EmployeeId = es.EmployeeId,
+                        FullName = $"{es.Employee.FirstName} {es.Employee.LastName}",
+                        Position = es.Employee.Position.JobTitle,
+                        OfficeCity = es.Employee.Office.City.Name,
+                    }),
                 }).FirstOrDefaultAsync();
         }
 
@@ -137,7 +146,12 @@
                 throw new ArgumentException(EmployeeNotExist);
             }
 
-            if (shipment.EmployeesShipments.Any(x => x.EmployeeId == employee.Id && x.ShipmentId == shipment.Id))
+            List<Shipment> shipmentEmployee = await this.shipmentRepo.AllAsNoTracking()
+                .Include(x => x.EmployeesShipments)
+                .Where(x => x.EmployeesShipments.Any(es => es.EmployeeId == employee.Id && es.ShipmentId == shipment.Id))
+                .ToListAsync();
+
+            if (shipmentEmployee.Count > 0)
             {
                 throw new ArgumentException(EmployeeWithShipmentAlreadyExists);
             }
@@ -147,6 +161,27 @@
                 ShipmentId = shipment.Id,
                 EmployeeId = employee.Id,
             });
+
+            await this.shipmentRepo.SaveChangesAsync();
+        }
+
+        public async Task RemoveEmployeeFromShipmentAsync(int shipmentId, string employeeId)
+        {
+            var shipmentEmployee = await this.shipmentRepo.All().Include(x => x.EmployeesShipments).Where(x => x.EmployeesShipments.Any(es => es.EmployeeId == employeeId && es.ShipmentId == shipmentId)).FirstOrDefaultAsync();
+
+            if (shipmentEmployee == null)
+            {
+                throw new ArgumentException(ShipmentWithEmployeeNotExists);
+            }
+
+            EmployeeShipment shipmentEmlp = shipmentEmployee.EmployeesShipments.Where(x => x.EmployeeId == employeeId && x.ShipmentId == shipmentId).FirstOrDefault();
+
+            if (shipmentEmlp == null)
+            {
+                throw new ArgumentException(ShipmentWithEmployeeNotExists);
+            }
+
+            shipmentEmployee.EmployeesShipments.Remove(shipmentEmlp);
 
             await this.shipmentRepo.SaveChangesAsync();
         }

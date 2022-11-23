@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-#nullable disable
+﻿#nullable disable
 
 namespace ExpressEaglesCourier.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddDeliveryWayEnum : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

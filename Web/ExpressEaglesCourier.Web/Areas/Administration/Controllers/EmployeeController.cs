@@ -27,13 +27,15 @@
         [AllowAnonymous]
         public async Task<IActionResult> GetAll(int id)
         {
-            if (id < 1)
+            try
             {
-                throw new ArgumentException(ShipmentNotExist);
+                IEnumerable<EmployeeAllViewModel> model = await this.employeeService.GetAllAsync(id);
+                return this.View(model);
             }
-
-            IEnumerable<EmployeeAllViewModel> model = await this.employeeService.GetAllAsync(id);
-            return this.View(model);
+            catch (Exception)
+            {
+                return this.RedirectToAction("Details", "Shipment", new { id });
+            }
         }
     }
 }
