@@ -21,14 +21,14 @@
 
         public async Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId)
         {
-            List<Employee> employees = await this.employeeRepo.AllAsNoTracking()
+             List<Employee> employees = await this.employeeRepo.AllAsNoTracking()
                 .Include(x => x.Position)
                 .Include(x => x.Vehicle)
                 .Include(x => x.Office)
                 .ThenInclude(x => x.City)
                 .ToListAsync();
 
-            List<EmployeeAllViewModel> model = employees.Select(x => new EmployeeAllViewModel()
+             List<EmployeeAllViewModel> model = employees.Select(x => new EmployeeAllViewModel()
             {
                 Id = x.Id,
                 FullName = $"{x.FirstName} {x.LastName}",
@@ -45,7 +45,7 @@
             }).OrderBy(x => x.OfficeCity)
                 .ToList();
 
-            return model;
+             return model;
         }
     }
 }

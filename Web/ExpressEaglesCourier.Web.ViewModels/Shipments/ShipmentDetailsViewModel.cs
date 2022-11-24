@@ -2,8 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using ExpressEaglesCourier.Data.Models;
-
     public class ShipmentDetailsViewModel
     {
         public int Id { get; set; }

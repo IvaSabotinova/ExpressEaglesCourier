@@ -18,18 +18,21 @@
         private readonly IDeletableEntityRepository<Shipment> shipmentRepo;
         private readonly IDeletableEntityRepository<Customer> customerRepo;
         private readonly IDeletableEntityRepository<Employee> employeeRepo;
+        private readonly IDeletableEntityRepository<EmployeeShipment> employeeShipmentRepo;
 
         public ShipmentService(
             IDeletableEntityRepository<Shipment> shipmentRepo,
             IDeletableEntityRepository<Customer> customerRepo,
-            IDeletableEntityRepository<Employee> employeeRepo)
+            IDeletableEntityRepository<Employee> employeeRepo,
+            IDeletableEntityRepository<EmployeeShipment> employeeShipmentRepo)
         {
             this.shipmentRepo = shipmentRepo;
             this.customerRepo = customerRepo;
             this.employeeRepo = employeeRepo;
+            this.employeeShipmentRepo = employeeShipmentRepo;
         }
 
-        public async Task<int> CreateShipmentAsync(AddNewShipmentModel model)
+        public async Task<int> CreateShipmentAsync(ShipmentFormModel model)
         {
             if (await this.TrackingNumberExists(model.TrackingNumber))
             {
@@ -61,10 +64,10 @@
                 DestinationAddress = model.DestinationAddress,
                 DestinationTown = model.DestinationTown,
                 DestinationCountry = model.DestinationCountry,
+                Weight = model.Weight,
+                DeliveryWay = model.DeliveryWay,
                 DeliveryType = model.DeliveryType,
                 ProductType = model.ProductType,
-                DeliveryWay = model.DeliveryWay,
-                Weight = model.Weight,
                 Price = model.Price,
             };
 
@@ -74,16 +77,36 @@
             return newShipment.Id;
         }
 
+       /// <summary>
+       /// Checks whether one exists as tracking numbers should not be duplicated.
+       /// </summary>
+       /// <param name="trackingNumber"></param>
+       /// <returns></returns>
         public async Task<bool> TrackingNumberExists(string trackingNumber)
         {
             return await this.shipmentRepo.AllAsNoTracking().Select(x => x.TrackingNumber).ContainsAsync(trackingNumber);
         }
 
+        /// <summary>
+        /// For a courier a customer is identified by first name, last name and a phone number - one should match all these three.
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="phoneNumber"></param>
+        /// <returns></returns>
         public async Task<bool> CustomerWithPhoneNumberExists(string firstName, string lastName, string phoneNumber)
         {
             return await this.customerRepo.AllAsNoTracking().AnyAsync(x => x.FirstName == firstName && x.LastName == lastName && x.PhoneNumber == phoneNumber);
         }
 
+        /// <summary>
+        /// For a courier a customer is identified by first name, last name and a phone number - one should match all these three.
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="phoneNumber"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Client not exists.</exception>
         public async Task<string> GetCustomerId(string firstName, string lastName, string phoneNumber)
         {
             Customer customer = await this.customerRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.FirstName == firstName && x.LastName == lastName && x.PhoneNumber == phoneNumber);
@@ -96,6 +119,85 @@
             return customer.Id;
         }
 
+        public async Task<ShipmentFormModel> GetShipmentForEditAsync(int shipmentId)
+        {
+            Shipment shipment = await this.shipmentRepo.All()
+                .Include(x => x.Sender)
+                .Include(x => x.Receiver)
+                .FirstOrDefaultAsync(x => x.Id == shipmentId);
+
+            ShipmentFormModel model = new ShipmentFormModel()
+            {
+                Id = shipment.Id,
+                TrackingNumber = shipment.TrackingNumber,
+                SenderFirstName = shipment.Sender.FirstName,
+                SenderLastName = shipment.Sender.LastName,
+                SenderPhoneNumber = shipment.Sender.PhoneNumber,
+                ReceiverFirstName = shipment.Receiver.FirstName,
+                ReceiverLastName = shipment.Receiver.LastName,
+                ReceiverPhoneNumber = shipment.Receiver.PhoneNumber,
+                PickUpAddress = shipment.PickupAddress,
+                PickUpTown = shipment.PickUpTown,
+                PickUpCountry = shipment.PickUpCountry,
+                DestinationAddress = shipment.DestinationAddress,
+                DestinationTown = shipment.DestinationTown,
+                DestinationCountry = shipment.DestinationCountry,
+                Weight = shipment.Weight,
+                DeliveryWay = shipment.DeliveryWay,
+                DeliveryType = shipment.DeliveryType,
+                ProductType = shipment.ProductType,
+                Price = shipment.Price,
+            };
+
+            return model;
+        }
+
+        public async Task EditShipmentAsync(ShipmentFormModel model)
+        {
+            if (await this.CustomerWithPhoneNumberExists(model.SenderFirstName, model.SenderLastName, model.SenderPhoneNumber) == false)
+            {
+                throw new ArgumentException(SenderWithPhoneNumberDoesNotExit);
+            }
+
+            if (await this.CustomerWithPhoneNumberExists(model.ReceiverFirstName, model.ReceiverLastName, model.ReceiverPhoneNumber) == false)
+            {
+                throw new ArgumentException(ReceiverWithPhoneNumberDoesNotExit);
+            }
+
+            string senderId = await this.GetCustomerId(model.SenderFirstName, model.SenderLastName, model.SenderPhoneNumber);
+
+            string receiverId = await this.GetCustomerId(model.ReceiverFirstName, model.ReceiverLastName, model.ReceiverPhoneNumber);
+
+            Shipment shipment = await this.shipmentRepo.All().FirstOrDefaultAsync(x => x.Id == model.Id);
+
+            if (shipment == null)
+            {
+                throw new ArgumentException(ShipmentNotExist);
+            }
+
+            shipment.TrackingNumber = model.TrackingNumber;
+            shipment.SenderId = senderId;
+            shipment.ReceiverId = receiverId;
+            shipment.PickupAddress = model.PickUpAddress;
+            shipment.PickUpTown = model.PickUpTown;
+            shipment.PickUpCountry = model.PickUpCountry;
+            shipment.DestinationAddress = model.DestinationAddress;
+            shipment.DestinationTown = model.DestinationTown;
+            shipment.DestinationCountry = model.DestinationCountry;
+            shipment.Weight = model.Weight;
+            shipment.DeliveryWay = model.DeliveryWay;
+            shipment.DeliveryType = model.DeliveryType;
+            shipment.ProductType = model.ProductType;
+            shipment.Price = model.Price;
+
+            await this.shipmentRepo.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Gets the details of a particular shipment by id to be displayed.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ShipmentDetailsViewModel> GetShipmentDetails(int id)
         {
             return await this.shipmentRepo.AllAsNoTracking()
@@ -118,7 +220,6 @@
                     EmployeesShipments = x.EmployeesShipments.Select(es =>
                     new EmployeeShipmentViewModel()
                     {
-                        ShipmentId = es.ShipmentId,
                         EmployeeId = es.EmployeeId,
                         FullName = $"{es.Employee.FirstName} {es.Employee.LastName}",
                         Position = es.Employee.Position.JobTitle,
@@ -130,11 +231,16 @@
         public async Task<bool> ShipmentExists(int id)
         => await this.shipmentRepo.AllAsNoTracking().AnyAsync(x => x.Id == id);
 
+        /// <summary>
+        /// Assigning an employee to take part in handling a shipment.
+        /// </summary>
+        /// <param name="shipmentId"></param>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Employee with that shipment exists.</exception>
         public async Task AddEmployeeToShipment(int shipmentId, string employeeId)
         {
-            Shipment shipment = await this.shipmentRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentId);
-
-            if (shipment == null)
+            if (!await this.ShipmentExists(shipmentId))
             {
                 throw new ArgumentException(ShipmentNotExist);
             }
@@ -146,42 +252,64 @@
                 throw new ArgumentException(EmployeeNotExist);
             }
 
-            List<Shipment> shipmentEmployee = await this.shipmentRepo.AllAsNoTracking()
-                .Include(x => x.EmployeesShipments)
-                .Where(x => x.EmployeesShipments.Any(es => es.EmployeeId == employee.Id && es.ShipmentId == shipment.Id))
-                .ToListAsync();
+            EmployeeShipment employeeShipment = await this.employeeShipmentRepo.AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.EmployeeId == employeeId && x.ShipmentId == shipmentId);
 
-            if (shipmentEmployee.Count > 0)
+            if (employeeShipment != null)
             {
                 throw new ArgumentException(EmployeeWithShipmentAlreadyExists);
             }
 
-            shipment.EmployeesShipments.Add(new EmployeeShipment
+            EmployeeShipment newEmployeeShipment = new EmployeeShipment()
             {
-                ShipmentId = shipment.Id,
-                EmployeeId = employee.Id,
-            });
+                EmployeeId = employeeId,
+                ShipmentId = shipmentId,
+            };
+
+            await this.employeeShipmentRepo.AddAsync(newEmployeeShipment);
 
             await this.shipmentRepo.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Withdrawing an employee from taking part in handling a shipment due to any reason - other obligations, changes in working schedule, other priorities etc. An entry in mapping table EmployeeShipment is therefore unnecessary hereof the hard delete.
+        /// </summary>
+        /// <param name="shipmentId"></param>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Shipment with that employee does not exist.</exception>
         public async Task RemoveEmployeeFromShipmentAsync(int shipmentId, string employeeId)
         {
-            var shipmentEmployee = await this.shipmentRepo.All().Include(x => x.EmployeesShipments).Where(x => x.EmployeesShipments.Any(es => es.EmployeeId == employeeId && es.ShipmentId == shipmentId)).FirstOrDefaultAsync();
+            EmployeeShipment employeeShipment = await this.employeeShipmentRepo.All().FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.EmployeeId == employeeId);
 
-            if (shipmentEmployee == null)
+            if (employeeShipment == null)
             {
                 throw new ArgumentException(ShipmentWithEmployeeNotExists);
             }
 
-            EmployeeShipment shipmentEmlp = shipmentEmployee.EmployeesShipments.Where(x => x.EmployeeId == employeeId && x.ShipmentId == shipmentId).FirstOrDefault();
+            this.employeeShipmentRepo.HardDelete(employeeShipment);
 
-            if (shipmentEmlp == null)
+            await this.employeeShipmentRepo.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Deletion after cancelling a shipment.
+        /// </summary>
+        /// <param name="shipmentId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Shipment does not exist.</exception>
+        public async Task DeleteShipmentAsync(int shipmentId)
+        {
+            //List<EmployeeShipment> shipmentEmployees = await this.employeeShipmentRepo.All().Where(x => x.ShipmentId == shipmentId).ToListAsync();
+
+            if (!await this.ShipmentExists(shipmentId))
             {
-                throw new ArgumentException(ShipmentWithEmployeeNotExists);
+                throw new ArgumentException(ShipmentNotExist);
             }
 
-            shipmentEmployee.EmployeesShipments.Remove(shipmentEmlp);
+            Shipment shipment = await this.shipmentRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentId);
+
+            this.shipmentRepo.Delete(shipment);
 
             await this.shipmentRepo.SaveChangesAsync();
         }

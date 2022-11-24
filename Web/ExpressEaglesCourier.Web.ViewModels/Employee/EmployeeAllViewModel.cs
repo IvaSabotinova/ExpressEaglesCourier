@@ -14,7 +14,6 @@
 
         public int ShipmentId { get; set; }
 
-        // public ICollection<EmployeeShipment> EmployeeShipments { get; set; }
         public VehicleEmployeeViewModel Vehicle { get; set; }
     }
 }

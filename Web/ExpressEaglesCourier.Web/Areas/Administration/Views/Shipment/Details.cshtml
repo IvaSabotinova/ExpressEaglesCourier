@@ -56,15 +56,14 @@
                   <div class="card mb-1" style="max-width:1140px;max-height:150px;">
                      <div class="card-body d-md-inline-block">
                         <input type="hidden" asp-for="@employee.EmployeeId" />
-                        <input type="hidden" asp-for="@employee.ShipmentId" />
+                        <input type="hidden" asp-for="@Model.Id" />
                                <p><b>Name: </b>@employee.FullName</p>                      
                                <p><b>Position: </b>@employee.Position, <b>Office: </b> @employee.OfficeCity</p>
                         <ul class="btn-group-toggle" style="list-style:none">
                             <li class="single-meta">
-                                <form asp-area="Administration" asp-controller="Shipment" asp-action="RemoveEmployee" id="deleteForm" asp-route-shipmentId="@employee.ShipmentId" asp-route-employeeId="@employee.EmployeeId">
+                                <form asp-area="Administration" asp-controller="Shipment" asp-action="RemoveEmployee" id="deleteForm" asp-route-shipmentId="@Model.Id" asp-route-employeeId="@employee.EmployeeId" onclick="return confirm('Are you sure you want to withdraw employee from that shipment?')">
                                     <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Remove</button>
                                 </form>
-@*                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Remove</button>*@
                             </li>
                         </ul>
                     </div>           
@@ -75,10 +74,8 @@
         <div class="form-inline offset-4 mt-3">
             @* @if (this.User.Identity.IsAuthenticated)
             {*@
-            <a class="btn btn-warning" asp-area="Administration" asp-controller="Shipment" asp-action="Edit"
-               asp-route-id="@Model.Id">Edit</a>
-            <a class="ms-2 btn btn-danger" asp-area="Administration" asp-controller="Shipment" asp-action="Delete"
-               asp-route-id="@Model.Id">Delete</a>
+            <a class="btn btn-warning" asp-area="Administration" asp-controller="Shipment" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+            <a class="ms-2 btn btn-danger" asp-area="Administration" asp-controller="Shipment" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that shipment?')">Delete</a>
             <a class="ms-2 btn btn-warning" asp-area="Administration" a
                sp-controller="ShipmentTrackingPath" asp-action="Create"
                asp-route-id="@Model.Id">Create Tracking Path</a>
@@ -91,7 +88,7 @@
 
 
 <!--Delete Modal-->
-<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+@*<div class="modal" tabindex="-1" role="dialog" id="deleteModal">  
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -103,5 +100,5 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 

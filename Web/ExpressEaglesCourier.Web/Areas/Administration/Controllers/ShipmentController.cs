@@ -6,6 +6,7 @@
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Web.Controllers;
+    using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Employee;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using Microsoft.AspNetCore.Authorization;
@@ -33,13 +34,13 @@
 
         public IActionResult Add()
         {
-            AddNewShipmentModel model = new AddNewShipmentModel();
+            ShipmentFormModel model = new ShipmentFormModel();
             return this.View(model);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Add(AddNewShipmentModel model)
+        public async Task<IActionResult> Add(ShipmentFormModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -63,6 +64,39 @@
             this.TempData[Message] = ShipmentCreated;
 
             return this.RedirectToAction(nameof(this.Details), new { id });
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Edit([FromRoute] int id)
+        {
+            ShipmentFormModel model = await this.shipmentService.GetShipmentForEditAsync(id);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Edit(ShipmentFormModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            try
+            {
+                await this.shipmentService.EditShipmentAsync(model);
+                this.TempData[Message] = ShipmentAmendedSuccessfully;
+                return this.RedirectToAction(nameof(this.Details), new { id = model.Id });
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError(string.Empty, InvalidShipmentDetails);
+
+                this.TempData[Message] = ex.Message;
+                return this.View(model);
+            }
         }
 
         [HttpGet]
@@ -101,9 +135,16 @@
         [AllowAnonymous]
         public async Task<IActionResult> RemoveEmployee(int shipmentId, string employeeId)
         {
-            await this.shipmentService.RemoveEmployeeFromShipmentAsync(shipmentId, employeeId);
+                await this.shipmentService.RemoveEmployeeFromShipmentAsync(shipmentId, employeeId);
 
-            return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
+                return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.shipmentService.DeleteShipmentAsync(id);
+            return this.RedirectToAction(nameof(this.Add));
         }
     }
 }

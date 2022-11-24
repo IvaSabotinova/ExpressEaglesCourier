@@ -7,8 +7,10 @@
 
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
-    public class AddNewShipmentModel
+    public class ShipmentFormModel
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(TrackingNumberMaxLength, MinimumLength = TrackingNumberMinLength)]
         [Display(Name = GlobalConstants.ViewModelConstants.TrackingNumber)]

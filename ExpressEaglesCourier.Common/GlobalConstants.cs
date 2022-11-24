@@ -165,6 +165,8 @@
             public const string EmployeeWithShipmentAlreadyExists = "Employee with this shipment already exists!";
 
             public const string ShipmentWithEmployeeNotExists = "Shipment with that employee does not exist!";
+
+            public const string ShipmentAmendedSuccessfully = "Shipment details amended successfully!";
         }
     }
 }

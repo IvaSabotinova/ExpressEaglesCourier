@@ -76,7 +76,6 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // Needed for Identity models configuration
             builder.Entity<EmployeeShipment>()
                 .HasKey(x => new { x.EmployeeId, x.ShipmentId });
 

@@ -1,0 +1,110 @@
+﻿@model ShipmentFormModel
+
+
+<div class="row">
+    <form method="post">
+        @* <div asp-validation-summary="All" class="text-danger"></div>*@
+        <div class="row">
+            <div class="col-6">
+                <input type="hidden" asp-for="@Model.Id" />
+                <div class="form-group">
+                    <label asp-for="TrackingNumber"></label>
+                    <input asp-for="TrackingNumber" class="form-control" placeholder="Enter tracking number" />
+                    <span asp-validation-for="TrackingNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SenderFirstName"></label>
+                    <input asp-for="SenderFirstName" class="form-control" placeholder="Enter sender first name" />
+                    <span asp-validation-for="SenderFirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SenderLastName"></label>
+                    <input asp-for="SenderLastName" class="form-control" placeholder="Enter sender last name" />
+                    <span asp-validation-for="SenderLastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SenderPhoneNumber"></label>
+                    <input asp-for="SenderPhoneNumber" class="form-control" placeholder="Enter sender phone number including country and city code" />
+                    <span asp-validation-for="SenderPhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReceiverFirstName"></label>
+                    <input asp-for="ReceiverFirstName" class="form-control" placeholder="Enter receiver first name" />
+                    <span asp-validation-for="ReceiverFirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReceiverLastName"></label>
+                    <input asp-for="ReceiverLastName" class="form-control" placeholder="Enter receiver last name" />
+                    <span asp-validation-for="ReceiverLastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReceiverPhoneNumber"></label>
+                    <input asp-for="ReceiverPhoneNumber" class="form-control" placeholder="Enter receiver phone number including country and city code" />
+                    <span asp-validation-for="ReceiverPhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PickUpAddress"></label>
+                    <input asp-for="PickUpAddress" class="form-control" placeholder="Enter full sending address" />
+                    <span asp-validation-for="PickUpAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PickUpTown"></label>
+                    <input asp-for="PickUpTown" class="form-control" placeholder="Enter town of dispatch" />
+                    <span asp-validation-for="PickUpTown" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-6">
+
+                <div class="form-group">
+                    <label asp-for="PickUpCountry"></label>
+                    <input asp-for="PickUpCountry" class="form-control" placeholder="Enter country of dispatch" />
+                    <span asp-validation-for="PickUpCountry" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DestinationAddress"></label>
+                    <input asp-for="DestinationAddress" class="form-control" placeholder="Enter destination full address" />
+                    <span asp-validation-for="DestinationAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DestinationTown"></label>
+                    <input asp-for="DestinationTown" class="form-control" placeholder="Enter town of destination" />
+                    <span asp-validation-for="DestinationTown" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DestinationCountry"></label>
+                    <input asp-for="DestinationCountry" class="form-control" placeholder="Enter country of destination" />
+                    <span asp-validation-for="DestinationCountry" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Weight"></label>
+                    <input asp-for="Weight" class="form-control" placeholder="Enter weight of shipment in kg" />
+                    <span asp-validation-for="Weight" class="text-danger"></span>
+                </div>
+                <div class="input-group mt-4">
+                    <label class="input-group-text" asp-for="DeliveryWay">Choose Delivery Way</label>
+                    <select class="form-select" asp-for="DeliveryWay" asp-items="@Html.GetEnumSelectList<DeliveryWay>()"></select>
+                </div>
+                <div class="input-group mt-4">
+                    <label class="input-group-text" asp-for="DeliveryType">Choose Delivery Type</label>
+                    <select class="form-select" asp-for="DeliveryType" asp-items="@Html.GetEnumSelectList<DeliveryType>()"></select>
+                </div>
+                <div class="input-group mt-3">
+                    <label class="input-group-text" asp-for="ProductType">Choose Product Type</label>
+                    <select class="form-select" asp-for="ProductType" asp-items="@Html.GetEnumSelectList<ProductType>()"></select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Price"></label>
+                    <input asp-for="Price" class="form-control" placeholder="Enter price of shipment in Euro" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="mb-3 mt-3 offset-5">
+                <input class="btn btn-primary" type="submit" value="Save Shipment" />
+            </div>
+        </div>
+    </form>
+</div>
+
