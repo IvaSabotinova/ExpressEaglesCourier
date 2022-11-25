@@ -26,54 +26,80 @@
         [HttpGet]
         public IActionResult Add()
         {
-            AddNewCustomerModel newCustomerModel = new AddNewCustomerModel();
+            CustomerFormModel model = new CustomerFormModel();
 
-            return this.View(newCustomerModel);
+            return this.View(model);
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Add(AddNewCustomerModel newCustomerModel)
+        public async Task<IActionResult> Add(CustomerFormModel model)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(newCustomerModel);
+                return this.View(model);
             }
 
             try
             {
-                await this.customerService.CreateCustomerAsync(newCustomerModel);
-                return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+                string id = await this.customerService.CreateCustomerAsync(model);
+                this.TempData[Message] = CustomerCreated;
+                return this.RedirectToAction(nameof(this.Details), new { id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 this.ModelState.AddModelError(string.Empty, InvalidClientDetails);
-                return this.View(newCustomerModel);
+                this.TempData[Message] = ex.Message;
+                return this.View(model);
             }
         }
 
-        // TO CHECK FURTHER
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Edit([FromRoute] string customerId)
+        public async Task<IActionResult> Details([FromRoute] string id)
         {
-            EditCustomerModel editCustomerModel = await this.customerService.GetCustomerForEditAsync(customerId);
+            CustomerDetailsViewModel model = await this.customerService.GetCustomerDetailsById(id);
 
-            return this.View(editCustomerModel);
+            return this.View(model);
         }
 
-        // TO CHECK FURTHER
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Edit(string id)
+        {
+            CustomerFormModel model = await this.customerService.GetCustomerForEditAsync(id);
+            return this.View(model);
+        }
+
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Edit(EditCustomerModel editCustomerModel)
+        public async Task<IActionResult> Edit(CustomerFormModel model)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(editCustomerModel);
+                return this.View(model);
             }
 
-            await this.customerService.EditCustomerAsync(editCustomerModel);
-            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+            try
+            {
+                await this.customerService.EditCustomerAsync(model);
+                this.TempData[Message] = CustomerDetailsAmended;
+                return this.RedirectToAction(nameof(this.Details), new { id = model.Id });
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError(string.Empty, InvalidClientDetails);
+
+                this.TempData[Message] = ex.Message;
+                return this.View(model);
+            }
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Delete(string id)
+        {
+              await this.customerService.DeleteCustomerAsync(id);
+              return this.RedirectToAction("Index", "Home", new { area = string.Empty });
         }
     }
 }

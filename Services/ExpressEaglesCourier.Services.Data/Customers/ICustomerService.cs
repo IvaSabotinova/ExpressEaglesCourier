@@ -2,14 +2,21 @@
 {
     using System.Threading.Tasks;
 
+    using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
 
     public interface ICustomerService
     {
-        Task CreateCustomerAsync(AddNewCustomerModel createCustomerInputModel);
+        Task<string> CreateCustomerAsync(CustomerFormModel createCustomerInputModel);
 
-        Task<EditCustomerModel> GetCustomerForEditAsync(string id);
+        Task<CustomerDetailsViewModel> GetCustomerDetailsById(string id);
 
-        Task EditCustomerAsync(EditCustomerModel editCustomerModel);
+        Task<CustomerFormModel> GetCustomerForEditAsync(string customerId);
+
+        Task<Customer> GetCustomerById(string customerId);
+
+        Task EditCustomerAsync(CustomerFormModel model);
+
+        Task DeleteCustomerAsync(string customerId);
     }
 }

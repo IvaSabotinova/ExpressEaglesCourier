@@ -138,7 +138,7 @@
 
         public static class ServicesConstants
         {
-            public const string ClientExists = "Client already exists";
+            public const string ClientExists = "Client with that name and phone number already exists!";
 
             public const string InvalidClientDetails = "Invalid client's details!";
 
@@ -167,6 +167,18 @@
             public const string ShipmentWithEmployeeNotExists = "Shipment with that employee does not exist!";
 
             public const string ShipmentAmendedSuccessfully = "Shipment details amended successfully!";
+
+            public const string VehicleNotExist = "Vehicle does not exist!";
+
+            public const string VehicleAssignedToShipment = "Vehicle already assigned to shipment"!;
+
+            public const string ShipmentWithVehicleNotExist = "Shipment with that vehicle does not exist"!;
+
+            public const string ShipmentNotFountGoBackToShipmentDetails = "Shipment not found! Go back to shipment details!";
+
+            public const string CustomerCreated = "Customer created successfully!";
+
+            public const string CustomerDetailsAmended = "Customer details amended successfully!";
         }
     }
 }

@@ -7,8 +7,10 @@
 
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
-    public class AddNewCustomerModel
+    public class CustomerFormModel
     {
+        public string Id { get; set; }
+
         [Required]
         [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]
         [Display(Name = GlobalConstants.ViewModelConstants.FirstName)]

@@ -22,6 +22,8 @@
 
         Task EditShipmentAsync(ShipmentFormModel model);
 
+        Task<bool> EmployeeHasVehicle(string employeeId);
+
         Task AddEmployeeToShipment(int shipmentId, string employeeId);
 
         Task RemoveEmployeeFromShipmentAsync(int shipmentId, string employeeId);

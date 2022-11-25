@@ -6,8 +6,6 @@
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Web.Controllers;
-    using ExpressEaglesCourier.Web.ViewModels.Customers;
-    using ExpressEaglesCourier.Web.ViewModels.Employee;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -135,9 +133,9 @@
         [AllowAnonymous]
         public async Task<IActionResult> RemoveEmployee(int shipmentId, string employeeId)
         {
-                await this.shipmentService.RemoveEmployeeFromShipmentAsync(shipmentId, employeeId);
+              await this.shipmentService.RemoveEmployeeFromShipmentAsync(shipmentId, employeeId);
 
-                return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
+              return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
         }
 
         [AllowAnonymous]

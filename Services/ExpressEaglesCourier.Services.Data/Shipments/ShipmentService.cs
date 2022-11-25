@@ -18,18 +18,24 @@
         private readonly IDeletableEntityRepository<Shipment> shipmentRepo;
         private readonly IDeletableEntityRepository<Customer> customerRepo;
         private readonly IDeletableEntityRepository<Employee> employeeRepo;
-        private readonly IDeletableEntityRepository<EmployeeShipment> employeeShipmentRepo;
+        private readonly IDeletableEntityRepository<EmployeeShipment> shipmentEmployeeRepo;
+        private readonly IDeletableEntityRepository<ShipmentVehicle> shipmentVehicleRepo;
+        private readonly IDeletableEntityRepository<Vehicle> vehicleRepo;
 
         public ShipmentService(
             IDeletableEntityRepository<Shipment> shipmentRepo,
             IDeletableEntityRepository<Customer> customerRepo,
             IDeletableEntityRepository<Employee> employeeRepo,
-            IDeletableEntityRepository<EmployeeShipment> employeeShipmentRepo)
+            IDeletableEntityRepository<EmployeeShipment> shipmentEmployeeRepo,
+            IDeletableEntityRepository<ShipmentVehicle> shipmentVehicleRepo,
+            IDeletableEntityRepository<Vehicle> vehicleRepo)
         {
             this.shipmentRepo = shipmentRepo;
             this.customerRepo = customerRepo;
             this.employeeRepo = employeeRepo;
-            this.employeeShipmentRepo = employeeShipmentRepo;
+            this.shipmentEmployeeRepo = shipmentEmployeeRepo;
+            this.shipmentVehicleRepo = shipmentVehicleRepo;
+            this.vehicleRepo = vehicleRepo;
         }
 
         public async Task<int> CreateShipmentAsync(ShipmentFormModel model)
@@ -232,7 +238,18 @@
         => await this.shipmentRepo.AllAsNoTracking().AnyAsync(x => x.Id == id);
 
         /// <summary>
-        /// Assigning an employee to take part in handling a shipment.
+        /// Defines whether the employee is assigned with a vehicle, i.e. the employee is a driver-courier.
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        public async Task<bool> EmployeeHasVehicle(string employeeId)
+        {
+            Employee employee = await this.employeeRepo.All().FirstOrDefaultAsync(x => x.Id == employeeId);
+            return employee.VehicleId > 0;
+        }
+
+        /// <summary>
+        /// Assigning an employee to take part in handling a shipment. If the employee has vehicle, mapping table ShipmentVehicle is updated too.
         /// </summary>
         /// <param name="shipmentId"></param>
         /// <param name="employeeId"></param>
@@ -242,7 +259,7 @@
         {
             if (!await this.ShipmentExists(shipmentId))
             {
-                throw new ArgumentException(ShipmentNotExist);
+                throw new ArgumentException(ShipmentNotFountGoBackToShipmentDetails);
             }
 
             Employee employee = await this.employeeRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == employeeId);
@@ -252,7 +269,7 @@
                 throw new ArgumentException(EmployeeNotExist);
             }
 
-            EmployeeShipment employeeShipment = await this.employeeShipmentRepo.AllAsNoTracking()
+            EmployeeShipment employeeShipment = await this.shipmentEmployeeRepo.AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.EmployeeId == employeeId && x.ShipmentId == shipmentId);
 
             if (employeeShipment != null)
@@ -260,19 +277,43 @@
                 throw new ArgumentException(EmployeeWithShipmentAlreadyExists);
             }
 
-            EmployeeShipment newEmployeeShipment = new EmployeeShipment()
+            EmployeeShipment newShipmentEmployee = new EmployeeShipment()
             {
                 EmployeeId = employeeId,
                 ShipmentId = shipmentId,
             };
 
-            await this.employeeShipmentRepo.AddAsync(newEmployeeShipment);
+            await this.shipmentEmployeeRepo.AddAsync(newShipmentEmployee);
 
-            await this.shipmentRepo.SaveChangesAsync();
+            await this.shipmentEmployeeRepo.SaveChangesAsync();
+
+            if (await this.EmployeeHasVehicle(employeeId))
+            {
+                Vehicle vehicle = await this.vehicleRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+
+                if (vehicle == null)
+                {
+                    throw new ArgumentException(VehicleNotExist);
+                }
+
+                ShipmentVehicle shipmentVehicle = await this.shipmentVehicleRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.VehicleId == vehicle.Id);
+
+                if (shipmentVehicle != null)
+                {
+                    throw new ArgumentException(VehicleAssignedToShipment);
+                }
+
+                await this.shipmentVehicleRepo.AddAsync(new ShipmentVehicle()
+                {
+                    ShipmentId = shipmentId,
+                    VehicleId = vehicle.Id,
+                });
+                await this.shipmentVehicleRepo.SaveChangesAsync();
+            }
         }
 
         /// <summary>
-        /// Withdrawing an employee from taking part in handling a shipment due to any reason - other obligations, changes in working schedule, other priorities etc. An entry in mapping table EmployeeShipment is therefore unnecessary hereof the hard delete.
+        /// Withdrawing an employee from taking part in handling a shipment due to any reason - other obligations, changes in working schedule, other priorities etc. An entry in mapping table EmployeeShipment is therefore unnecessary hence the hard delete. If employee has vehicle, the vehicle is withdrawn from the shipment too, hence the hard delete in ShipmentVehicle table.
         /// </summary>
         /// <param name="shipmentId"></param>
         /// <param name="employeeId"></param>
@@ -280,31 +321,73 @@
         /// <exception cref="ArgumentException">Shipment with that employee does not exist.</exception>
         public async Task RemoveEmployeeFromShipmentAsync(int shipmentId, string employeeId)
         {
-            EmployeeShipment employeeShipment = await this.employeeShipmentRepo.All().FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.EmployeeId == employeeId);
+            EmployeeShipment employeeShipment = await this.shipmentEmployeeRepo.All().FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.EmployeeId == employeeId);
 
             if (employeeShipment == null)
             {
                 throw new ArgumentException(ShipmentWithEmployeeNotExists);
             }
 
-            this.employeeShipmentRepo.HardDelete(employeeShipment);
+            this.shipmentEmployeeRepo.HardDelete(employeeShipment);
 
-            await this.employeeShipmentRepo.SaveChangesAsync();
+            await this.shipmentEmployeeRepo.SaveChangesAsync();
+
+            if (await this.EmployeeHasVehicle(employeeId))
+            {
+                Vehicle vehicle = await this.vehicleRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+
+                if (vehicle == null)
+                {
+                    throw new ArgumentException(VehicleNotExist);
+                }
+
+                ShipmentVehicle shipmentVehicle = await this.shipmentVehicleRepo.All().FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.VehicleId == vehicle.Id);
+
+                if (shipmentVehicle == null)
+                {
+                    throw new ArgumentException(ShipmentWithVehicleNotExist);
+                }
+
+                this.shipmentVehicleRepo.HardDelete(shipmentVehicle);
+                await this.shipmentVehicleRepo.SaveChangesAsync();
+            }
         }
 
         /// <summary>
-        /// Deletion after cancelling a shipment.
+        /// Deletion after cancelling a shipment or since shipment is obsolete. Corresponding employees and vehicles (if any) deleted from mapping tables too (EmployeesShipments and ShipmentsVehicles).
         /// </summary>
         /// <param name="shipmentId"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Shipment does not exist.</exception>
         public async Task DeleteShipmentAsync(int shipmentId)
         {
-            //List<EmployeeShipment> shipmentEmployees = await this.employeeShipmentRepo.All().Where(x => x.ShipmentId == shipmentId).ToListAsync();
-
             if (!await this.ShipmentExists(shipmentId))
             {
                 throw new ArgumentException(ShipmentNotExist);
+            }
+
+            List<EmployeeShipment> employeesShipment = await this.shipmentEmployeeRepo.All().Where(x => x.ShipmentId == shipmentId).ToListAsync();
+
+            if (employeesShipment.Count > 0)
+            {
+                foreach (EmployeeShipment employeeShipment in employeesShipment)
+                {
+                    this.shipmentEmployeeRepo.Delete(employeeShipment);
+                }
+
+                await this.shipmentEmployeeRepo.SaveChangesAsync();
+            }
+
+            List<ShipmentVehicle> shipmentVehicles = await this.shipmentVehicleRepo.All().Where(x => x.ShipmentId == shipmentId).ToListAsync();
+
+            if (shipmentVehicles.Count > 0)
+            {
+                foreach (ShipmentVehicle shipmentVehicle in shipmentVehicles)
+                {
+                    this.shipmentVehicleRepo.Delete(shipmentVehicle);
+                }
+
+                await this.shipmentVehicleRepo.SaveChangesAsync();
             }
 
             Shipment shipment = await this.shipmentRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentId);
