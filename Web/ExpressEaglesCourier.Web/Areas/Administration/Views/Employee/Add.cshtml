@@ -1,0 +1,102 @@
+﻿@model EmployeeFormModel
+
+@{
+    ViewBag.Title = "Create New Employee Record";
+    IEnumerable<SelectListItem> Offices = this.Model.Offices.Select(x => new SelectListItem(x.Value, x.Key));
+    IEnumerable<SelectListItem> Positions = this.Model.Positions.Select(x => new SelectListItem(x.Value, x.Key));
+    IEnumerable<SelectListItem> Vehicles = this.Model.Vehicles.Select(x => new SelectListItem(x.Value, x.Key));
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if (this.TempData.ContainsKey(Message))
+{
+    <div class="alert alert-danger">@this.TempData[Message]</div>
+}
+
+<div class="row">
+    <form method="post">
+        <div class="row">
+            <div class="col-6">
+                <input type="hidden" asp-for="@Model.Id" />
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" placeholder="Enter first name" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MiddleName"></label>
+                    <input asp-for="MiddleName" class="form-control" placeholder="Enter middle name" />
+                    <span asp-validation-for="MiddleName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" placeholder="Enter last name" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address"></label>
+                    <input asp-for="Address" class="form-control" placeholder="Enter home address" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="City"></label>
+                    <input asp-for="City" class="form-control" placeholder="Enter home city name" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Country"></label>
+                    <input asp-for="Country" class="form-control" placeholder="Enter home country name" />
+                    <span asp-validation-for="Country" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="Enter phone number including country and area code" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>                
+            </div>
+
+            <div class="col-6">
+                <div class="form-group">
+                    <label asp-for="HiredOn"></label>
+                    <input asp-for="HiredOn" value="@DateTime.Now.ToString("F")" class="form-control" />
+                    <span asp-validation-for="HiredOn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Salary"></label>
+                    <input asp-for="Salary" class="form-control" placeholder="Enter gross salary in leva" />
+                    <span asp-validation-for="Salary" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ResignOn"></label>
+                    <input asp-for="ResignOn" value="@DateTime.Now.ToString("F")" class="form-control" />
+                    <span asp-validation-for="ResignOn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="OfficeId">Office</label>
+                    <select asp-for="OfficeId" class="form-control" asp-items="Offices"><option selected>Choose An Office...</option></select>
+                    <span asp-validation-for="OfficeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PositionId">Position</label>
+                    <select asp-for="PositionId" class="form-control" asp-items="Positions"><option selected>Select Position...</option></select>
+                    <span asp-validation-for="PositionId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="VehicleId">Vehicle</label>
+                    <select asp-for="VehicleId" class="form-control" asp-items="Vehicles"><option value="" selected>Select Vehicle...</option></select>
+                    <span asp-validation-for="VehicleId" class="text-danger"></span>
+                </div>            
+            </div>
+            <div class="mb-3 mt-3 offset-5">
+                <input class="btn btn-primary" type="submit" value="Save Employee" />
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

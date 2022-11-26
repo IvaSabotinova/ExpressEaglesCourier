@@ -30,6 +30,6 @@
 
         public decimal Price { get; set; }
 
-        public IEnumerable<EmployeeShipmentViewModel> EmployeesShipments { get; set; }
+        public IEnumerable<EmployeeShipmentViewModel> EmployeesShipments { get; set; } = new List<EmployeeShipmentViewModel>();
     }
 }

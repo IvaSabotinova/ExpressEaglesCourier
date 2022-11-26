@@ -8,11 +8,11 @@
 
         public static class EntitiesConstants
         {
-            public const string HomeAddress = "Home address";
+            public const string HomeAddress = "Home Address";
 
-            public const string HomeCity = "Home city";
+            public const string HomeCity = "Home City";
 
-            public const string HomeCountry = "Home country";
+            public const string HomeCountry = "Home Country";
 
             public const string DecimalType = "decimal(18,2)";
 
@@ -103,6 +103,8 @@
 
             public const string MiddleName = "Middle Name (optional)";
 
+            public const string MiddleNameEmployee = "Middle Name";
+
             public const string LastName = "Last Name";
 
             public const string CompanyName = "Company Name (optional)";
@@ -134,6 +136,18 @@
             public const string DestinationTown = "Destination Town";
 
             public const string DestinationCountry = "Destination Country";
+
+            public const string HireOnDate = "The Date Of Hiring";
+
+            public const string SalaryEmployee = "Gross Salary In Leva";
+
+            public const string ResignOnDate = "The Date Of Resignation";
+
+            public const string Office = "Office";
+
+            public const string Position = "Position";
+
+            public const string Vehicle = "Vehicle";
         }
 
         public static class ServicesConstants
@@ -179,6 +193,12 @@
             public const string CustomerCreated = "Customer created successfully!";
 
             public const string CustomerDetailsAmended = "Customer details amended successfully!";
+
+            public const string EmployeeExists = "Employee with that name and phone number already exists!";
+
+            public const string EmployeeCreated = "New employee recorded successfully!";
+
+            public const string InvalidEmployee = "Invalid employee's details!";
         }
     }
 }

@@ -6,6 +6,7 @@
 
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
+    using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Employee;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,59 @@
         public EmployeeController(IEmployeeService employeeService)
         {
             this.employeeService = employeeService;
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+
+        public IActionResult Add()
+        {
+            var model = new EmployeeFormModel();
+            model.Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
+            model.Positions = this.employeeService.GetAllPositionsAsKeyValuePairs();
+            model.Vehicles = this.employeeService.GetAllVehiclesAsKeyValuePairs();
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> Add(EmployeeFormModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                model.Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
+                model.Positions = this.employeeService.GetAllPositionsAsKeyValuePairs();
+                model.Vehicles = this.employeeService.GetAllVehiclesAsKeyValuePairs();
+                return this.View(model);
+            }
+
+            try
+            {
+                string id = await this.employeeService.CreateEmployeeAsync(model);
+                this.TempData[Message] = EmployeeCreated;
+                return this.RedirectToAction(nameof(this.Details), new { id });
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError(string.Empty, InvalidEmployee);
+
+                model.Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
+                model.Positions = this.employeeService.GetAllPositionsAsKeyValuePairs();
+                model.Vehicles = this.employeeService.GetAllVehiclesAsKeyValuePairs();
+
+                this.TempData[Message] = ex.Message;
+                return this.View(model);
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> Details([FromRoute]string id)
+        {
+            EmployeeDetailsViewModel model = await this.employeeService.GetEmployeeDetails(id);
+            return this.View(model);
         }
 
         [HttpGet]

@@ -55,6 +55,7 @@
                 .Include(x => x.SentShipments)
                 .Include(x => x.ReceivedShipments)
                 .FirstOrDefaultAsync(x => x.Id == id);
+
             if (customer == null)
             {
                 throw new ArgumentException(ClientNotExist);
