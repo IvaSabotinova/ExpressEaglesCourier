@@ -34,7 +34,6 @@ namespace ExpressEaglesCourier.Data.Models
         /// <summary>
         /// Gets or sets the employee assigned with the vehicle.
         /// </summary>
-        [Required]
         [ForeignKey(nameof(Employee))]
         [Comment("The employee assigned with the vehicle.")]
         public string EmployeeId { get; set; }

@@ -32,7 +32,7 @@
             var model = new EmployeeFormModel();
             model.Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
             model.Positions = this.employeeService.GetAllPositionsAsKeyValuePairs();
-            model.Vehicles = this.employeeService.GetAllVehiclesAsKeyValuePairs();
+            model.Vehicles = this.employeeService.GetVehiclesAsKeyValuePairs();
             return this.View(model);
         }
 
@@ -45,7 +45,7 @@
             {
                 model.Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
                 model.Positions = this.employeeService.GetAllPositionsAsKeyValuePairs();
-                model.Vehicles = this.employeeService.GetAllVehiclesAsKeyValuePairs();
+                model.Vehicles = this.employeeService.GetVehiclesAsKeyValuePairs();
                 return this.View(model);
             }
 
@@ -61,7 +61,7 @@
 
                 model.Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
                 model.Positions = this.employeeService.GetAllPositionsAsKeyValuePairs();
-                model.Vehicles = this.employeeService.GetAllVehiclesAsKeyValuePairs();
+                model.Vehicles = this.employeeService.GetVehiclesAsKeyValuePairs();
 
                 this.TempData[Message] = ex.Message;
                 return this.View(model);
@@ -75,6 +75,47 @@
         {
             EmployeeDetailsViewModel model = await this.employeeService.GetEmployeeDetails(id);
             return this.View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Edit(string id)
+        {
+            EmployeeFormModel model = await this.employeeService.GetEmployeeForEditAsync(id);
+
+            model.Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
+            model.Positions = this.employeeService.GetAllPositionsAsKeyValuePairs();
+            model.Vehicles = this.employeeService.GetVehiclesAsKeyValuePairs();
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Edit(EmployeeFormModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                model.Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
+                model.Positions = this.employeeService.GetAllPositionsAsKeyValuePairs();
+                model.Vehicles = this.employeeService.GetVehiclesAsKeyValuePairs();
+                return this.View(model);
+            }
+
+            try
+            {
+                await this.employeeService.EditEmployeeAsync(model);
+                this.TempData[Message] = EmployeeDetailsAmended;
+                return this.RedirectToAction(nameof(this.Details), new { id = model.Id });
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError(string.Empty, InvalidEmployee);
+                model.Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
+                model.Positions = this.employeeService.GetAllPositionsAsKeyValuePairs();
+                model.Vehicles = this.employeeService.GetVehiclesAsKeyValuePairs();
+                this.TempData[Message] = ex.Message;
+                return this.View(model);
+            }
         }
 
         [HttpGet]

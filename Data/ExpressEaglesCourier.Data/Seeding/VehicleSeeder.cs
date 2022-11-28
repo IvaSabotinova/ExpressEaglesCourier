@@ -25,7 +25,25 @@
                 PlateNumber = "B6894CC",
                 EmployeeId = driverVn.Id,
             };
+
+            Vehicle vehicle3 = new Vehicle()
+            {
+                Model = "Citroen Berlingo",
+                PlateNumber = "A9876BB",
+            };
+            Vehicle vehicle4 = new Vehicle()
+            {
+                Model = "Peugeot Partner",
+                PlateNumber = "A3131CC",
+            };
+            Vehicle vehicle5 = new Vehicle()
+            {
+                Model = "Opel Combo",
+                PlateNumber = "B2896MH",
+            };
+
             await dbContext.Vehicles.AddRangeAsync(vehicle1, vehicle2);
+            await dbContext.Vehicles.AddRangeAsync(vehicle3, vehicle4, vehicle5);
         }
     }
 }

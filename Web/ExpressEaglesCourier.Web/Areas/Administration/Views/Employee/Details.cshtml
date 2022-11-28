@@ -17,15 +17,30 @@
 <div class="container" style="display:inline">
     <div class="row">
         <div class="card text-body bg-light col-6">
-            <input type="hidden" asp-for="@Model.Id" />
-            <p style="font-size:17px;"><u>Employee Name:</u></p>
-            <p>@Model.FullName</p>
-            <p style="font-size:17px;"><u>Employee Phone Number:</u></p>
-            <p>@Model.PhoneNumber</p>
-            <p style="font-size:17px;"><u>Company Name:</u></p>
-            <p>@(@Model.VehicleDetails ?? "None")</p>
-            <p>@Model.Position</p>
-            <p style="font-size:17px;"><u>Total Number Of Shipments:</u> @Model.OfficeDetails</p>
+            <input type="hidden" asp-for="@Model.Id" />            
+                <table class="table table-striped table-hover" table-name="Employee Details">
+                    <tbody>               
+                        <tr><td><u>Employee Name</u></td></tr>
+                        <tr><td>@Model.FullName</td> </tr>
+                        <tr><td><u>Phone Number</u></td> </tr>
+                        <tr><td>@Model.PhoneNumber</td> </tr>
+                        <tr><td><u>Employee Position</u></td> </tr>
+                        <tr><td>@Model.Position</td> </tr>
+                        <tr><td><u>Office Details</u></td> </tr>
+                        <tr><td>@Model.OfficeDetails</td> </tr>
+                        <tr><td><u>Employee Vehicle (if any assigned)</u></td> </tr>
+                        <tr>
+                            @if (Model.VehicleModel == null && Model.VehiclePlateNumber == null)
+                            {
+                                <td>None</td>
+                            }
+                            else
+                            {
+                                <td>@Model.VehicleModel, @Model.VehiclePlateNumber</td>
+                            }
+                            </tr> 
+                    </tbody>
+                </table>          
         </div>
         <div class="col-5">
             <img class="card-img-top" style="width: 25rem;"

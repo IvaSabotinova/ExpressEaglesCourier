@@ -103,14 +103,14 @@
         {
             Customer customer = await this.GetCustomerById(model.Id);
 
-            bool isClient = this.customerRepo.AllAsNoTracking().Any(x => x.PhoneNumber == model.PhoneNumber
-           && x.FirstName == model.FirstName && x.LastName == model.LastName);
+            // ??????
+           // bool isClient = this.customerRepo.AllAsNoTracking().Any(x => x.PhoneNumber == model.PhoneNumber
+           // && x.FirstName == model.FirstName && x.LastName == model.LastName);
 
-            if (isClient)
-            {
-                throw new ArgumentException(ClientExists);
-            }
-
+           // if (isClient)
+           // {
+           //     throw new ArgumentException(ClientExists);
+           // }
             customer.Id = model.Id;
             customer.FirstName = model.FirstName;
             customer.MiddleName = model.MiddleName;

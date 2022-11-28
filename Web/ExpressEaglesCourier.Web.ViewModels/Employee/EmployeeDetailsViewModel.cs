@@ -12,6 +12,8 @@
 
         public string OfficeDetails { get; set; }
 
-        public string VehicleDetails { get; set; }
+        public string VehicleModel { get; set; }
+
+        public string VehiclePlateNumber { get; set; }
     }
 }

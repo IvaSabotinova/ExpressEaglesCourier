@@ -111,7 +111,7 @@ namespace ExpressEaglesCourier.Data.Models
         /// Gets or sets the vehicle used by the employee courier.
         /// </summary>
         [Comment("The vehicle used by the employee courier.")]
-        public int VehicleId { get; set; }
+        public int? VehicleId { get; set; }
 
         public virtual Vehicle Vehicle { get; set; }
     }

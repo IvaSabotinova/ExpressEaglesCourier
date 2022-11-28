@@ -199,6 +199,8 @@
             public const string EmployeeCreated = "New employee recorded successfully!";
 
             public const string InvalidEmployee = "Invalid employee's details!";
+
+            public const string EmployeeDetailsAmended = "Employee details amended successfully!";
         }
     }
 }

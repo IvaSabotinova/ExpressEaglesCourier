@@ -57,9 +57,10 @@
                 .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Position));
         }
 
-        public IEnumerable<KeyValuePair<string, string>> GetAllVehiclesAsKeyValuePairs()
+        public IEnumerable<KeyValuePair<string, string>> GetVehiclesAsKeyValuePairs()
         {
             return this.vehicleRepo.AllAsNoTracking()
+                .Where(x => x.EmployeeId == null)
                 .Select(x => new
                 {
                     x.Id,
@@ -95,11 +96,20 @@
                 ResignOn = model.ResignOn,
                 OfficeId = model.OfficeId,
                 PositionId = model.PositionId,
-                VehicleId = model.VehicleId ?? 0,
+                VehicleId = model.VehicleId,
             };
 
             await this.employeeRepo.AddAsync(newEmployee);
             await this.employeeRepo.SaveChangesAsync();
+
+            int vehicleId = newEmployee.VehicleId ?? 0;
+
+            if (vehicleId != 0)
+            {
+                Vehicle vehicle = await this.vehicleRepo.All().FirstOrDefaultAsync(x => x.Id == vehicleId);
+                vehicle.EmployeeId = newEmployee.Id;
+                await this.vehicleRepo.SaveChangesAsync();
+            }
 
             return newEmployee.Id;
         }
@@ -107,11 +117,11 @@
         public async Task<EmployeeDetailsViewModel> GetEmployeeDetails(string employeeId)
         {
             Employee employee = await this.employeeRepo.AllAsNoTracking()
+                .Include(x => x.Vehicle)
                 .Include(x => x.Position)
                 .Include(x => x.Office)
                 .ThenInclude(x => x.City)
                 .ThenInclude(x => x.Country)
-                .Include(x => x.Vehicle)
                 .FirstOrDefaultAsync(x => x.Id == employeeId);
 
             if (employee == null)
@@ -119,15 +129,84 @@
                 throw new ArgumentException(EmployeeNotExist);
             }
 
-            return new EmployeeDetailsViewModel()
+            EmployeeDetailsViewModel model = new EmployeeDetailsViewModel()
             {
                 Id = employee.Id,
                 FullName = $"{employee.FirstName} {employee.MiddleName} {employee.LastName}",
                 PhoneNumber = employee.PhoneNumber,
                 Position = employee.Position.JobTitle,
                 OfficeDetails = $"{employee.Office.Address}, {employee.Office.City.Name}, {employee.Office.City.Country.Name}",
-                VehicleDetails = $"{employee.Vehicle?.Model}, {employee.Vehicle?.PlateNumber}" ?? null,
+                VehicleModel = employee.Vehicle?.Model ?? null,
+                VehiclePlateNumber = employee.Vehicle?.PlateNumber ?? null,
             };
+
+            return model;
+        }
+
+        public async Task<Employee> GetEmployeeById(string employeeId)
+       => await this.employeeRepo.All().FirstOrDefaultAsync(x => x.Id == employeeId);
+
+        public async Task<EmployeeFormModel> GetEmployeeForEditAsync(string employeeId)
+        {
+            Employee employee = await this.GetEmployeeById(employeeId);
+
+            if (employee == null)
+            {
+                throw new ArgumentException(EmployeeNotExist);
+            }
+
+            return new EmployeeFormModel()
+            {
+                Id = employee.Id,
+                FirstName = employee.FirstName,
+                MiddleName = employee.MiddleName,
+                LastName = employee.LastName,
+                Address = employee.Address,
+                City = employee.City,
+                Country = employee.Country,
+                PhoneNumber = employee.PhoneNumber,
+                HiredOn = employee.HiredOn,
+                Salary = employee.Salary,
+                ResignOn = employee.ResignOn,
+                OfficeId = employee.OfficeId,
+                PositionId = employee.PositionId,
+                VehicleId = employee.VehicleId,
+            };
+        }
+
+        public async Task EditEmployeeAsync(EmployeeFormModel model)
+        {
+            Employee employee = await this.GetEmployeeById(model.Id);
+            Vehicle employeeOldVehicle = await this.vehicleRepo.All().FirstOrDefaultAsync(x => x.Id == employee.VehicleId);
+            Vehicle employeeNewVehicle = await this.vehicleRepo.All().FirstOrDefaultAsync(x => x.Id == model.VehicleId);
+
+            employee.FirstName = model.FirstName;
+            employee.MiddleName = model.MiddleName;
+            employee.LastName = model.LastName;
+            employee.Address = model.Address;
+            employee.City = model.City;
+            employee.Country = model.Country;
+            employee.PhoneNumber = model.PhoneNumber;
+            employee.HiredOn = model.HiredOn;
+            employee.Salary = model.Salary;
+            employee.ResignOn = model.ResignOn;
+            employee.OfficeId = model.OfficeId;
+            employee.PositionId = model.PositionId;
+            employee.VehicleId = model.VehicleId;
+
+            await this.employeeRepo.SaveChangesAsync();
+
+            if (employeeOldVehicle != null)
+            {
+                employeeOldVehicle.EmployeeId = null;
+            }
+
+            if (employeeNewVehicle != null)
+            {
+                employeeNewVehicle.EmployeeId = employee.Id;
+            }
+
+            await this.vehicleRepo.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId)
