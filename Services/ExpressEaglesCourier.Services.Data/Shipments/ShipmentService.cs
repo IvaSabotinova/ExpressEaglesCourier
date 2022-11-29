@@ -238,14 +238,14 @@
         => await this.shipmentRepo.AllAsNoTracking().AnyAsync(x => x.Id == id);
 
         /// <summary>
-        /// Defines whether the employee is assigned with a vehicle, i.e. the employee is a driver-courier.
+        /// Defines whether the employee is assigned with a vehicle, mainly whether the employee is a driver-courier.
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
         public async Task<bool> EmployeeHasVehicle(string employeeId)
         {
             Employee employee = await this.employeeRepo.All().FirstOrDefaultAsync(x => x.Id == employeeId);
-            return employee.VehicleId > 0;
+            return employee.VehicleId != null;
         }
 
         /// <summary>

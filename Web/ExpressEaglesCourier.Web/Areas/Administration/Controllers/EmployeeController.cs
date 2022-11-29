@@ -118,6 +118,13 @@
             }
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.employeeService.DeleteEmployeeAsync(id);
+            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAll(int id)

@@ -23,14 +23,6 @@
 
         public async Task<string> CreateCustomerAsync(CustomerFormModel model)
         {
-            bool isClient = this.customerRepo.AllAsNoTracking().Any(x => x.PhoneNumber == model.PhoneNumber
-            && x.FirstName == model.FirstName && x.LastName == model.LastName);
-
-            if (isClient)
-            {
-                throw new ArgumentException(ClientExists);
-            }
-
             Customer newCustomer = new Customer()
             {
                 FirstName = model.FirstName,
@@ -79,11 +71,6 @@
         {
             Customer customer = await this.GetCustomerById(customerId);
 
-            if (customer == null)
-            {
-                throw new ArgumentException(ClientNotExist);
-            }
-
             CustomerFormModel model = new CustomerFormModel()
             {
                 Id = customerId,
@@ -103,14 +90,11 @@
         {
             Customer customer = await this.GetCustomerById(model.Id);
 
-            // ??????
-           // bool isClient = this.customerRepo.AllAsNoTracking().Any(x => x.PhoneNumber == model.PhoneNumber
-           // && x.FirstName == model.FirstName && x.LastName == model.LastName);
+            if (customer == null)
+            {
+                throw new ArgumentException(ClientNotExist);
+            }
 
-           // if (isClient)
-           // {
-           //     throw new ArgumentException(ClientExists);
-           // }
             customer.Id = model.Id;
             customer.FirstName = model.FirstName;
             customer.MiddleName = model.MiddleName;

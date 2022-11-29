@@ -14,8 +14,6 @@
 
         IEnumerable<KeyValuePair<string, string>> GetVehiclesAsKeyValuePairs();
 
-        Task<bool> EmployeeExist(string firstName, string lastName, string phoneNumber);
-
         Task<string> CreateEmployeeAsync(EmployeeFormModel model);
 
         Task<EmployeeDetailsViewModel> GetEmployeeDetails(string employeeId);
@@ -25,6 +23,8 @@
         Task<EmployeeFormModel> GetEmployeeForEditAsync(string employeeId);
 
         Task EditEmployeeAsync(EmployeeFormModel model);
+
+        Task DeleteEmployeeAsync(string employeeId);
 
         Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId);
     }

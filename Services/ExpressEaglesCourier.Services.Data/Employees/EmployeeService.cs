@@ -70,18 +70,8 @@
                 .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.ModelAndRegNumber));
         }
 
-        public async Task<bool> EmployeeExist(string firstName, string lastName, string phoneNumber)
-        {
-            return await this.employeeRepo.AllAsNoTracking().AnyAsync(x => x.FirstName == firstName && x.LastName == lastName && x.PhoneNumber == phoneNumber);
-        }
-
         public async Task<string> CreateEmployeeAsync(EmployeeFormModel model)
         {
-            if (await this.EmployeeExist(model.FirstName, model.LastName, model.PhoneNumber))
-            {
-                throw new ArgumentException(EmployeeExists);
-            }
-
             Employee newEmployee = new Employee()
             {
                 FirstName = model.FirstName,
@@ -150,11 +140,6 @@
         {
             Employee employee = await this.GetEmployeeById(employeeId);
 
-            if (employee == null)
-            {
-                throw new ArgumentException(EmployeeNotExist);
-            }
-
             return new EmployeeFormModel()
             {
                 Id = employee.Id,
@@ -177,6 +162,12 @@
         public async Task EditEmployeeAsync(EmployeeFormModel model)
         {
             Employee employee = await this.GetEmployeeById(model.Id);
+
+            if (employee == null)
+            {
+                throw new ArgumentException(EmployeeNotExist);
+            }
+
             Vehicle employeeOldVehicle = await this.vehicleRepo.All().FirstOrDefaultAsync(x => x.Id == employee.VehicleId);
             Vehicle employeeNewVehicle = await this.vehicleRepo.All().FirstOrDefaultAsync(x => x.Id == model.VehicleId);
 
@@ -207,6 +198,27 @@
             }
 
             await this.vehicleRepo.SaveChangesAsync();
+        }
+
+        public async Task DeleteEmployeeAsync(string employeeId)
+        {
+            Employee employee = await this.GetEmployeeById(employeeId);
+
+            if (employee == null)
+            {
+                throw new ArgumentException(EmployeeNotExist);
+            }
+
+            if (employee.VehicleId != null)
+            {
+                Vehicle vehicle = await this.vehicleRepo.All().FirstOrDefaultAsync(x => x.Id == employee.VehicleId);
+
+                vehicle.EmployeeId = null;
+                await this.vehicleRepo.SaveChangesAsync();
+            }
+
+            this.employeeRepo.Delete(employee);
+            await this.employeeRepo.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId)
