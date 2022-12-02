@@ -148,6 +148,16 @@
             public const string Position = "Position";
 
             public const string Vehicle = "Vehicle";
+
+            public const string DateTimePickUp = "Date and time of pick-up from customer";
+
+            public const string DateTimeSentFromOffice = "Date and time sent from office";
+
+            public const string DateTimeArrivalAtOffice = "Date and time of arrival at office";
+
+            public const string DateTimePrepForFinalDelivery = "Date and time of preparation for final delivery";
+
+            public const string DateTimeFinalDelivery = "Date and time of final delivery";
         }
 
         public static class ServicesConstants
@@ -201,6 +211,10 @@
             public const string InvalidEmployee = "Invalid employee's details!";
 
             public const string EmployeeDetailsAmended = "Employee details amended successfully!";
+
+            public const string InvalidShipmentTrackingPathDetails = "Invalid shipment tracking path details!";
+
+            public const string ShipmentTrackingPathCreated = "Shipment Tracking Path Created Successfully!";
         }
     }
 }

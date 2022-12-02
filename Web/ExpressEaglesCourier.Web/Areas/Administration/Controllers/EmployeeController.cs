@@ -6,6 +6,7 @@
 
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
+    using ExpressEaglesCourier.Web.Controllers;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Employee;
     using Microsoft.AspNetCore.Authorization;
@@ -15,7 +16,7 @@
 
     [Area("Administration")]
     [Authorize]
-    public class EmployeeController : Controller
+    public class EmployeeController : BaseController
     {
         private readonly IEmployeeService employeeService;
 

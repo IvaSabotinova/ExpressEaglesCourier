@@ -22,6 +22,7 @@
             ShipmentTrackingPath shipmentTrackingPath1 = new ShipmentTrackingPath()
             {
                 ShipmentId = shipment1.Id,
+                TrackingNumber = shipment1.TrackingNumber,
                 PickedUpByCourier = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 SentFromDispatchingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 ArrivalInReceivingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
@@ -31,6 +32,7 @@
             ShipmentTrackingPath shipmentTrackingPath2 = new ShipmentTrackingPath()
             {
                 ShipmentId = shipment2.Id,
+                TrackingNumber = shipment2.TrackingNumber,
                 PickedUpByCourier = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 SentFromDispatchingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 ArrivalInReceivingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
@@ -40,6 +42,7 @@
             ShipmentTrackingPath shipmentTrackingPath3 = new ShipmentTrackingPath()
             {
                 ShipmentId = shipment3.Id,
+                TrackingNumber = shipment3.TrackingNumber,
                 PickedUpByCourier = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 SentFromDispatchingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 ArrivalInReceivingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
@@ -49,6 +52,7 @@
             ShipmentTrackingPath shipmentTrackingPath4 = new ShipmentTrackingPath()
             {
                 ShipmentId = shipment4.Id,
+                TrackingNumber = shipment4.TrackingNumber,
                 PickedUpByCourier = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 SentFromDispatchingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 ArrivalInReceivingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
@@ -58,6 +62,7 @@
             ShipmentTrackingPath shipmentTrackingPath5 = new ShipmentTrackingPath()
             {
                 ShipmentId = shipment5.Id,
+                TrackingNumber = shipment5.TrackingNumber,
                 PickedUpByCourier = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 SentFromDispatchingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 ArrivalInReceivingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
@@ -67,6 +72,7 @@
             ShipmentTrackingPath shipmentTrackingPath6 = new ShipmentTrackingPath()
             {
                 ShipmentId = shipment6.Id,
+                TrackingNumber = shipment6.TrackingNumber,
                 PickedUpByCourier = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 SentFromDispatchingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),
                 ArrivalInReceivingOffice = DateTime.ParseExact("09-11-2022", "dd-MM-yyyy", CultureInfo.InvariantCulture),

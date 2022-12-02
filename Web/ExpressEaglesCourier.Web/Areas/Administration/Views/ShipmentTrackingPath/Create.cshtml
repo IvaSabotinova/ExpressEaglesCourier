@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Create Shipment Tracking Path";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if (this.TempData.ContainsKey(Message))
+{
+    <div class="alert alert-danger">@this.TempData[Message]</div>
+}
+
+<partial name="_ShipmentTrackingPathPartial" model="@Model" />
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

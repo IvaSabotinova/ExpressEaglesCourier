@@ -6,6 +6,8 @@
     using ExpressEaglesCourier.Data.Common.Models;
     using Microsoft.EntityFrameworkCore;
 
+    using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
+
     public class ShipmentTrackingPath : BaseDeletableModel<int>
     {
         /// <summary>
@@ -16,6 +18,14 @@
         public int ShipmentId { get; set; }
 
         public virtual Shipment Shipment { get; set; }
+
+        /// <summary>
+        /// Gets or sets tracking number of the shipment that shipment tracking path refers to.
+        /// </summary>
+        [Required]
+        [MaxLength(TrackingNumberMaxLength)]
+        [Comment("Tracking number of the shipment.")]
+        public string TrackingNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of picking up shipment from customer.

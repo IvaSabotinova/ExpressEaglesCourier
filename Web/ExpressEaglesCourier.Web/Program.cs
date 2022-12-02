@@ -12,6 +12,7 @@
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
+    using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Services.Messaging;
     using ExpressEaglesCourier.Web.ViewModels;
@@ -71,6 +72,7 @@
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IShipmentService, ShipmentService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IShipmentTrackingPathService, ShipmentTrackingPathService>();
         }
 
         private static void Configure(WebApplication app)
@@ -107,6 +109,7 @@
 
             app.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
             app.MapRazorPages();
         }
     }
