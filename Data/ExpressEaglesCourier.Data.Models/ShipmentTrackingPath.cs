@@ -28,16 +28,32 @@
         public string TrackingNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets the date and time of picking up shipment from customer.
+        /// Gets or sets the date and time of accepting the shipment from customer.
         /// </summary>
-        [Comment("Date and time of picking up shipment from customer.")]
+        [Comment("Date and time of accepting the shipment from customer.")]
+        public DateTime? AcceptanceFromCustomer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date and time of picking up shipment by courier.
+        /// </summary>
+        [Comment("Date and time of picking up shipment by courier.")]
         public DateTime? PickedUpByCourier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of the office shipment is sent from.
+        /// </summary>
+        public int? SendingOfficeId { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of sending shipment from dispatching office.
         /// </summary>
         [Comment("Date and time of sending shipment from dispatching office.")]
         public DateTime? SentFromDispatchingOffice { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of the office shipment is sent to.
+        /// </summary>
+        public int? ReceivingOfficeId { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of shipment arrival in receiving office.

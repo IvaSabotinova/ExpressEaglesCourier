@@ -9,6 +9,16 @@
     {
         Task<Shipment> GetShipmentById(int shipmentId);
 
-        Task<int> CreateShipmentTrackingPathAsync(int shipmentId, ShipmentTrackingPathFormModel model);
+        Task<int> CreateShipmentTrackingPathAsync(ShipmentTrackingPathFormModel model);
+
+        Task<ShipmentTrackingPath> GetTrackingPathById(int shipmentTrackingPathId);
+
+        Task<ShipmentTrackingPathDetailsViewModel> Details(int shipmentTrackPathId);
+
+        Task<ShipmentTrackingPathFormModel> GetTrackingPathForUpdate(int shipmentTrackingPathId);
+
+        Task UpdateShipmentTrackingPathAsync(ShipmentTrackingPathFormModel model);
+
+        Task DeleteTrackingPathAsync(int shipmentTrackingPathId);
     }
 }

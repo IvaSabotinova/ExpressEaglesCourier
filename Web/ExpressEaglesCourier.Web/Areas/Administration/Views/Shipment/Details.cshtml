@@ -75,7 +75,7 @@
             <a class="btn btn-warning" asp-area="Administration" asp-controller="Shipment" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
             <a class="ms-2 btn btn-danger" asp-area="Administration" asp-controller="Shipment" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that shipment?')">Delete</a>
             <a class="ms-2 btn btn-warning" asp-area="Administration" asp-controller="ShipmentTrackingPath" asp-action="Create"
-               asp-route-id="@Model.Id">Create Tracking Path</a>
+               asp-route-id="@Model.Id">Create Tracking Path</a>            
             <a class="ms-2 btn btn-warning" asp-area="Administration" asp-controller="Employee" asp-action="GetAll" asp-route-Id="@Model.Id">Assign Employee</a>
             @* }*@
         </div>

@@ -4,6 +4,7 @@ using ExpressEaglesCourier.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpressEaglesCourier.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221203062243_TrackingPathInShipmentNullable")]
+    partial class TrackingPathInShipmentNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -671,10 +673,6 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime?>("AcceptanceFromCustomer")
-                        .HasColumnType("datetime2")
-                        .HasComment("Date and time of accepting the shipment from customer.");
-
                     b.Property<DateTime?>("ArrivalInReceivingOffice")
                         .HasColumnType("datetime2")
                         .HasComment("Date and time of shipment arrival in receiving office.");
@@ -701,7 +699,7 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.Property<DateTime?>("PickedUpByCourier")
                         .HasColumnType("datetime2")
-                        .HasComment("Date and time of picking up shipment by courier.");
+                        .HasComment("Date and time of picking up shipment from customer.");
 
                     b.Property<int?>("ReceivingOfficeId")
                         .HasColumnType("int");

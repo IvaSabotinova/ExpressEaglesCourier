@@ -1,6 +1,7 @@
 ﻿namespace ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using ExpressEaglesCourier.Common;
@@ -19,11 +20,22 @@
         [Display(Name = GlobalConstants.ViewModelConstants.TrackingNumber)]
         public string TrackingNumber { get; set; }
 
-        [Display(Name = DateTimePickUp)]
+        [Display(Name = DateTimeAcceptanceFromCustomer)]
+        public DateTime? AcceptanceFromCustomer { get; set; }
+
+        [Display(Name = DateTimePickUpByCourier)]
         public DateTime? PickedUpByCourier { get; set; }
+
+        public int? SendingOfficeId { get; set; }
+
+        public IEnumerable<KeyValuePair<string, string>> Offices_Dispatch { get; set; } = new List<KeyValuePair<string, string>>();
 
         [Display(Name = DateTimeSentFromOffice)]
         public DateTime? SentFromDispatchingOffice { get; set; }
+
+        public int? ReceivingOfficeId { get; set; }
+
+        public IEnumerable<KeyValuePair<string, string>> Offices_Receipt { get; set; } = new List<KeyValuePair<string, string>>();
 
         [Display(Name = DateTimeArrivalAtOffice)]
         public DateTime? ArrivalInReceivingOffice { get; set; }

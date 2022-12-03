@@ -21,6 +21,7 @@
         private readonly IDeletableEntityRepository<EmployeeShipment> shipmentEmployeeRepo;
         private readonly IDeletableEntityRepository<ShipmentVehicle> shipmentVehicleRepo;
         private readonly IDeletableEntityRepository<Vehicle> vehicleRepo;
+        private readonly IDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo;
 
         public ShipmentService(
             IDeletableEntityRepository<Shipment> shipmentRepo,
@@ -28,14 +29,16 @@
             IDeletableEntityRepository<Employee> employeeRepo,
             IDeletableEntityRepository<EmployeeShipment> shipmentEmployeeRepo,
             IDeletableEntityRepository<ShipmentVehicle> shipmentVehicleRepo,
-            IDeletableEntityRepository<Vehicle> vehicleRepo)
-        {
+            IDeletableEntityRepository<Vehicle> vehicleRepo,
+            IDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo)
+        { 
             this.shipmentRepo = shipmentRepo;
             this.customerRepo = customerRepo;
             this.employeeRepo = employeeRepo;
             this.shipmentEmployeeRepo = shipmentEmployeeRepo;
             this.shipmentVehicleRepo = shipmentVehicleRepo;
             this.vehicleRepo = vehicleRepo;
+            this.shipmentTrackingPathRepo = shipmentTrackingPathRepo;
         }
 
         public async Task<int> CreateShipmentAsync(ShipmentFormModel model)
@@ -354,7 +357,7 @@
         }
 
         /// <summary>
-        /// Deletion after cancelling a shipment or since shipment is obsolete. Corresponding employees and vehicles (if any) deleted from mapping tables too (EmployeesShipments and ShipmentsVehicles).
+        /// Deletion after cancelling a shipment or since shipment is obsolete. Corresponding employees and vehicles related to it (if any) deleted from mapping tables too (EmployeesShipments and ShipmentsVehicles). ShipmentTrackingPath (if any) deleted too.
         /// </summary>
         /// <param name="shipmentId"></param>
         /// <returns></returns>
@@ -391,6 +394,15 @@
             }
 
             Shipment shipment = await this.shipmentRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentId);
+
+            ShipmentTrackingPath shipmentTrackingPath = await this.shipmentTrackingPathRepo.All()
+                .FirstOrDefaultAsync(x => x.Id == shipment.ShipmentTrackingPathId);
+
+            if (shipmentTrackingPath != null)
+            {
+                this.shipmentTrackingPathRepo.Delete(shipmentTrackingPath);
+                await this.shipmentTrackingPathRepo.SaveChangesAsync();
+            }
 
             this.shipmentRepo.Delete(shipment);
 

@@ -149,7 +149,9 @@
 
             public const string Vehicle = "Vehicle";
 
-            public const string DateTimePickUp = "Date and time of pick-up from customer";
+            public const string DateTimeAcceptanceFromCustomer = "Date and time of acceptance from customer";
+
+            public const string DateTimePickUpByCourier = "Date and time of pick-up by courier";
 
             public const string DateTimeSentFromOffice = "Date and time sent from office";
 
@@ -215,6 +217,14 @@
             public const string InvalidShipmentTrackingPathDetails = "Invalid shipment tracking path details!";
 
             public const string ShipmentTrackingPathCreated = "Shipment Tracking Path Created Successfully!";
+
+            public const string ShipmentTrackingPathExist = "Tracking Path For The Shipment Already Created!";
+
+            public const string TrackingNumberIncorrect = "Entered tracking number different from shipment tracking number!";
+
+            public const string ShipmentTrackingPathNotExist = "Tracking path for the shipment does not exist!";
+
+            public const string ShipmentTrackingPathUpdated = "Shipment Tracking Path Details Updated Successfully!";
         }
     }
 }

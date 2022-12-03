@@ -93,7 +93,7 @@ namespace ExpressEaglesCourier.Data.Models
         [Comment("Feedback received from the shipment's sender or receiver.")]
         public virtual ICollection<Feedback> Feedbacks { get; set; }
 
-        public int ShipmentTrackingPathId { get; set; }
+        public int? ShipmentTrackingPathId { get; set; }
 
         public virtual ShipmentTrackingPath ShipmentTrackingPath { get; set; }
 

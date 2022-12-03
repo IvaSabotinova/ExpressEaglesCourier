@@ -1,0 +1,66 @@
+﻿@model ShipmentTrackingPathDetailsViewModel
+
+@{
+    ViewBag.Title = "Shipment Tracking Path";  
+}
+
+<script>
+    var msg = '@TempData[Message]';
+    if (msg.length) {
+        alert(msg);
+    }
+</script>
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<p></p>
+<h4 class="text-center mt-4">Shipment info: Tracking Number @Model.TrackingNumber</h4>
+
+
+<table class="table table-striped table-bordered mt-4">
+    <thead>
+        <tr>           
+            <th scope="col">Date And Time</th>
+            <th scope="col">Operation</th>
+            <th scope="col">Place Of Operation</th>                      
+        </tr>
+    </thead>
+    <tbody>
+         <tr scope="row">          
+            <td>@Model.DateTimeAcceptanceFromCustomer</td>
+            <td>Acceptance From Sender: @Model.ShipmentDetails.SenderName</td>
+            <td>@Model.ShipmentDetails.PickUpAddressCityCountry</td>
+        </tr>
+        <tr scope="row">         
+            <td>@Model.DateTimePickedUpByCourier</td>
+            <td>Picked Up By Courier</td>
+            <td>@Model.ShipmentDetails.PickUpAddressCityCountry</td>
+        </tr>
+        <tr scope="row">          
+            <td>@Model.DateTimeSentFromDispatchingOffice</td>
+            <td>Sent From Office</td>
+            <td>@(Model.SendingOfficeAddress ?? string.Empty) @(Model.SendingOfficeCity ?? string.Empty) @(Model.SendingOfficeCountry ?? string.Empty)</td>
+        </tr>
+        <tr scope="row">         
+            <td>@Model.DateTimeArrivalInReceivingOffice</td>
+            <td>Arrival At Office</td>
+            <td>@(Model.ReceivingOfficeAddress ?? string.Empty) @(Model.ReceivingOfficeCity ?? string.Empty) @(Model.ReceivingOfficeCountry ?? string.Empty)</td>
+        </tr>
+        <tr scope="row">         
+            <td>@Model.DateTimeFinalDeliveryPreparation</td>
+            <td>Preparation In Office For Delivery To Client</td>
+            <td>@(Model.ReceivingOfficeAddress ?? string.Empty) @(Model.ReceivingOfficeCity ?? string.Empty) @(Model.ReceivingOfficeCountry ?? string.Empty)</td>
+        </tr>
+        <tr scope="row">     
+            <td>@Model.DateTimeFinalDelivery</td>
+            <td>Delivery To Customer: @Model.ShipmentDetails.ReceiverName</td>
+            <td>@Model.ShipmentDetails.DestinationAddressCityCountry</td>
+        </tr>
+        
+    </tbody>
+</table>
+
+<div class="form-inline offset-5 mt-5 mb-3">
+    <a class="btn btn-warning" asp-area="Administration" asp-controller="ShipmentTrackingPath" asp-action="Update" asp-route-id="@Model.Id">Update Details</a>
+    <a class="ms-2 btn btn-danger" asp-area="Administration" asp-controller="ShipmentTrackingPath" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that tracking path?')">Delete</a>
+</div>
