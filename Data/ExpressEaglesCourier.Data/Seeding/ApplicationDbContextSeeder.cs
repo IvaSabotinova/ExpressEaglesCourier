@@ -41,6 +41,8 @@
                               // new ShipmentVehicleSeeder(),
                               // new EmployeeVehicleSeeder(),
                               // new ShipmentShipmentTrackingPathSeeder(),
+                              new AdminSeeder(),
+                              new StaffUsersSeeder(),
                           };
 
             foreach (var seeder in seeders)

@@ -6,6 +6,10 @@
 
         public const string AdministratorRoleName = "Administrator";
 
+        public const string ManagerRoleName = "Manager";
+
+        public const string EmployeeRoleName = "Employee";
+
         public static class EntitiesConstants
         {
             public const string HomeAddress = "Home Address";

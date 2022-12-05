@@ -81,7 +81,7 @@
                     SignInResult result = await this.signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return this.RedirectToAction("All", "Movies");
+                        return this.RedirectToAction("Index", "Home");
                     }
                 }
 
