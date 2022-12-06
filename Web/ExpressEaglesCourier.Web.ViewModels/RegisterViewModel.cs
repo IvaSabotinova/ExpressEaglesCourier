@@ -26,9 +26,9 @@
         [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        // [Required]
         [Phone]
-        [StringLength(PhoneNumberMaxLenght, MinimumLength = PhoneNumberMinLenght)]
+        [StringLength(PhoneNumberMaxLenght)]
 
         public string TelephoneNumber { get; set; }
     }

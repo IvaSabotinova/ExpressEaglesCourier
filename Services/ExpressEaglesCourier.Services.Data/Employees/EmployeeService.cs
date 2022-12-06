@@ -3,14 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Numerics;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Web.ViewModels.Employee;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
+    using static ExpressEaglesCourier.Common.GlobalConstants;
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
     public class EmployeeService : IEmployeeService
@@ -19,17 +20,20 @@
         private readonly IDeletableEntityRepository<Office> officeRepo;
         private readonly IDeletableEntityRepository<Position> positionRepo;
         private readonly IDeletableEntityRepository<Vehicle> vehicleRepo;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public EmployeeService(
             IDeletableEntityRepository<Employee> employeeRepo,
             IDeletableEntityRepository<Office> officeRepo,
             IDeletableEntityRepository<Position> positionRepo,
-            IDeletableEntityRepository<Vehicle> vehicleRepo)
+            IDeletableEntityRepository<Vehicle> vehicleRepo,
+            UserManager<ApplicationUser> userManager)
         {
             this.employeeRepo = employeeRepo;
             this.officeRepo = officeRepo;
             this.positionRepo = positionRepo;
             this.vehicleRepo = vehicleRepo;
+            this.userManager = userManager;
         }
 
         public IEnumerable<KeyValuePair<string, string>> GetAllOfficesDetailsAsKeyValuePairs()
@@ -89,10 +93,10 @@
                 VehicleId = model.VehicleId,
             };
 
-
-
             await this.employeeRepo.AddAsync(newEmployee);
             await this.employeeRepo.SaveChangesAsync();
+
+            await this.AddRolesToEmployees(newEmployee);
 
             int vehicleId = newEmployee.VehicleId ?? 0;
 
@@ -104,6 +108,30 @@
             }
 
             return newEmployee.Id;
+        }
+
+        public async Task AddRolesToEmployees(Employee employee)
+        {
+            if (employee.PositionId == 1 || employee.PositionId == 2
+                || employee.PositionId == 3 || employee.PositionId == 5)
+            {
+                ApplicationUser user = new ApplicationUser()
+                {
+                    UserName = employee.FirstName + employee.LastName,
+                    Email = employee.FirstName + employee.LastName + "@" + "expresseagles.com",
+                    PhoneNumber = employee.PhoneNumber,
+                    EmployeeId = employee.Id,
+                };
+
+                IdentityResult result = await this.userManager.CreateAsync(user);
+
+                employee.ApplicationUserId = user.Id;
+
+                if (result.Succeeded)
+                {
+                    _ = employee.PositionId == 1 ? await this.userManager.AddToRoleAsync(user, ManagerRoleName) : await this.userManager.AddToRoleAsync(user, EmployeeRoleName);
+                }
+            }
         }
 
         public async Task<EmployeeDetailsViewModel> GetEmployeeDetails(string employeeId)
@@ -189,6 +217,10 @@
 
             await this.employeeRepo.SaveChangesAsync();
 
+            await this.DeleteEmployeeApplicationUser(employee);
+
+            await this.AddRolesToEmployees(employee);
+
             if (employeeOldVehicle != null)
             {
                 employeeOldVehicle.EmployeeId = null;
@@ -221,6 +253,32 @@
 
             this.employeeRepo.Delete(employee);
             await this.employeeRepo.SaveChangesAsync();
+
+            await this.DeleteEmployeeApplicationUser(employee);
+        }
+
+        public async Task DeleteEmployeeApplicationUser(Employee employee)
+        {
+            ApplicationUser user = await this.userManager.FindByIdAsync(employee.ApplicationUserId);
+
+            if (user != null)
+            {
+                IdentityResult result = null;
+                if (await this.userManager.IsInRoleAsync(user, ManagerRoleName))
+                {
+                    result = await this.userManager.RemoveFromRoleAsync(user, ManagerRoleName);
+                }
+
+                if (await this.userManager.IsInRoleAsync(user, EmployeeRoleName))
+                {
+                    result = await this.userManager.RemoveFromRoleAsync(user, EmployeeRoleName);
+                }
+
+                if (result.Succeeded)
+                {
+                    await this.userManager.DeleteAsync(user);
+                }
+            }
         }
 
         public async Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId)

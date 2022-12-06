@@ -16,6 +16,8 @@
 
         Task<string> CreateEmployeeAsync(EmployeeFormModel model);
 
+        Task AddRolesToEmployees(Employee employee);
+
         Task<EmployeeDetailsViewModel> GetEmployeeDetails(string employeeId);
 
         Task<Employee> GetEmployeeById(string employeeId);
@@ -25,6 +27,8 @@
         Task EditEmployeeAsync(EmployeeFormModel model);
 
         Task DeleteEmployeeAsync(string employeeId);
+
+        Task DeleteEmployeeApplicationUser(Employee employee);
 
         Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId);
     }
