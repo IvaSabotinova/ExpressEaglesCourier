@@ -60,7 +60,20 @@
     </tbody>
 </table>
 
+@if (this.User.Identity.IsAuthenticated 
+     && this.User.IsInRole(AdministratorRoleName)
+     || this.User.IsInRole(EmployeeRoleName)
+     || this.User.IsInRole(ManagerRoleName))
+     {
 <div class="form-inline offset-5 mt-5 mb-3">
-    <a class="btn btn-warning" asp-area="Administration" asp-controller="ShipmentTrackingPath" asp-action="Update" asp-route-id="@Model.Id">Update Details</a>
-    <a class="ms-2 btn btn-danger" asp-area="Administration" asp-controller="ShipmentTrackingPath" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that tracking path?')">Delete</a>
+    <a class="btn btn-warning" asp-area="Staff" asp-controller="ShipmentTrackingPath" asp-action="Update" asp-route-id="@Model.Id">Update Details</a>
+    @if(this.User.IsInRole(AdministratorRoleName)                
+                || this.User.IsInRole(ManagerRoleName))
+                {
+                     <a class="ms-2 btn btn-danger" asp-area="Staff" asp-controller="ShipmentTrackingPath" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that tracking path?')">Delete</a>
+                }
+   
 </div>
+
+     }
+

@@ -95,11 +95,23 @@
 
               if (user != null)
               {
-                    SignInResult result = await this.signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
-                    if (result.Succeeded)
+                SignInResult result = await this.signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
+                if (result.Succeeded)
+                {
+                    if (await this.userManager.IsInRoleAsync(user, AdministratorRoleName)
+                        || await this.userManager.IsInRoleAsync(user, ManagerRoleName))
                     {
-                     return this.RedirectToAction("Index", "Home");
+                        return this.RedirectToAction("Index", "Dashboard", new { area = "Administration" });
                     }
+                    else if (await this.userManager.IsInRoleAsync(user, EmployeeRoleName))
+                    {
+                        return this.RedirectToAction("Index", "Board", new { area = "Staff" });
+                    }
+                    else
+                    {
+                        return this.RedirectToAction("Index", "Home");
+                    }
+                }
               }
 
               this.ModelState.AddModelError(string.Empty, UserErrorMessage);
@@ -107,7 +119,6 @@
         }
 
         [HttpPost]
-
         public async Task<IActionResult> Logout()
         {
                 await this.signInManager.SignOutAsync();

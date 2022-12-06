@@ -1,20 +1,18 @@
-﻿namespace ExpressEaglesCourier.Web.Areas.Administration.Controllers
+﻿namespace ExpressEaglesCourier.Web.Areas.Employee.Controllers
 {
     using System;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
-    using ExpressEaglesCourier.Web.Controllers;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using static ExpressEaglesCourier.Common.GlobalConstants;
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
-    [Authorize]
-    [Area("Administration")]
-    public class ShipmentController : BaseController
+    public class ShipmentController : StaffController
     {
         private readonly IShipmentService shipmentService;
         private readonly IEmployeeService employeeService;
@@ -28,8 +26,6 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
-
         public IActionResult Add()
         {
             ShipmentFormModel model = new ShipmentFormModel();
@@ -37,7 +33,6 @@
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Add(ShipmentFormModel model)
         {
             if (!this.ModelState.IsValid)
@@ -65,16 +60,13 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
             ShipmentFormModel model = await this.shipmentService.GetShipmentForEditAsync(id);
-
             return this.View(model);
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Edit(ShipmentFormModel model)
         {
             if (!this.ModelState.IsValid)
@@ -98,7 +90,6 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             if (!await this.shipmentService.ShipmentExists(id))
@@ -107,11 +98,10 @@
             }
 
             ShipmentDetailsViewModel model = await this.shipmentService.GetShipmentDetails(id);
-
             return this.View(model);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = AdministratorRoleName + "," + ManagerRoleName)]
         [HttpPost]
         public async Task<IActionResult> AddEmployee(int shipmentId, string employeeId)
         {
@@ -124,21 +114,21 @@
                 this.ModelState.AddModelError(string.Empty, CannotAddEmployeeToShipment);
 
                 this.TempData[Message] = ex.Message;
-                return this.RedirectToAction(nameof(EmployeeController.GetAll), "Employee");
+                return this.RedirectToAction("GetAll", "Employee", new { area = "Administration" });
             }
 
             return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = AdministratorRoleName + "," + ManagerRoleName)]
         public async Task<IActionResult> RemoveEmployee(int shipmentId, string employeeId)
         {
-              await this.shipmentService.RemoveEmployeeFromShipmentAsync(shipmentId, employeeId);
+            await this.shipmentService.RemoveEmployeeFromShipmentAsync(shipmentId, employeeId);
 
-              return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
+            return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = AdministratorRoleName + "," + ManagerRoleName)]
         public async Task<IActionResult> Delete(int id)
         {
             await this.shipmentService.DeleteShipmentAsync(id);

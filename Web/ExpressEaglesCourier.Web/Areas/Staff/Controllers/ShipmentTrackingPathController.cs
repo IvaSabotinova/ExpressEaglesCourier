@@ -1,20 +1,19 @@
-﻿namespace ExpressEaglesCourier.Web.Areas.Administration.Controllers
+﻿namespace ExpressEaglesCourier.Web.Areas.Employee.Controllers
 {
     using System;
+    using System.Data;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
-    using ExpressEaglesCourier.Web.Controllers;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using static ExpressEaglesCourier.Common.GlobalConstants;
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
-    [Authorize]
-    [Area("Administration")]
-    public class ShipmentTrackingPathController : BaseController
+    public class ShipmentTrackingPathController : StaffController
     {
         private readonly IShipmentTrackingPathService shipmentTrackingPathService;
         private readonly IEmployeeService employeeService;
@@ -28,8 +27,6 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
-
         public IActionResult Create(int id)
         {
             ShipmentTrackingPathFormModel model = new ShipmentTrackingPathFormModel();
@@ -41,8 +38,6 @@
         }
 
         [HttpPost]
-        [AllowAnonymous]
-
         public async Task<IActionResult> Create(ShipmentTrackingPathFormModel model)
         {
             if (!this.ModelState.IsValid)
@@ -73,16 +68,13 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
-
         public async Task<IActionResult> Details(int id)
         {
-           ShipmentTrackingPathDetailsViewModel model = await this.shipmentTrackingPathService.Details(id);
-           return this.View(model);
+            ShipmentTrackingPathDetailsViewModel model = await this.shipmentTrackingPathService.Details(id);
+            return this.View(model);
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Update([FromRoute] int id)
         {
             ShipmentTrackingPathFormModel model = await this.shipmentTrackingPathService.GetTrackingPathForUpdate(id);
@@ -93,7 +85,6 @@
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Update(ShipmentTrackingPathFormModel model)
         {
             if (!this.ModelState.IsValid)
@@ -118,12 +109,11 @@
             }
         }
 
-        [AllowAnonymous]
-
+        [Authorize(Roles = ManagerRoleName + ", " + AdministratorRoleName)]
         public async Task<IActionResult> Delete(int id)
         {
             await this.shipmentTrackingPathService.DeleteTrackingPathAsync(id);
-            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+            return this.RedirectToAction("Index", "Dashboard", new { area = "Administration" });
         }
     }
 }

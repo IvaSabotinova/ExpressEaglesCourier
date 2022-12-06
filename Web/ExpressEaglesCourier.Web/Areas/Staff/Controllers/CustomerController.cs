@@ -1,19 +1,17 @@
-﻿namespace ExpressEaglesCourier.Web.Areas.Administration.Controllers
+﻿namespace ExpressEaglesCourier.Web.Areas.Employee.Controllers
 {
     using System;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Services.Data.Customers;
-    using ExpressEaglesCourier.Web.Controllers;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using static ExpressEaglesCourier.Common.GlobalConstants;
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
-    [Authorize]
-    [Area("Administration")]
-    public class CustomerController : BaseController
+    public class CustomerController : StaffController
     {
         private readonly ICustomerService customerService;
 
@@ -22,7 +20,6 @@
             this.customerService = customerService;
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public IActionResult Add()
         {
@@ -31,7 +28,6 @@
             return this.View(model);
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Add(CustomerFormModel model)
         {
@@ -55,7 +51,7 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = ManagerRoleName + ", " + AdministratorRoleName + ", " + EmployeeRoleName)]
         public async Task<IActionResult> Details([FromRoute] string id)
         {
             CustomerDetailsViewModel model = await this.customerService.GetCustomerDetailsById(id);
@@ -64,7 +60,6 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Edit(string id)
         {
             CustomerFormModel model = await this.customerService.GetCustomerForEditAsync(id);
@@ -72,7 +67,6 @@
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Edit(CustomerFormModel model)
         {
             if (!this.ModelState.IsValid)
@@ -95,11 +89,11 @@
             }
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = ManagerRoleName + ", " + AdministratorRoleName)]
         public async Task<IActionResult> Delete(string id)
         {
-              await this.customerService.DeleteCustomerAsync(id);
-              return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+            await this.customerService.DeleteCustomerAsync(id);
+            return this.RedirectToAction("Index", "Dashboard", new { area = "Administration" });
         }
     }
 }

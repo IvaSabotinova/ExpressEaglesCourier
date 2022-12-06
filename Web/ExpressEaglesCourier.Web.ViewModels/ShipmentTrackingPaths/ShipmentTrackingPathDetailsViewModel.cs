@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths
+﻿namespace ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths
 {
+    using System;
+
     public class ShipmentTrackingPathDetailsViewModel
     {
         public int Id { get; set; }

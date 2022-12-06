@@ -7,7 +7,6 @@
 
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
-    using ExpressEaglesCourier.Web.ViewModels.Employee;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using Microsoft.EntityFrameworkCore;
 
@@ -31,7 +30,7 @@
             IDeletableEntityRepository<ShipmentVehicle> shipmentVehicleRepo,
             IDeletableEntityRepository<Vehicle> vehicleRepo,
             IDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo)
-        { 
+        {
             this.shipmentRepo = shipmentRepo;
             this.customerRepo = customerRepo;
             this.employeeRepo = employeeRepo;

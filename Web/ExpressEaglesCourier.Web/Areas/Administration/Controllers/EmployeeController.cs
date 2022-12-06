@@ -5,18 +5,12 @@
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Services.Data.Employees;
-    using ExpressEaglesCourier.Services.Data.Shipments;
-    using ExpressEaglesCourier.Web.Controllers;
-    using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Employee;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
-    [Area("Administration")]
-    [Authorize]
-    public class EmployeeController : BaseController
+    public class EmployeeController : AdministrationController
     {
         private readonly IEmployeeService employeeService;
 
@@ -26,8 +20,6 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
-
         public IActionResult Add()
         {
             var model = new EmployeeFormModel();
@@ -38,8 +30,6 @@
         }
 
         [HttpPost]
-        [AllowAnonymous]
-
         public async Task<IActionResult> Add(EmployeeFormModel model)
         {
             if (!this.ModelState.IsValid)
@@ -70,16 +60,13 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
-
-        public async Task<IActionResult> Details([FromRoute]string id)
+        public async Task<IActionResult> Details([FromRoute] string id)
         {
             EmployeeDetailsViewModel model = await this.employeeService.GetEmployeeDetails(id);
             return this.View(model);
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Edit(string id)
         {
             EmployeeFormModel model = await this.employeeService.GetEmployeeForEditAsync(id);
@@ -91,7 +78,6 @@
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Edit(EmployeeFormModel model)
         {
             if (!this.ModelState.IsValid)
@@ -119,15 +105,13 @@
             }
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult> Delete(string id)
         {
             await this.employeeService.DeleteEmployeeAsync(id);
-            return this.RedirectToAction("Index", "Home", new { area = string.Empty });
+            return this.RedirectToAction(nameof(DashboardController.Index), "Dashboard");
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> GetAll(int id)
         {
             try
