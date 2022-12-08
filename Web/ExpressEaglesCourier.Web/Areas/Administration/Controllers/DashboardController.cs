@@ -1,23 +1,25 @@
 ﻿namespace ExpressEaglesCourier.Web.Areas.Administration.Controllers
 {
-    using ExpressEaglesCourier.Services.Data;
-    using ExpressEaglesCourier.Web.ViewModels.Administration.Dashboard;
+    using System.Threading.Tasks;
 
+    using ExpressEaglesCourier.Services.Data.Stats;
+    using ExpressEaglesCourier.Web.ViewModels.Administration.Dashboard;
     using Microsoft.AspNetCore.Mvc;
 
     public class DashboardController : AdministrationController
     {
-        private readonly ISettingsService settingsService;
+        private readonly IStatsService statsService;
 
-        public DashboardController(ISettingsService settingsService)
+        public DashboardController(IStatsService statsService)
         {
-            this.settingsService = settingsService;
+            this.statsService = statsService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
-            return this.View(viewModel);
+            DashboardViewModel model = await this.statsService.GetStatsAsync();
+
+            return this.View(model);
         }
     }
 }

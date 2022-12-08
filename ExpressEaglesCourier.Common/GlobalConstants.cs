@@ -72,7 +72,7 @@
 
             public const double ShipmentMaxWeightInKg = 70.00;
 
-            public const double ShipmentMinWeightInKg = 0.00;
+            public const double ShipmentMinWeightInKg = 0.01;
 
             public const string SameDayCourier = "Same-day Courier";
 

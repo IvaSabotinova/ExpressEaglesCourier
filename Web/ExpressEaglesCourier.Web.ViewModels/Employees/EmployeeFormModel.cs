@@ -52,6 +52,7 @@
         public DateTime HiredOn { get; set; }
 
         [Display(Name = SalaryEmployee)]
+        [Range(typeof(decimal), "0.01", "79228162514264337593543950335", ConvertValueInInvariantCulture = true)]
         public decimal Salary { get; set; }
 
         [Display(Name = ResignOnDate)]

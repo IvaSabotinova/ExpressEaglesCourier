@@ -1,0 +1,92 @@
+﻿@model StaffBoardViewModel
+@{
+	 this.ViewData["Title"] = "Staff Board";
+}
+
+<hr />
+
+<table class="table table-striped table-hover mt-5">
+    <thead>
+        <tr class="table-danger">
+            <th><label><b>Subject</b></label></th>
+            <th><label><b>Count</b></label></th>
+            <th><label><b>Option</b></label></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-warning">
+            <td><label>Number Of Customers</label></td>
+            <td><label>@Model.CustomersCount</label></td>
+            <td>
+                <form asp-area="Staff" asp-controller="Customer" asp-action="All" method="post">
+                    <button type="submit" class="btn btn-danger">View All</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Number Of Shipments</label></td>
+            <td><label>@Model.ShipmentsCount</label></td>
+            <td>
+                <form asp-area="Staff" asp-controller="Shipment" asp-action="All" method="post">
+                    <button type="submit" class="btn btn-danger">View All</button>
+                </form>
+            </td>
+        </tr>
+        <tr class="table-warning">
+            <td><label>Number Of Shipment Tracking Paths</label></td>
+            <td><label>@Model.ShipmentTrackingPathsCount</label></td>
+            <td>
+                <form asp-area="Staff" asp-controller="ShipmentTrackingPath" asp-action="Search" method="post">
+                    <button type="submit" class="btn btn-danger">Search</button>
+                </form>
+            </td>
+        </tr>      
+        
+    </tbody>
+</table>
+
+<table class="table table-striped table-hover mt-5">
+    <thead>
+        <tr class="table-danger">
+            <th><label><b>Product Type</b></label></th>
+            <th><label><b>Percentage Of All Shipments</b></label></th>            
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-warning">
+            <td><label>Car Parts</label></td>
+            <td><label>@Model.ShipmentProductTypeViewModel.CarParts</label></td>
+         </tr>
+        <tr>
+            <td><label>Documents</label></td>
+            <td><label>@Model.ShipmentProductTypeViewModel.Documents</label></td>             </tr>
+        <tr class="table-warning">
+            <td><label>Stationeries</label></td>
+            <td><label>@Model.ShipmentProductTypeViewModel.Stationeries</label></td>         </tr>
+        <tr>
+            <td><label>Furniture</label></td>
+            <td><label>@Model.ShipmentProductTypeViewModel.Furniture</label></td>
+        </tr>
+        <tr class="table-warning">
+            <td><label>Textile</label></td>
+            <td><label>@Model.ShipmentProductTypeViewModel.Textile</label></td>
+        </tr>
+        <tr>
+            <td><label>Medicaments</label></td>
+            <td><label>@Model.ShipmentProductTypeViewModel.Medicaments</label></td>
+        </tr>
+        <tr class="table-warning">
+            <td><label>Technique</label></td>
+            <td><label>@Model.ShipmentProductTypeViewModel.Technique</label></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="offset-4 mt-5 mb-5">
+       <a asp-area="Staff" asp-controller="Customer" asp-action="Add"
+       class="btn btn-primary btn-lg me-3">Add Customer</a>
+
+    <a asp-area="Staff" asp-controller="Shipment" asp-action="Add"
+       class="btn btn-primary btn-lg me-3">Add Shipment</a>
+</div>
+

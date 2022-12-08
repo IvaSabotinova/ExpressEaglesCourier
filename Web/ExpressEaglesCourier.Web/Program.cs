@@ -1,7 +1,7 @@
 ﻿namespace ExpressEaglesCourier.Web
 {
     using System.Reflection;
-
+    using ExpressEaglesCourier.Common.ModelBinders;
     using ExpressEaglesCourier.Data;
     using ExpressEaglesCourier.Data.Common;
     using ExpressEaglesCourier.Data.Common.Repositories;
@@ -13,10 +13,11 @@
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
+    using ExpressEaglesCourier.Services.Data.Stats;
     using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Services.Messaging;
     using ExpressEaglesCourier.Web.ViewModels;
-
+    using HouseRentingSystem.ModelBinders;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -60,7 +61,14 @@
                 options =>
                 {
                     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                }).AddRazorRuntimeCompilation();
+                })
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                    options.ModelBinderProviders.Insert(1, new DoubleModelBinderProvider());
+                })
+                .AddRazorRuntimeCompilation();
+
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -78,6 +86,7 @@
             services.AddTransient<IShipmentService, ShipmentService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IShipmentTrackingPathService, ShipmentTrackingPathService>();
+            services.AddTransient<IStatsService, StatsService>();
         }
 
         private static void Configure(WebApplication app)

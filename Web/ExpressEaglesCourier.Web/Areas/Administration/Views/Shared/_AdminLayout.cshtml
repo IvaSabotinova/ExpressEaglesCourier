@@ -20,14 +20,18 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
 
-            <img src="~/img/gallery/net.png" height="45" alt="logo" />
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
+          @*  <img src="~/img/gallery/net.png" height="45" alt="logo" />*@
+   @*         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>*@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
+                    <li>
+                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index"
+                           class="btn btn-outline-warning btn-lg me-3">To Admin Dashboard</a>
+                    </li>
                     <li class="nav-item dropdown me-3">
                         <a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Customers</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -42,14 +46,14 @@
                             <a class="dropdown-item" asp-area="Staff" asp-controller="Shipment" asp-action="SearchShipment">Search Shipment</a></>
                         </div>
                     </li>
-                    @*<li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
                         <a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Employees</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" asp-area="Administration" asp-controller="Employee" asp-action="Add">Add New Employee</a>
                             <a class="dropdown-item" asp-area="Administration" asp-controller="Employee" asp-action="SearchEmployee">Search Employee</a></>
                             <a class="dropdown-item" asp-area="Administration" asp-controller="Employee" asp-action="GetAll">Get All Employee</a>
                         </div>
-                    </li>*@
+                    </li>
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
@@ -573,8 +577,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0">
-                        <a class="text-decoration-none" href="#"><img src="~/img/gallery/net.png" height="51" alt="" /></a>
-                        <p class="text-500 my-4">The most trusted Courier<br />company in your area.</p>
+@*                        <a class="text-decoration-none" href="#"><img src="~/img/gallery/net.png" height="51" alt="" /></a>*@
+@*                        <p class="text-500 my-4">The most trusted Courier<br />company in your area.</p>*@
                     </div>
                     <div class="col-6 col-sm-4 col-lg-2 mb-3 order-2 order-sm-1">
                         <h5 class="lh-lg fw-bold mb-4 text-light font-sans-serif">Other links </h5>
@@ -658,3 +662,4 @@
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

@@ -1,10 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-#nullable disable
+﻿#nullable disable
 
 namespace ExpressEaglesCourier.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddPropertyPickedUpFromCustomerToShipmentTrackingPathEntity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
