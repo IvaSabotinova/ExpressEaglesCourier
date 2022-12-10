@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class ShipmentTrackingPathDetailsViewModel
+    public class ShipmentTrackingPathDetailsModel
     {
         public int Id { get; set; }
 

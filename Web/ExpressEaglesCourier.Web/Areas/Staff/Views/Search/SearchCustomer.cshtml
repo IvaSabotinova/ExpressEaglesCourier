@@ -1,0 +1,30 @@
+﻿@model CustomerDetailsViewModel
+
+@{
+    ViewBag.Title = "Search Customer By Phone Number";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center mt-5 mb-5">
+    <img class="card-img-top" style="width: 30rem;"
+         src="~/img/gallery/customerSearch.webp" alt="">
+</div>
+
+<form method="get" asp-area="Staff" asp-controller="Search" asp-action="CustomerByPhoneNumber">
+    <div class="row">
+
+        <div class="form-group col-md-3 offset-4">
+            <label asp-for="PhoneNumber">Enter Phone Number (incl. country and area code)</label>
+            <input asp-for="PhoneNumber" class="form-control" placeholder="...">
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </div>
+</form>
+

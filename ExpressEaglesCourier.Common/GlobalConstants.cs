@@ -229,6 +229,8 @@
             public const string ShipmentTrackingPathNotExist = "Tracking path for the shipment does not exist!";
 
             public const string ShipmentTrackingPathUpdated = "Shipment Tracking Path Details Updated Successfully!";
+
+            public const string TrackingPathNotFound = "Tracking path not found!";
         }
     }
 }

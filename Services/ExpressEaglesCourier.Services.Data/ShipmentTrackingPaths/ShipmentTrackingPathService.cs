@@ -88,7 +88,7 @@
             return shipmentTrackingPath;
         }
 
-        public async Task<ShipmentTrackingPathDetailsViewModel> Details(int shipmentTrackPathId)
+        public async Task<ShipmentTrackingPathDetailsModel> Details(int shipmentTrackPathId)
         {
             ShipmentTrackingPath shipmentTrackingPath = await this.GetTrackingPathById(shipmentTrackPathId);
 
@@ -107,7 +107,7 @@
                 .Include(x => x.Receiver)
                 .FirstOrDefaultAsync(x => x.Id == shipmentTrackingPath.ShipmentId);
 
-            ShipmentTrackingPathDetailsViewModel model = new ShipmentTrackingPathDetailsViewModel()
+            ShipmentTrackingPathDetailsModel model = new ShipmentTrackingPathDetailsModel()
             {
                 Id = shipmentTrackPathId,
                 TrackingNumber = shipmentTrackingPath.TrackingNumber,

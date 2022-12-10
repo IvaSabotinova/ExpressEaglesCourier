@@ -12,13 +12,14 @@
 </script>
 
 
+
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 <div class="container" style="display:inline">
     <div class="row">
-        <div class="card text-body bg-light col-6">
-            <input type="hidden" asp-for="@Model.Id" />            
-                <table class="table table-striped table-hover" table-name="Employee Details">
+        <div class="card text-body col-6">
+            <input type="hidden" asp-for="@Model.Id" />
+            <table class="table table-striped table-hover" table-name="Employee Details">
                     <tbody>               
                         <tr><td><u>Employee Name</u></td></tr>
                         <tr><td>@Model.FullName</td> </tr>
@@ -41,10 +42,10 @@
                             </tr> 
                     </tbody>
                 </table>          
-        </div>
+       </div>
         <div class="col-5">
-            <img class="card-img-top" style="width: 25rem;"
-                 src="~/img/gallery/new_employee.net.jpg" alt="">
+            <img class="card-img-top" style="width: 27rem;"
+                 src="~/img/gallery/depositphotos_81284000-stock-photo-courier-delivering-package-by-van.jpg" alt="">
         </div>
         <div class="form-inline offset-1 mt-4">
             @* @if (this.User.Identity.IsAuthenticated)

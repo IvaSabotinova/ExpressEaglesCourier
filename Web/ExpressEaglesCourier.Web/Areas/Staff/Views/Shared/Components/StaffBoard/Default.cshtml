@@ -18,17 +18,17 @@
             <td><label>Number Of Customers</label></td>
             <td><label>@Model.CustomersCount</label></td>
             <td>
-                <form asp-area="Staff" asp-controller="Customer" asp-action="All" method="post">
-                    <button type="submit" class="btn btn-danger">View All</button>
+                <form asp-area="Staff" asp-controller="Search" asp-action="SearchCustomer" method="get">
+                    <button type="submit" class="btn btn-danger">Search</button>
                 </form>
             </td>
         </tr>
         <tr>
-            <td><label>Number Of Shipments</label></td>
+            <td><label>Number Of Active Shipments</label></td>
             <td><label>@Model.ShipmentsCount</label></td>
             <td>
-                <form asp-area="Staff" asp-controller="Shipment" asp-action="All" method="post">
-                    <button type="submit" class="btn btn-danger">View All</button>
+                <form asp-area="Staff" asp-controller="Search" asp-action="SearchShipment" method="get">
+                    <button type="submit" class="btn btn-danger">Search</button>
                 </form>
             </td>
         </tr>
@@ -36,9 +36,10 @@
             <td><label>Number Of Shipment Tracking Paths</label></td>
             <td><label>@Model.ShipmentTrackingPathsCount</label></td>
             <td>
-                <form asp-area="Staff" asp-controller="ShipmentTrackingPath" asp-action="Search" method="post">
+               @* <form asp-area="Staff" asp-controller="Search" asp-action="SearchTrackingPath" method="post">
                     <button type="submit" class="btn btn-danger">Search</button>
-                </form>
+                </form>*@
+                <a class="btn btn-danger" asp-area="" asp-controller="Search" asp-action="SearchTrackingPath">Search</a>
             </td>
         </tr>      
         

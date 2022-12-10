@@ -9,7 +9,7 @@
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using static ExpressEaglesCourier.Common.GlobalConstants;
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
@@ -67,11 +67,13 @@
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            ShipmentTrackingPathDetailsViewModel model = await this.shipmentTrackingPathService.Details(id);
-            return this.View(model);
+           ShipmentTrackingPathDetailsModel model = await this.shipmentTrackingPathService.Details(id);
+           return this.View(model);
+
         }
 
         [HttpGet]

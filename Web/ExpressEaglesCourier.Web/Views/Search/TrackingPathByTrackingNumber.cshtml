@@ -1,0 +1,18 @@
+﻿
+<div class="col-12 text-center container clear-top">
+       <h2 class="mt-7">No Tracking Path Available</h2>
+         <br />
+    </div>
+
+    <form method="get" asp-area="" asp-controller="Search" asp-action="SearchTrackingPath">
+        <div class="text-center mt-5"><button type="submit" class="btn btn-danger wrn-btn" style="margin-left:10px">Search Again</button></div>
+    </form>
+
+    @if (this.User.Identity.IsAuthenticated && this.User.IsInRole(EmployeeRoleName))
+    {
+    <form method="get" asp-area="Staff" asp-controller="Board" asp-action="Index">
+        <div class="text-center mt-5 mb-8"><button type="submit" class="btn btn-outline-warning wrn-btn" style="margin-left:10px">To Staff Board</button></div>
+    </form>
+    }
+  
+

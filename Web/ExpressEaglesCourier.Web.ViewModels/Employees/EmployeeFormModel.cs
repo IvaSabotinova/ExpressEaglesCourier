@@ -48,6 +48,7 @@
         [Phone]
         public string PhoneNumber { get; set; }
 
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = HireOnDate)]
         public DateTime HiredOn { get; set; }
 
@@ -58,10 +59,12 @@
         [Display(Name = ResignOnDate)]
         public DateTime? ResignOn { get; set; }
 
+        [Required(ErrorMessage = "The field is required")]
         public int OfficeId { get; set; }
 
         public IEnumerable<KeyValuePair<string, string>> Offices { get; set; } = new List<KeyValuePair<string, string>>();
 
+        [Required(ErrorMessage = "The field is required")]
         public int PositionId { get; set; }
 
         public IEnumerable<KeyValuePair<string, string>> Positions { get; set; } = new List<KeyValuePair<string, string>>();

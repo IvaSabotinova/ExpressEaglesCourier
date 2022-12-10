@@ -13,7 +13,7 @@
 
         Task<ShipmentTrackingPath> GetTrackingPathById(int shipmentTrackingPathId);
 
-        Task<ShipmentTrackingPathDetailsViewModel> Details(int shipmentTrackPathId);
+        Task<ShipmentTrackingPathDetailsModel> Details(int shipmentTrackPathId);
 
         Task<ShipmentTrackingPathFormModel> GetTrackingPathForUpdate(int shipmentTrackingPathId);
 

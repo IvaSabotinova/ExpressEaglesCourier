@@ -10,53 +10,46 @@
 <table class="table table-striped table-hover mt-5">
     <thead>
         <tr class="table-danger">
-            <th><label><b>Subject</b></label></th>
+            <th><label><b>Total Number</b></label></th>
             <th><label><b>Count</b></label></th>
             <th><label><b>Option</b></label></th>           
         </tr>
     </thead>
     <tbody>
         <tr class="table-warning">
-                <td><label>Number Of Offices</label></td>
+                <td><label>Offices</label></td>
                 <td><label>@Model.OfficesCount</label></td>
-            <td>
-                <form asp-area="Administration" asp-controller="Office" asp-action="All" method="post">
-                    <button type="submit" class="btn btn-danger">View All</button>
-                </form>
-            </td>
+           <td></td>
            </tr>
-           <tr>
-            <td><label>Number Of Employees</label></td>
-            <td><label>@Model.EmployeesCount</label></td>
-            <td>
-                <form asp-area="Administration" asp-controller="Employee" asp-action="All" method="post">
-                    <button type="submit" class="btn btn-danger">View All</button>
-                </form>
-            </td>
+        <tr>
+            <td><label>Company Vehicles</label></td>
+            <td><label>@Model.VehiclesCount</label></td>
+            <td></td>
         </tr>
         <tr class="table-warning">
-            <td><label>Number Of Company Vehicles</label></td>
-            <td><label>@Model.VehiclesCount</label></td>
+            <td><label>Employees</label></td>
+            <td><label>@Model.EmployeesCount</label></td>
             <td>
-                <form asp-area="Administration" asp-controller="Vehicle" asp-action="All" method="post">
-                    <button type="submit" class="btn btn-danger">View All</button>
+                <form asp-area="Administration" asp-controller="Search" asp-action="SearchEmployee" method="get">
+                    <button type="submit" class="btn btn-danger">Search</button>
                 </form>
             </td>
         </tr>
+      
         <tr>
-            <td><label>Number Of Customers</label></td>
+            <td><label>Customers</label></td>
             <td><label>@Model.CustomersCount</label></td>
             <td>
-                <form asp-area="Administration" asp-controller="Customer" asp-action="Search" method="post">
+                <form asp-area="Staff" asp-controller="Search" asp-action="SearchCustomer" method="get">
                     <button type="submit" class="btn btn-danger">Search</button>
                 </form>
             </td>
         </tr>
         <tr class="table-warning">
-            <td><label>Number Of Active Shipments</label></td>
+            <td><label>Active Shipments</label></td>
             <td><label>@Model.ShipmentsCount</label></td>
             <td>
-                <form asp-area="Administration" asp-controller="Shipment" asp-action="Search" method="post">
+                <form asp-area="Staff" asp-controller="Search" asp-action="SearchShipment" method="get">
                     <button type="submit" class="btn btn-danger">Search</button>
                 </form>
             </td>
