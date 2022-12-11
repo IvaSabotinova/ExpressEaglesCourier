@@ -170,6 +170,11 @@
         {
             Employee employee = await this.GetEmployeeById(employeeId);
 
+            if (employee == null)
+            {
+                throw new ArgumentException(EmployeeNotExist);
+            }
+
             return new EmployeeFormModel()
             {
                 Id = employee.Id,

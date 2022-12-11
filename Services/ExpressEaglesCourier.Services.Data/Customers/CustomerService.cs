@@ -71,6 +71,11 @@
         {
             Customer customer = await this.GetCustomerById(customerId);
 
+            if (customerId == null)
+            {
+                throw new ArgumentException(ClientNotExist);
+            }
+
             CustomerFormModel model = new CustomerFormModel()
             {
                 Id = customerId,

@@ -1,6 +1,7 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Searches
 {
     using System.Threading.Tasks;
+
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Employee;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;

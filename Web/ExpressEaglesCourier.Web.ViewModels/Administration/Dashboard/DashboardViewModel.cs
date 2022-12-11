@@ -11,5 +11,7 @@
         public int CustomersCount { get; set; }
 
         public int ShipmentsCount { get; set; }
+
+        public int TrackingPathsCount { get; set; }
     }
 }

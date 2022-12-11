@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Web.ViewModels.Employee;
     using Microsoft.AspNetCore.Mvc;
@@ -62,6 +63,13 @@
         [HttpGet]
         public async Task<IActionResult> Details([FromRoute] string id)
         {
+            Employee employee = await this.employeeService.GetEmployeeById(id);
+
+            if (employee == null)
+            {
+                return this.BadRequest();
+            }
+
             EmployeeDetailsViewModel model = await this.employeeService.GetEmployeeDetails(id);
             return this.View(model);
         }

@@ -72,10 +72,11 @@
             return new DashboardViewModel()
             {
                 OfficesCount = await this.OfficesCountAsync(),
-                EmployeesCount = await this.EmployeesCountAsync(),
                 VehiclesCount = await this.VehiclesCountAsync(),
+                EmployeesCount = await this.EmployeesCountAsync(),
                 CustomersCount = await this.CustomersCountAsync(),
                 ShipmentsCount = await this.ShipmentsCountAsync(),
+                TrackingPathsCount = await this.ShipmentsTrackingPathsCountAsync(),
             };
         }
 

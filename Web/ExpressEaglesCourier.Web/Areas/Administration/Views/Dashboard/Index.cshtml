@@ -53,8 +53,17 @@
                     <button type="submit" class="btn btn-danger">Search</button>
                 </form>
             </td>
+        </tr>     
+        <tr>
+            <td><label>Tracking Paths</label></td>
+            <td><label>@Model.TrackingPathsCount</label></td>
+            <td>
+                <form asp-area="" asp-controller="Search" asp-action="SearchTrackingPath" method="get">
+                    <button type="submit" class="btn btn-danger">Search</button>
+                </form>
+            </td>
         </tr>
-            </tbody>
+    </tbody>
 </table>
 
 <div class="offset-3 mt-5 mb-5">

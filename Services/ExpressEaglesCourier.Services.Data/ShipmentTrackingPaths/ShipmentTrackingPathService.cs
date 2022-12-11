@@ -77,16 +77,7 @@
         }
 
         public async Task<ShipmentTrackingPath> GetTrackingPathById(int shipmentTrackingPathId)
-        {
-            ShipmentTrackingPath shipmentTrackingPath = await this.shipmentTrackingPathRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentTrackingPathId);
-
-            if (shipmentTrackingPath == null)
-            {
-                throw new ArgumentException(ShipmentTrackingPathNotExist);
-            }
-
-            return shipmentTrackingPath;
-        }
+            => await this.shipmentTrackingPathRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentTrackingPathId);
 
         public async Task<ShipmentTrackingPathDetailsModel> Details(int shipmentTrackPathId)
         {
@@ -140,6 +131,11 @@
         {
             ShipmentTrackingPath shipmentTrackingPath = await this.GetTrackingPathById(shipmentTrackingPathId);
 
+            if (shipmentTrackingPath == null)
+            {
+                throw new ArgumentException(TrackingPathNotFound);
+            }
+
             ShipmentTrackingPathFormModel model = new ShipmentTrackingPathFormModel()
             {
                 Id = shipmentTrackingPath.Id,
@@ -161,6 +157,11 @@
         public async Task UpdateShipmentTrackingPathAsync(ShipmentTrackingPathFormModel model)
         {
             ShipmentTrackingPath shipmentTrackingPath = await this.GetTrackingPathById(model.Id);
+
+            if (shipmentTrackingPath == null)
+            {
+                throw new ArgumentException(TrackingPathNotFound);
+            }
 
             shipmentTrackingPath.TrackingNumber = model.TrackingNumber;
             shipmentTrackingPath.ShipmentId = model.ShipmentId;

@@ -134,6 +134,11 @@
                 .Include(x => x.Receiver)
                 .FirstOrDefaultAsync(x => x.Id == shipmentId);
 
+            if (shipment == null)
+            {
+                throw new ArgumentException(ShipmentNotExist);
+            }
+
             ShipmentFormModel model = new ShipmentFormModel()
             {
                 Id = shipment.Id,

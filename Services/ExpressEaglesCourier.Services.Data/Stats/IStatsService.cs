@@ -1,7 +1,7 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Stats
 {
     using System.Threading.Tasks;
-    using ExpressEaglesCourier.Data.Models.Enums;
+
     using ExpressEaglesCourier.Web.ViewModels.Administration.Dashboard;
     using ExpressEaglesCourier.Web.ViewModels.ViewComponent;
 

@@ -1,15 +1,14 @@
 ﻿namespace ExpressEaglesCourier.Web.Areas.Employee.Controllers
 {
     using System;
-    using System.Data;
     using System.Threading.Tasks;
-
+    using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
+
     using static ExpressEaglesCourier.Common.GlobalConstants;
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
@@ -71,9 +70,14 @@
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-           ShipmentTrackingPathDetailsModel model = await this.shipmentTrackingPathService.Details(id);
-           return this.View(model);
+            ShipmentTrackingPath shipmentTrackingPath = await this.shipmentTrackingPathService.GetTrackingPathById(id);
+            if (shipmentTrackingPath == null)
+            {
+                return this.BadRequest();
+            }
 
+            ShipmentTrackingPathDetailsModel model = await this.shipmentTrackingPathService.Details(id);
+            return this.View(model);
         }
 
         [HttpGet]

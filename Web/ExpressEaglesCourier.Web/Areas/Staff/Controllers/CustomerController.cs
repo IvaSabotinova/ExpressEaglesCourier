@@ -2,7 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
-
+    using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using Microsoft.AspNetCore.Authorization;
@@ -54,8 +54,13 @@
         [Authorize(Roles = ManagerRoleName + ", " + AdministratorRoleName + ", " + EmployeeRoleName)]
         public async Task<IActionResult> Details([FromRoute] string id)
         {
-            CustomerDetailsViewModel model = await this.customerService.GetCustomerDetailsById(id);
+            Customer customer = await this.customerService.GetCustomerById(id);
+            if (customer == null)
+            {
+                return this.BadRequest();
+            }
 
+            CustomerDetailsViewModel model = await this.customerService.GetCustomerDetailsById(id);
             return this.View(model);
         }
 

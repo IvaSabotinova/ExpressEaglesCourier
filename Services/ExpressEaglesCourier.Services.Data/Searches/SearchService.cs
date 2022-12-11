@@ -25,7 +25,6 @@
         private readonly IDeletableEntityRepository<Customer> customerRepo;
         private readonly ICustomerService customerService;
 
-
         public SearchService(
             IDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo,
             IShipmentTrackingPathService shipmentTrackingPathService,

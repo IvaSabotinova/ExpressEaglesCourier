@@ -1,7 +1,8 @@
 ﻿@model ShipmentTrackingPathDetailsModel
+@inject SignInManager<ApplicationUser> singInManager
 
 @{
-    ViewBag.Title = "Shipment Tracking Path";  
+    ViewBag.Title = "Shipment Tracking Path";
 }
 
 <script>
@@ -60,20 +61,31 @@
     </tbody>
 </table>
 
-@if (this.User.Identity.IsAuthenticated 
-     && this.User.IsInRole(AdministratorRoleName)
+@if (this.singInManager.IsSignedIn(this.User))
+{
+    @if(this.User.IsInRole(AdministratorRoleName)
      || this.User.IsInRole(EmployeeRoleName)
      || this.User.IsInRole(ManagerRoleName))
      {
-<div class="form-inline offset-5 mt-5 mb-3">
-    <a class="btn btn-warning" asp-area="Staff" asp-controller="ShipmentTrackingPath" asp-action="Update" asp-route-id="@Model.Id">Update Details</a>
-    @if(this.User.IsInRole(AdministratorRoleName)                
-                || this.User.IsInRole(ManagerRoleName))
-                {
-                     <a class="ms-2 btn btn-danger" asp-area="Staff" asp-controller="ShipmentTrackingPath" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that tracking path?')">Delete</a>
-                }
-   
-</div>
+        <div class="form-inline offset-5 mt-5 mb-3">
+            <a class="btn btn-warning" asp-area="Staff" asp-controller="ShipmentTrackingPath" asp-action="Update" asp-route-id="@Model.Id">Update Details</a>
+            @if (this.User.IsInRole(AdministratorRoleName)
+           || this.User.IsInRole(ManagerRoleName))
+            {
+                <a class="ms-2 btn btn-danger" asp-area="Staff" asp-controller="ShipmentTrackingPath" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that tracking path?')">Delete</a>
+            }
 
-     }
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <a asp-area="" asp-controller="Home" asp-action="Index"
+       class="btn btn-warning btn-lg me-3">Back To Home Page</a>
+        </div>
+    }
+}
+
+
+    
 

@@ -20,7 +20,12 @@
             <div class="col-md-75 col-xl-6 col-xxl-5 text-md-start text-center py-8">
                 <h1 class="fw-normal fs-6 fs-xxl-7">A trusted provider of </h1>
                 <h1 class="fw-bolder fs-6 fs-xxl-7 mb-2">courier services.</h1>
-                <p class="fs-1 mb-5">We deliver your products safely to <br />your home in a reasonable time. </p><a class="btn btn-primary me-2" href="#!" role="button">Get started<i class="fas fa-arrow-right ms-2"></i></a>
+                <p class="fs-1 mb-5">We deliver your products safely to <br />your home in a reasonable time. </p>
+                @if(this.User.Identity.IsAuthenticated)
+                {
+                    <a asp-area="" asp-controller="Search" asp-action="SearchTrackingPath" class="btn btn-primary me-2" role="button">Track a shipment<i class="fas fa-arrow-right ms-2"></i></a>
+                }
+              
             </div>
         </div>
     </div>
