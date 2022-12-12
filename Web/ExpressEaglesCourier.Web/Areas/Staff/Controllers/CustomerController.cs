@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
+
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
@@ -57,7 +58,7 @@
             Customer customer = await this.customerService.GetCustomerById(id);
             if (customer == null)
             {
-                return this.BadRequest();
+                return this.NotFound();
             }
 
             CustomerDetailsViewModel model = await this.customerService.GetCustomerDetailsById(id);

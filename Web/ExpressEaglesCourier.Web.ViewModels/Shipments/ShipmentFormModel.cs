@@ -88,7 +88,7 @@
         public DeliveryWay DeliveryWay { get; set; }
 
         [Required]
-        [Range(ShipmentMinWeightInKg, ShipmentMaxWeightInKg, ConvertValueInInvariantCulture = true)]       
+        [Range(ShipmentMinWeightInKg, ShipmentMaxWeightInKg, ConvertValueInInvariantCulture = true)]
 
         // [Range(ShipmentMinWeightInKg, ShipmentMaxWeightInKg, ErrorMessage = "Weight must be between {1} and {2}")]
         public double Weight { get; set; }

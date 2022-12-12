@@ -2,7 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
-    using ExpressEaglesCourier.Data.Models;
+
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
@@ -52,7 +52,7 @@
 
                 this.TempData[Message] = ShipmentTrackingPathCreated;
 
-                return this.RedirectToAction(nameof(this.Details), new { id = shipmentTrackingPathId });
+                return this.RedirectToAction("Details", "ShipmentTrackingPath", new { area=string.Empty, id = shipmentTrackingPathId });
             }
             catch (Exception ex)
             {
@@ -64,20 +64,6 @@
                 this.TempData[Message] = ex.Message;
                 return this.View(model);
             }
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<IActionResult> Details(int id)
-        {
-            ShipmentTrackingPath shipmentTrackingPath = await this.shipmentTrackingPathService.GetTrackingPathById(id);
-            if (shipmentTrackingPath == null)
-            {
-                return this.BadRequest();
-            }
-
-            ShipmentTrackingPathDetailsModel model = await this.shipmentTrackingPathService.Details(id);
-            return this.View(model);
         }
 
         [HttpGet]
@@ -104,7 +90,7 @@
             {
                 await this.shipmentTrackingPathService.UpdateShipmentTrackingPathAsync(model);
                 this.TempData[Message] = ShipmentTrackingPathUpdated;
-                return this.RedirectToAction(nameof(this.Details), new { id = model.Id });
+                return this.RedirectToAction("Details", "ShipmentTrackingPath", new { area = string.Empty, id = model.Id });
             }
             catch (Exception ex)
             {
@@ -115,11 +101,10 @@
             }
         }
 
-        [Authorize(Roles = ManagerRoleName + ", " + AdministratorRoleName)]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await this.shipmentTrackingPathService.DeleteTrackingPathAsync(id);
-            return this.RedirectToAction("Index", "Dashboard", new { area = "Administration" });
-        }
+        // [Authorize(Roles = ManagerRoleName + ", " + AdministratorRoleName)]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //    await this.shipmentTrackingPathService.DeleteTrackingPathAsync(id);
+        //    return this.RedirectToAction("Index", "Dashboard", new { area = "Administration" });
     }
 }

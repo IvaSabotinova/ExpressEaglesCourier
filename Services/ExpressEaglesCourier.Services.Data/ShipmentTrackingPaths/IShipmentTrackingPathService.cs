@@ -19,6 +19,6 @@
 
         Task UpdateShipmentTrackingPathAsync(ShipmentTrackingPathFormModel model);
 
-        Task DeleteTrackingPathAsync(int shipmentTrackingPathId);
+        // Task DeleteTrackingPathAsync(int shipmentTrackingPathId);
     }
 }

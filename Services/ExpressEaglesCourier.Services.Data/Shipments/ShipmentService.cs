@@ -264,11 +264,6 @@
         /// <exception cref="ArgumentException">Employee with that shipment exists.</exception>
         public async Task AddEmployeeToShipment(int shipmentId, string employeeId)
         {
-            if (!await this.ShipmentExists(shipmentId))
-            {
-                throw new ArgumentException(ShipmentNotFountGoBackToShipmentDetails);
-            }
-
             Employee employee = await this.employeeRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == employeeId);
 
             if (employee == null)
@@ -281,7 +276,7 @@
 
             if (employeeShipment != null)
             {
-                throw new ArgumentException(EmployeeWithShipmentAlreadyExists);
+                throw new ArgumentException(EmployeeAlreadyAssignedWithShipment);
             }
 
             EmployeeShipment newShipmentEmployee = new EmployeeShipment()

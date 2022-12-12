@@ -67,7 +67,7 @@
 
             if (employee == null)
             {
-                return this.BadRequest();
+                return this.NotFound();
             }
 
             EmployeeDetailsViewModel model = await this.employeeService.GetEmployeeDetails(id);
@@ -122,6 +122,11 @@
         [HttpGet]
         public async Task<IActionResult> GetAll(int id)
         {
+            if (id < 1)
+            {
+                return this.NotFound();
+            }
+
             try
             {
                 IEnumerable<EmployeeAllViewModel> model = await this.employeeService.GetAllAsync(id);

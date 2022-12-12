@@ -1,5 +1,4 @@
-﻿
-namespace ExpressEaglesCourier.Common.ModelBinders
+﻿namespace ExpressEaglesCourier.Common.ModelBinders
 {
     using System;
 

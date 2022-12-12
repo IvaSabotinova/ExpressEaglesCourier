@@ -192,7 +192,7 @@
 
             public const string CannotAddEmployeeToShipment = "Cannot add employee to shipment!";
 
-            public const string EmployeeWithShipmentAlreadyExists = "Employee with this shipment already exists!";
+            public const string EmployeeAlreadyAssignedWithShipment = "Employee already assigned with this shipment!";
 
             public const string ShipmentWithEmployeeNotExists = "Shipment with that employee does not exist!";
 
@@ -204,8 +204,7 @@
 
             public const string ShipmentWithVehicleNotExist = "Shipment with that vehicle does not exist"!;
 
-            public const string ShipmentNotFountGoBackToShipmentDetails = "Shipment not found! Go back to shipment details!";
-
+            // public const string ShipmentNotFountGoBackToShipmentDetails = "Shipment not found! Go back to shipment details!";
             public const string CustomerCreated = "Customer created successfully!";
 
             public const string CustomerDetailsAmended = "Customer details amended successfully!";

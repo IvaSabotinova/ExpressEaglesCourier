@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-7">
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <img src="~/img/gallery/Error404.jpg" alt="Alternative image" class="img-thumbnail mb-3">
+                <div class="text-center h4">
+                    <p>Oops, better check that URL. Page was not found.</p>
+                </div>
+                @if(this.User.IsInRole(AdministratorRoleName)
+                || this.User.IsInRole(ManagerRoleName))
+                {
+                    <div class="text-center h4">  Go back to <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Admin</a> Dashboard</div>
+                }
+                else if (this.User.IsInRole(EmployeeRoleName))
+                {
+                    <div class="text-center h4">  Go back to <a asp-area="Staff" asp-controller="Board" asp-action="Index">Staff</a> Board</div>
+                }
+                else                
+                {
+                    <div class="text-center h4">  Go back to <a asp-area="" asp-controller="Home" asp-action="Index">Home</a> Page</div>
+                }
+               
+            </div>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>

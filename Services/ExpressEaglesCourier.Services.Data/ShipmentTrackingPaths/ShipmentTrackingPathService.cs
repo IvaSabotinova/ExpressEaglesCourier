@@ -184,13 +184,11 @@
             await this.shipmentTrackingPathRepo.SaveChangesAsync();
         }
 
-        public async Task DeleteTrackingPathAsync(int shipmentTrackingPathId)
-        {
-            ShipmentTrackingPath shipmentTrackingPath = await this.GetTrackingPathById(shipmentTrackingPathId);
-
-            this.shipmentTrackingPathRepo.Delete(shipmentTrackingPath);
-
-            await this.shipmentTrackingPathRepo.SaveChangesAsync();
-        }
+        // public async Task DeleteTrackingPathAsync(int shipmentTrackingPathId)
+        // {
+        //    ShipmentTrackingPath shipmentTrackingPath = await this.GetTrackingPathById(shipmentTrackingPathId);
+        //    this.shipmentTrackingPathRepo.Delete(shipmentTrackingPath);
+        //    await this.shipmentTrackingPathRepo.SaveChangesAsync();
+        // }
     }
 }

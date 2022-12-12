@@ -94,7 +94,7 @@
         {
             if (!await this.shipmentService.ShipmentExists(id))
             {
-                return this.BadRequest();
+                return this.NotFound();
             }
 
             ShipmentDetailsViewModel model = await this.shipmentService.GetShipmentDetails(id);
@@ -105,19 +105,23 @@
         [HttpPost]
         public async Task<IActionResult> AddEmployee(int shipmentId, string employeeId)
         {
+            if (shipmentId < 1)
+            {
+                return this.NotFound();
+            }
+
             try
             {
                 await this.shipmentService.AddEmployeeToShipment(shipmentId, employeeId);
+                return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
             }
             catch (Exception ex)
             {
                 this.ModelState.AddModelError(string.Empty, CannotAddEmployeeToShipment);
 
                 this.TempData[Message] = ex.Message;
-                return this.RedirectToAction("GetAll", "Employee", new { area = "Administration" });
+                return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
             }
-
-            return this.RedirectToAction(nameof(this.Details), new { id = shipmentId });
         }
 
         [Authorize(Roles = AdministratorRoleName + "," + ManagerRoleName)]

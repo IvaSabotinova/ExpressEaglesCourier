@@ -112,6 +112,7 @@
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
                 app.UseHsts();
             }
 
@@ -124,6 +125,9 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // app.MapControllerRoute(
+            //    name: "GetAll",
+            //    pattern: "Administration/Employee/GetAll/{id}");
             app.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
