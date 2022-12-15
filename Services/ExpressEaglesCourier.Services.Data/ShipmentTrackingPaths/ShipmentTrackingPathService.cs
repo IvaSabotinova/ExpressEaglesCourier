@@ -32,7 +32,7 @@
 
             if (shipment == null)
             {
-                throw new ArgumentException(ShipmentNotExist);
+                throw new NullReferenceException(ShipmentNotExist);
             }
 
             return shipment;
@@ -133,7 +133,7 @@
 
             if (shipmentTrackingPath == null)
             {
-                throw new ArgumentException(TrackingPathNotFound);
+                throw new NullReferenceException(TrackingPathNotFound);
             }
 
             ShipmentTrackingPathFormModel model = new ShipmentTrackingPathFormModel()
@@ -160,7 +160,7 @@
 
             if (shipmentTrackingPath == null)
             {
-                throw new ArgumentException(TrackingPathNotFound);
+                throw new NullReferenceException(TrackingPathNotFound);
             }
 
             shipmentTrackingPath.TrackingNumber = model.TrackingNumber;

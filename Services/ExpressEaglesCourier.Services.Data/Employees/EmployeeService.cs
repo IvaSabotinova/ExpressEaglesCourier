@@ -146,7 +146,7 @@
 
             if (employee == null)
             {
-                throw new ArgumentException(EmployeeNotExist);
+                throw new NullReferenceException(EmployeeNotExist);
             }
 
             EmployeeDetailsViewModel model = new EmployeeDetailsViewModel()
@@ -172,7 +172,7 @@
 
             if (employee == null)
             {
-                throw new ArgumentException(EmployeeNotExist);
+                throw new NullReferenceException(EmployeeNotExist);
             }
 
             return new EmployeeFormModel()
@@ -200,7 +200,7 @@
 
             if (employee == null)
             {
-                throw new ArgumentException(EmployeeNotExist);
+                throw new NullReferenceException(EmployeeNotExist);
             }
 
             Vehicle employeeOldVehicle = await this.vehicleRepo.All().FirstOrDefaultAsync(x => x.Id == employee.VehicleId);
@@ -245,7 +245,7 @@
 
             if (employee == null)
             {
-                throw new ArgumentException(EmployeeNotExist);
+                throw new NullReferenceException(EmployeeNotExist);
             }
 
             if (employee.VehicleId != null)

@@ -44,17 +44,17 @@
         {
             if (await this.TrackingNumberExists(model.TrackingNumber))
             {
-                throw new ArgumentException(TrackingNumberExistsInDB);
+                throw new NullReferenceException(TrackingNumberExistsInDB);
             }
 
             if (await this.CustomerWithPhoneNumberExists(model.SenderFirstName, model.SenderLastName, model.SenderPhoneNumber) == false)
             {
-                throw new ArgumentException(SenderWithPhoneNumberDoesNotExit);
+                throw new NullReferenceException(SenderWithPhoneNumberDoesNotExit);
             }
 
             if (await this.CustomerWithPhoneNumberExists(model.ReceiverFirstName, model.ReceiverLastName, model.ReceiverPhoneNumber) == false)
             {
-                throw new ArgumentException(ReceiverWithPhoneNumberDoesNotExit);
+                throw new NullReferenceException(ReceiverWithPhoneNumberDoesNotExit);
             }
 
             string senderId = await this.GetCustomerId(model.SenderFirstName, model.SenderLastName, model.SenderPhoneNumber);
@@ -121,7 +121,7 @@
 
             if (customer == null)
             {
-                throw new ArgumentException(ClientNotExist);
+                throw new NullReferenceException(ClientNotExist);
             }
 
             return customer.Id;
@@ -136,7 +136,7 @@
 
             if (shipment == null)
             {
-                throw new ArgumentException(ShipmentNotExist);
+                throw new NullReferenceException(ShipmentNotExist);
             }
 
             ShipmentFormModel model = new ShipmentFormModel()
