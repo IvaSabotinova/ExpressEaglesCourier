@@ -125,9 +125,6 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // app.MapControllerRoute(
-            //    name: "GetAll",
-            //    pattern: "Administration/Employee/GetAll/{id}");
             app.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 

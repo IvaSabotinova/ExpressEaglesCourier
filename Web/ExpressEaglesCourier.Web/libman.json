@@ -22,10 +22,10 @@
     },
     {
       "library": "jquery-validation@1.19.4",
-      "destination": "wwwroot/lib/jquery-validation/",
+      "destination": "wwwroot/lib/jquery-validation/",     
       "files": [
         "dist/jquery.validate.js",
-        "dist/jquery.validate.min.js"
+        "dist/jquery.validate.min.js"        
       ]
     },
     {

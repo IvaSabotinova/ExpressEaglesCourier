@@ -50,7 +50,7 @@
 
             if (customer == null)
             {
-                throw new ArgumentException(ClientNotExist);
+                throw new NullReferenceException(ClientNotExist);
             }
 
             return new CustomerDetailsViewModel()
@@ -73,7 +73,7 @@
 
             if (customerId == null)
             {
-                throw new ArgumentException(ClientNotExist);
+                throw new NullReferenceException(ClientNotExist);
             }
 
             CustomerFormModel model = new CustomerFormModel()
@@ -97,7 +97,7 @@
 
             if (customer == null)
             {
-                throw new ArgumentException(ClientNotExist);
+                throw new NullReferenceException(ClientNotExist);
             }
 
             customer.Id = model.Id;
@@ -119,7 +119,7 @@
 
             if (customer == null)
             {
-                throw new ArgumentException(ClientNotExist);
+                throw new NullReferenceException(ClientNotExist);
             }
 
             this.customerRepo.Delete(customer);
