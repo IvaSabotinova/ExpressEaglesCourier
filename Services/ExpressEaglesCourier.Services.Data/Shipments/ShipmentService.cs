@@ -114,7 +114,7 @@
         /// <param name="lastName"></param>
         /// <param name="phoneNumber"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentException">Client not exists.</exception>
+        /// <exception cref="NullReferenceException">Client not exists.</exception>
         public async Task<string> GetCustomerId(string firstName, string lastName, string phoneNumber)
         {
             Customer customer = await this.customerRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.FirstName == firstName && x.LastName == lastName && x.PhoneNumber == phoneNumber);
@@ -169,12 +169,12 @@
         {
             if (await this.CustomerWithPhoneNumberExists(model.SenderFirstName, model.SenderLastName, model.SenderPhoneNumber) == false)
             {
-                throw new ArgumentException(SenderWithPhoneNumberDoesNotExit);
+                throw new NullReferenceException(SenderWithPhoneNumberDoesNotExit);
             }
 
             if (await this.CustomerWithPhoneNumberExists(model.ReceiverFirstName, model.ReceiverLastName, model.ReceiverPhoneNumber) == false)
             {
-                throw new ArgumentException(ReceiverWithPhoneNumberDoesNotExit);
+                throw new NullReferenceException(ReceiverWithPhoneNumberDoesNotExit);
             }
 
             string senderId = await this.GetCustomerId(model.SenderFirstName, model.SenderLastName, model.SenderPhoneNumber);
@@ -185,7 +185,7 @@
 
             if (shipment == null)
             {
-                throw new ArgumentException(ShipmentNotExist);
+                throw new NullReferenceException(ShipmentNotExist);
             }
 
             shipment.TrackingNumber = model.TrackingNumber;
@@ -261,14 +261,14 @@
         /// <param name="shipmentId"></param>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentException">Employee with that shipment exists.</exception>
+        /// <exception cref="ArgumentException">Employee already assigned with this shipment!.</exception>
         public async Task AddEmployeeToShipment(int shipmentId, string employeeId)
         {
             Employee employee = await this.employeeRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == employeeId);
 
             if (employee == null)
             {
-                throw new ArgumentException(EmployeeNotExist);
+                throw new NullReferenceException(EmployeeNotExist);
             }
 
             EmployeeShipment employeeShipment = await this.shipmentEmployeeRepo.AllAsNoTracking()
@@ -295,7 +295,7 @@
 
                 if (vehicle == null)
                 {
-                    throw new ArgumentException(VehicleNotExist);
+                    throw new NullReferenceException(VehicleNotExist);
                 }
 
                 ShipmentVehicle shipmentVehicle = await this.shipmentVehicleRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.VehicleId == vehicle.Id);
@@ -320,14 +320,14 @@
         /// <param name="shipmentId"></param>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentException">Shipment with that employee does not exist.</exception>
+        /// <exception cref="NullReferenceException">Shipment with that employee does not exist.</exception>
         public async Task RemoveEmployeeFromShipmentAsync(int shipmentId, string employeeId)
         {
             EmployeeShipment employeeShipment = await this.shipmentEmployeeRepo.All().FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.EmployeeId == employeeId);
 
             if (employeeShipment == null)
             {
-                throw new ArgumentException(ShipmentWithEmployeeNotExists);
+                throw new NullReferenceException(ShipmentWithEmployeeNotExists);
             }
 
             this.shipmentEmployeeRepo.HardDelete(employeeShipment);
@@ -340,14 +340,14 @@
 
                 if (vehicle == null)
                 {
-                    throw new ArgumentException(VehicleNotExist);
+                    throw new NullReferenceException(VehicleNotExist);
                 }
 
                 ShipmentVehicle shipmentVehicle = await this.shipmentVehicleRepo.All().FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.VehicleId == vehicle.Id);
 
                 if (shipmentVehicle == null)
                 {
-                    throw new ArgumentException(ShipmentWithVehicleNotExist);
+                    throw new NullReferenceException(ShipmentWithVehicleNotExist);
                 }
 
                 this.shipmentVehicleRepo.HardDelete(shipmentVehicle);
@@ -360,12 +360,12 @@
         /// </summary>
         /// <param name="shipmentId"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentException">Shipment does not exist.</exception>
+        /// <exception cref="NullReferenceException">Shipment does not exist.</exception>
         public async Task DeleteShipmentAsync(int shipmentId)
         {
             if (!await this.ShipmentExists(shipmentId))
             {
-                throw new ArgumentException(ShipmentNotExist);
+                throw new NullReferenceException(ShipmentNotExist);
             }
 
             List<EmployeeShipment> employeesShipment = await this.shipmentEmployeeRepo.All().Where(x => x.ShipmentId == shipmentId).ToListAsync();

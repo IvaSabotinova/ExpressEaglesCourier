@@ -6,6 +6,7 @@
 
     using ExpressEaglesCourier.Data;
     using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Data.Models.Enums;
     using ExpressEaglesCourier.Data.Repositories;
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Data.Shipments;
@@ -56,7 +57,6 @@
         {
             CustomerFormModel customerModel1 = new CustomerFormModel()
             {
-                Id = "908f7741-6e6e-4c23-86ae-0eb81107e880",
                 FirstName = "Gosho",
                 MiddleName = "Goshev",
                 LastName = "Marinov",
@@ -74,7 +74,6 @@
         {
             CustomerFormModel customerModel2 = new CustomerFormModel()
             {
-                Id = "d2f41660-79e8-45a4-852d-3cd99e6935a4",
                 FirstName = "Pesho",
                 MiddleName = "Peshev",
                 LastName = "Peshev",
@@ -106,7 +105,6 @@
         {
             CustomerFormModel exceptionModel = new CustomerFormModel()
             {
-                Id = "f8fe1582-6283-459a-88e1-f89cc0b1e368",
                 FirstName = "Vlad",
                 MiddleName = "Vladov",
                 LastName = "Vladov",
@@ -139,7 +137,6 @@
 
             ShipmentFormModel shipmentModel = new ShipmentFormModel()
             {
-                Id = 1,
                 TrackingNumber = "11111111111",
                 SenderFirstName = customer1.FirstName,
                 SenderLastName = customer1.LastName,
@@ -156,7 +153,7 @@
                 Weight = 0.90,
                 DeliveryWay = 0,
                 DeliveryType = 0,
-                ProductType = 0,
+                ProductType = (ProductType)4,
                 Price = 4.90m,
             };
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
@@ -187,7 +184,6 @@
 
             ShipmentFormModel model = new ShipmentFormModel()
             {
-                Id = 2,
                 TrackingNumber = "11111111112",
                 SenderFirstName = customer1.FirstName,
                 SenderLastName = customer1.LastName,
@@ -204,7 +200,7 @@
                 Weight = 0.90,
                 DeliveryWay = 0,
                 DeliveryType = 0,
-                ProductType = 0,
+                ProductType = (ProductType)4,
                 Price = 4.90m,
             };
             await this.GetShipmentService().CreateShipmentAsync(model);
@@ -240,7 +236,6 @@
 
             ShipmentFormModel shipmentModel = new ShipmentFormModel()
             {
-                Id = 3,
                 TrackingNumber = "11111111113",
                 SenderFirstName = customer1.FirstName,
                 SenderLastName = customer1.LastName,
@@ -257,7 +252,7 @@
                 Weight = 0.90,
                 DeliveryWay = 0,
                 DeliveryType = 0,
-                ProductType = 0,
+                ProductType = (ProductType)4,
                 Price = 4.90m,
             };
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
@@ -286,13 +281,232 @@
                 Weight = 0.90,
                 DeliveryWay = 0,
                 DeliveryType = 0,
-                ProductType = 0,
+                ProductType = (ProductType)4,
                 Price = 4.90m,
             });
 
             Shipment shipmenNew = await this.GetDbContext().Shipments.Where(x => x.Id == editModel.Id).FirstOrDefaultAsync();
 
             Assert.Equal("Changed address", shipmenNew.DestinationAddress);
+        }
+
+        [Fact]
+
+        public async Task GetShipmentDetailsTest()
+        {
+            await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
+
+            Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
+
+            await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer2FormModel());
+
+            Customer customer2 = await this.GetDbContext().Customers.Skip(1).FirstOrDefaultAsync();
+
+            ShipmentFormModel shipmentModel = new ShipmentFormModel()
+            {
+                TrackingNumber = "11111111114",
+                SenderFirstName = customer1.FirstName,
+                SenderLastName = customer1.LastName,
+                SenderPhoneNumber = customer1.PhoneNumber,
+                ReceiverFirstName = customer2.FirstName,
+                ReceiverLastName = customer2.LastName,
+                ReceiverPhoneNumber = customer2.PhoneNumber,
+                PickUpAddress = customer1.Address,
+                PickUpTown = customer1.City,
+                PickUpCountry = customer1.Country,
+                DestinationAddress = customer2.Address,
+                DestinationTown = customer2.City,
+                DestinationCountry = customer2.Country,
+                Weight = 0.90,
+                DeliveryWay = 0,
+                DeliveryType = 0,
+                ProductType = (ProductType)4,
+                Price = 4.90m,
+            };
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+
+            Shipment shipment = await this.GetDbContext().Shipments
+                .Where(x => x.TrackingNumber == "11111111114").FirstOrDefaultAsync();
+
+            ShipmentDetailsViewModel model = await this.GetShipmentService().GetShipmentDetails(shipment.Id);
+
+            Assert.Equal("Gosho Marinov", model.SenderFullName);
+            Assert.Equal("Lazur block 33, Bourgas, Bulgaria", model.FullPickUpAddress);
+        }
+
+        [Fact]
+
+        public async Task ShipmentExistsTest()
+        {
+            await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
+
+            Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
+
+            await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer2FormModel());
+
+            Customer customer2 = await this.GetDbContext().Customers.Skip(1).FirstOrDefaultAsync();
+
+            ShipmentFormModel shipmentModel = new ShipmentFormModel()
+            {
+                TrackingNumber = "11111111115",
+                SenderFirstName = customer1.FirstName,
+                SenderLastName = customer1.LastName,
+                SenderPhoneNumber = customer1.PhoneNumber,
+                ReceiverFirstName = customer2.FirstName,
+                ReceiverLastName = customer2.LastName,
+                ReceiverPhoneNumber = customer2.PhoneNumber,
+                PickUpAddress = customer1.Address,
+                PickUpTown = customer1.City,
+                PickUpCountry = customer1.Country,
+                DestinationAddress = customer2.Address,
+                DestinationTown = customer2.City,
+                DestinationCountry = customer2.Country,
+                Weight = 0.90,
+                DeliveryWay = 0,
+                DeliveryType = 0,
+                ProductType = (ProductType)4,
+                Price = 4.90m,
+            };
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+
+            Shipment shipment = await this.GetDbContext().Shipments
+                .Where(x => x.TrackingNumber == "11111111115").FirstOrDefaultAsync();
+
+            bool result = await this.GetShipmentService().ShipmentExists(shipment.Id);
+
+            Assert.True(result);
+        }
+
+        [Fact]
+
+        public async Task AddEmployeeToShipmentExceptionTest()
+        {
+            await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
+
+            Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
+
+            await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer2FormModel());
+
+            Customer customer2 = await this.GetDbContext().Customers.Skip(1).FirstOrDefaultAsync();
+
+            ShipmentFormModel shipmentModel = new ShipmentFormModel()
+            {
+                TrackingNumber = "11111111116",
+                SenderFirstName = customer1.FirstName,
+                SenderLastName = customer1.LastName,
+                SenderPhoneNumber = customer1.PhoneNumber,
+                ReceiverFirstName = customer2.FirstName,
+                ReceiverLastName = customer2.LastName,
+                ReceiverPhoneNumber = customer2.PhoneNumber,
+                PickUpAddress = customer1.Address,
+                PickUpTown = customer1.City,
+                PickUpCountry = customer1.Country,
+                DestinationAddress = customer2.Address,
+                DestinationTown = customer2.City,
+                DestinationCountry = customer2.Country,
+                Weight = 0.90,
+                DeliveryWay = 0,
+                DeliveryType = 0,
+                ProductType = (ProductType)4,
+                Price = 4.90m,
+            };
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+
+            Shipment shipment = await this.GetDbContext().Shipments
+                .Where(x => x.TrackingNumber == "11111111116").FirstOrDefaultAsync();
+
+            await Assert.ThrowsAsync<NullReferenceException>(() => this.GetShipmentService().AddEmployeeToShipment(shipment.Id, "61bf43aa-b84d-43c1-ae25-e42c56bce588"));
+        }
+
+        [Fact]
+
+        public async Task RemoveEmployeeFromShipmentAsyncExceptionTest()
+        {
+            await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
+
+            Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
+
+            await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer2FormModel());
+
+            Customer customer2 = await this.GetDbContext().Customers.Skip(1).FirstOrDefaultAsync();
+
+            ShipmentFormModel shipmentModel = new ShipmentFormModel()
+            {
+                TrackingNumber = "11111111117",
+                SenderFirstName = customer1.FirstName,
+                SenderLastName = customer1.LastName,
+                SenderPhoneNumber = customer1.PhoneNumber,
+                ReceiverFirstName = customer2.FirstName,
+                ReceiverLastName = customer2.LastName,
+                ReceiverPhoneNumber = customer2.PhoneNumber,
+                PickUpAddress = customer1.Address,
+                PickUpTown = customer1.City,
+                PickUpCountry = customer1.Country,
+                DestinationAddress = customer2.Address,
+                DestinationTown = customer2.City,
+                DestinationCountry = customer2.Country,
+                Weight = 0.90,
+                DeliveryWay = 0,
+                DeliveryType = 0,
+                ProductType = (ProductType)4,
+                Price = 4.90m,
+            };
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+
+            Shipment shipment = await this.GetDbContext().Shipments
+                .Where(x => x.TrackingNumber == "11111111117").FirstOrDefaultAsync();
+
+            await Assert.ThrowsAsync<NullReferenceException>(() => this.GetShipmentService().RemoveEmployeeFromShipmentAsync(shipment.Id, "bd22feb6-e954-4903-ba40-66fae271a013"));
+        }
+
+        [Fact]
+        public async Task DeleteShipmentAsyncTest()
+        {
+            await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
+
+            Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
+
+            await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer2FormModel());
+
+            Customer customer2 = await this.GetDbContext().Customers.Skip(1).FirstOrDefaultAsync();
+
+            ShipmentFormModel shipmentModel = new ShipmentFormModel()
+            {
+                TrackingNumber = "11111111118",
+                SenderFirstName = customer1.FirstName,
+                SenderLastName = customer1.LastName,
+                SenderPhoneNumber = customer1.PhoneNumber,
+                ReceiverFirstName = customer2.FirstName,
+                ReceiverLastName = customer2.LastName,
+                ReceiverPhoneNumber = customer2.PhoneNumber,
+                PickUpAddress = customer1.Address,
+                PickUpTown = customer1.City,
+                PickUpCountry = customer1.Country,
+                DestinationAddress = customer2.Address,
+                DestinationTown = customer2.City,
+                DestinationCountry = customer2.Country,
+                Weight = 0.90,
+                DeliveryWay = 0,
+                DeliveryType = 0,
+                ProductType = (ProductType)4,
+                Price = 4.90m,
+            };
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+
+            Shipment shipment = await this.GetDbContext().Shipments
+                .Where(x => x.TrackingNumber == "11111111118").FirstOrDefaultAsync();
+
+            await this.GetShipmentService().DeleteShipmentAsync(shipment.Id);
+
+            bool result = await this.GetDbContext().Shipments.AnyAsync(x => x.Id == shipment.Id);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async Task DeleteShipmentAsyncExceptionTest()
+        {
+            await Assert.ThrowsAsync<NullReferenceException>(() => this.GetShipmentService().DeleteShipmentAsync(15));
         }
     }
 }

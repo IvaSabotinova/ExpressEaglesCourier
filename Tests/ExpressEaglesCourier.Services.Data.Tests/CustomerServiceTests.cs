@@ -34,7 +34,6 @@
         {
             CustomerFormModel model = new CustomerFormModel()
             {
-                Id = "74d8ad86-ef7a-49bf-b435-96f263b0ed2d",
                 FirstName = "Gosho",
                 MiddleName = "Goshev",
                 LastName = "Goshev",
@@ -109,7 +108,6 @@
         {
             CustomerFormModel model1 = new CustomerFormModel()
             {
-                Id = "82c5d8b6-2a6d-4756-aeb1-de696291deaf",
                 FirstName = "Pesho",
                 MiddleName = "Peshev",
                 LastName = "Peshev",
@@ -150,7 +148,6 @@
         {
             CustomerFormModel model = new CustomerFormModel()
             {
-                Id = "82c5d8b6-2a6d-4756-aeb1-de696291deaf",
                 FirstName = "Pesho",
                 MiddleName = "Peshev",
                 LastName = "Peshev",
@@ -168,7 +165,7 @@
             await this.GetCustomerService().DeleteCustomerAsync(customer.Id);
 
             Assert.False(await this.GetDbContext().Customers
-                .AnyAsync(x => x.Id == "82c5d8b6-2a6d-4756-aeb1-de696291deaf"));
+                .AnyAsync(x => x.Id == customer.Id));
         }
     }
 }
