@@ -110,48 +110,6 @@
             return customer2;
         }
 
-        // public async Task<ShipmentTrackingPathFormModel> GetShipmentTrackingPathModel()
-        // {
-        //    ShipmentFormModel shipmentModel = new ShipmentFormModel()
-        //    {
-        //        TrackingNumber = "11111111119",
-        //        SenderFirstName = this.GetCustomer1().Result.FirstName,
-        //        SenderLastName = this.GetCustomer1().Result.LastName,
-        //        SenderPhoneNumber = this.GetCustomer1().Result.PhoneNumber,
-        //        ReceiverFirstName = this.GetCustomer2().Result.FirstName,
-        //        ReceiverLastName = this.GetCustomer2().Result.LastName,
-        //        ReceiverPhoneNumber = this.GetCustomer2().Result.PhoneNumber,
-        //        PickUpAddress = this.GetCustomer1().Result.Address,
-        //        PickUpTown = this.GetCustomer1().Result.City,
-        //        PickUpCountry = this.GetCustomer1().Result.Country,
-        //        DestinationAddress = this.GetCustomer2().Result.Address,
-        //        DestinationTown = this.GetCustomer2().Result.City,
-        //        DestinationCountry = this.GetCustomer2().Result.Country,
-        //        Weight = 0.90,
-        //        DeliveryWay = 0,
-        //        DeliveryType = 0,
-        //        ProductType = 0,
-        //        Price = 4.90m,
-        //    };
-        // await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
-        //    Shipment shipment = await this.GetDbContext().Shipments
-        //        .Where(x => x.TrackingNumber == shipmentModel.TrackingNumber).FirstOrDefaultAsync();
-
-        // ShipmentTrackingPathFormModel shipmentTrackingPathModel = new ShipmentTrackingPathFormModel()
-        //    {
-        //        ShipmentId = shipment.Id,
-        //        TrackingNumber = shipment.TrackingNumber,
-        //        AcceptanceFromCustomer = DateTime.Now.AddDays(-2),
-        //        PickedUpByCourier = DateTime.Now.AddDays(-2),
-        //        SendingOfficeId = 1,
-        //        SentFromDispatchingOffice = DateTime.Now.AddDays(-2),
-        //        ReceivingOfficeId = 2,
-        //        ArrivalInReceivingOffice = DateTime.Now.AddDays(-1),
-        //        FinalDeliveryPreparation = DateTime.Now.AddDays(-1),
-        //        FinalDelivery = DateTime.Now.AddDays(-1),
-        //    };
-        //    return shipmentTrackingPathModel;
-        // }
         [Fact]
         public async Task GetShipmentByIdTest()
         {
@@ -525,7 +483,6 @@
                 .FirstOrDefaultAsync(x => x.TrackingNumber == shipment.TrackingNumber);
 
             Assert.Equal(2, updatedShipmentTrackingPath.ReceivingOfficeId);
-
         }
     }
 }

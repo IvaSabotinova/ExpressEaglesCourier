@@ -7,13 +7,13 @@
     using ExpressEaglesCourier.Data.Models;
     using Moq;
 
-    //public class CustomerMockRepository
-    //{
+    // public class CustomerMockRepository
+    // {
     //    public static Mock<IDeletableEntityRepository<Customer>> CustomerMockRepo()
     //    {
     //        Mock<IDeletableEntityRepository<Customer>> customerMockRepo = new Mock<IDeletableEntityRepository<Customer>>();
 
-    //        List<Customer> customerList = new List<Customer>()
+    // List<Customer> customerList = new List<Customer>()
     //        {
     //            new Customer()
     //            {
@@ -41,21 +41,21 @@
     //            },
     //        };
 
-    //        customerMockRepo.Setup(r => r.AddAsync(It.IsAny<Customer>()))
+    // customerMockRepo.Setup(r => r.AddAsync(It.IsAny<Customer>()))
     //           .Callback((Customer customer) => customerList.Add(customer));
 
-    //        customerMockRepo.Setup(r => r.All())
+    // customerMockRepo.Setup(r => r.All())
     //            .Returns(customerList.Where(x => x.IsDeleted = false).AsQueryable());
 
-    //        //customerMockRepo.Setup(r => r.AllAsNoTrackingWithDeleted()).Returns(customerList.AsQueryable());
+    // customerMockRepo.Setup(r => r.AllAsNoTrackingWithDeleted()).Returns(customerList.AsQueryable());
 
-    //        customerMockRepo.Setup(r => r.AllAsNoTracking())
+    // customerMockRepo.Setup(r => r.AllAsNoTracking())
     //            .Returns(customerList.AsQueryable());
 
-    //        customerMockRepo.Setup(r => r.Delete(It.IsAny<Customer>()))
+    // customerMockRepo.Setup(r => r.Delete(It.IsAny<Customer>()))
     //            .Callback((Customer customer) => customerList.Remove(customer));
 
-    //        return customerMockRepo;
-    //}
-    //}
+    // return customerMockRepo;
+    // }
+    // }
 }
