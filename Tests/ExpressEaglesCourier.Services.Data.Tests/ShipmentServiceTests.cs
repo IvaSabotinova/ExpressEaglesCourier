@@ -9,20 +9,44 @@
     using ExpressEaglesCourier.Data.Models.Enums;
     using ExpressEaglesCourier.Data.Repositories;
     using ExpressEaglesCourier.Services.Data.Customers;
+    using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
+    using ExpressEaglesCourier.Web.ViewModels.Employee;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Moq;
     using Xunit;
 
     public class ShipmentServiceTests
     {
+        private Mock<UserManager<ApplicationUser>> mockUserManager;
+
         public ApplicationDbContext GetDbContext()
         {
             DbContextOptionsBuilder<ApplicationDbContext> optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase("TestShipment");
             ApplicationDbContext dbContext = new ApplicationDbContext(optionBuilder.Options);
             return dbContext;
+        }
+
+        public EmployeeService GetEmployeeService()
+        {
+            EfDeletableEntityRepository<Employee> employeeRepo = new EfDeletableEntityRepository<Employee>(this.GetDbContext());
+
+            EfDeletableEntityRepository<Office> officeRepo = new EfDeletableEntityRepository<Office>(this.GetDbContext());
+
+            EfDeletableEntityRepository<Position> positionRepo = new EfDeletableEntityRepository<Position>(this.GetDbContext());
+
+            EfDeletableEntityRepository<Vehicle> vehicleRepo = new EfDeletableEntityRepository<Vehicle>(this.GetDbContext());
+
+            this.mockUserManager = new Mock<UserManager<ApplicationUser>>(
+                Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
+
+            EmployeeService employeeService = new EmployeeService(employeeRepo, officeRepo, positionRepo, vehicleRepo, this.mockUserManager.Object);
+
+            return employeeService;
         }
 
         public ShipmentService GetShipmentService()
@@ -85,6 +109,28 @@
             };
 
             return customerModel2;
+        }
+
+        public EmployeeFormModel GetEmployeeFormModel()
+        {
+            EmployeeFormModel model = new EmployeeFormModel()
+            {
+                FirstName = "Milen",
+                MiddleName = "Milenov",
+                LastName = "Milenov",
+                Address = "Zornitsa block 15",
+                City = "Bourgas",
+                Country = "Bulgaria",
+                HiredOn = DateTime.Now.AddDays(-2),
+                PhoneNumber = "00359987654314",
+                OfficeId = 1,
+                PositionId = 8,
+                VehicleId = null,
+                ResignOn = null,
+                Salary = 1200,
+            };
+
+            return model;
         }
 
         [Fact]
@@ -168,6 +214,14 @@
             Assert.Equal(shipmentModel.TrackingNumber, shipment.TrackingNumber);
             Assert.True(result);
             Assert.Equal(customer1.Id, customer1Id);
+        }
+
+        [Fact]
+
+        public async Task GetCustomerIdExceptionTest()
+        {
+            await Assert.ThrowsAsync<NullReferenceException>(() =>
+                this.GetShipmentService().GetCustomerId("Milen", "Peshov", "00222222222221"));
         }
 
         [Fact]
@@ -291,6 +345,35 @@
         }
 
         [Fact]
+        public async Task EditShipmentAsyncExceptionTest()
+        {
+            ShipmentFormModel shipmentModel = new ShipmentFormModel()
+            {
+                TrackingNumber = "11111111129",
+                SenderFirstName = "SFirst",
+                SenderLastName = "SLast",
+                SenderPhoneNumber = "00359313313131",
+                ReceiverFirstName = "RFirst",
+                ReceiverLastName = "RLast",
+                ReceiverPhoneNumber = "00122112211211",
+                PickUpAddress = "Some address",
+                PickUpTown = "Some town",
+                PickUpCountry = "Some country",
+                DestinationAddress = "Another address",
+                DestinationTown = "Another town",
+                DestinationCountry = "Another country",
+                Weight = 0.90,
+                DeliveryWay = 0,
+                DeliveryType = 0,
+                ProductType = (ProductType)4,
+                Price = 4.90m,
+            };
+
+            await Assert.ThrowsAsync<NullReferenceException>(() =>
+            this.GetShipmentService().EditShipmentAsync(shipmentModel));
+        }
+
+        [Fact]
 
         public async Task GetShipmentDetailsTest()
         {
@@ -375,6 +458,37 @@
             bool result = await this.GetShipmentService().ShipmentExists(shipment.Id);
 
             Assert.True(result);
+        }
+
+        [Fact]
+
+        public async Task EmployeeHasVehicleTest()
+        {
+            await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
+
+            Employee employee = await this.GetDbContext().Employees
+                .Where(x => x.PhoneNumber == "00359987654314")
+                .FirstOrDefaultAsync();
+
+            bool result = await this.GetShipmentService().EmployeeHasVehicle(employee.Id);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async Task AddEmployeeToShipmentTest()
+        {
+            await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
+
+            Employee employee = await this.GetDbContext().Employees
+                .Where(x => x.PhoneNumber == "00359987654314")
+                .FirstOrDefaultAsync();
+
+            await this.GetShipmentService().AddEmployeeToShipment(1, employee.Id);
+
+            EmployeeShipment employeeShipment = await this.GetDbContext().EmployeesShipments.Where(x => x.EmployeeId == employee.Id && x.ShipmentId == 1).FirstOrDefaultAsync();
+
+            Assert.NotNull(employeeShipment);
         }
 
         [Fact]
