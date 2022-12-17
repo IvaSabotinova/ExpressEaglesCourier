@@ -61,6 +61,7 @@
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomerFormModel());
 
             Customer customer = await this.GetDbContext().Customers.FirstOrDefaultAsync();
+
             Customer customerService = await this.GetCustomerService().GetCustomerById(customer.Id);
 
             Assert.Equal(customer.Id, customerService.Id);

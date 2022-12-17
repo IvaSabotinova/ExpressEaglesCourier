@@ -136,7 +136,9 @@
 
         public async Task<EmployeeDetailsViewModel> GetEmployeeDetails(string employeeId)
         {
-            Employee employee = await this.employeeRepo.AllAsNoTracking()
+            Employee employee = await this.employeeRepo
+                //.All()
+                .AllAsNoTracking()
                 .Include(x => x.Vehicle)
                 .Include(x => x.Position)
                 .Include(x => x.Office)

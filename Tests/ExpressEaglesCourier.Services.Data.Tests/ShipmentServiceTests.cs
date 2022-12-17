@@ -460,6 +460,48 @@
         }
 
         [Fact]
+        public async Task RemoveEmployeeFromShipmentTest()
+        {
+            EfDeletableEntityRepository<Employee> employeeRepo = new EfDeletableEntityRepository<Employee>(this.GetDbContext());
+
+            Employee employee = new Employee()
+            {
+                Id = "007e8598-ff81-42f2-bc2b-2f01009d5fff",
+                FirstName = "Martin",
+                MiddleName = "Peshov",
+                LastName = "Peshov",
+                Address = "Lazur 2",
+                City = "Bourgas",
+                Country = "Bulgaria",
+                HiredOn = DateTime.Now.AddDays(-2),
+                PhoneNumber = "00359888888899",
+                OfficeId = 1,
+                PositionId = 8,
+                Salary = 1200,
+            };
+
+            await employeeRepo.AddAsync(employee);
+            await employeeRepo.SaveChangesAsync();
+
+            EfDeletableEntityRepository<EmployeeShipment> employeeShipmentRepo = new EfDeletableEntityRepository<EmployeeShipment>(this.GetDbContext());
+
+            EmployeeShipment employeeShipment = new EmployeeShipment()
+            {
+                EmployeeId = employee.Id,
+                ShipmentId = 15,
+            };
+
+            await employeeShipmentRepo.AddAsync(employeeShipment);
+
+            await employeeShipmentRepo.SaveChangesAsync();
+
+            await this.GetShipmentService().RemoveEmployeeFromShipmentAsync(15, employee.Id);
+
+            Assert.False(await employeeShipmentRepo.All().AnyAsync(x => x.EmployeeId == employee.Id && x.ShipmentId == 15));
+        }
+
+
+        [Fact]
         public async Task DeleteShipmentAsyncTest()
         {
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());

@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data;
@@ -9,122 +11,278 @@
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Repositories;
     using ExpressEaglesCourier.Services.Data.Employees;
+    using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Employee;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Moq;
     using Xunit;
 
-    // public class EmployeeServiceTests
-    // {
-        // public ApplicationDbContext GetDbContext()
-        // {
-        //    DbContextOptionsBuilder<ApplicationDbContext> optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>()
-        //        .UseInMemoryDatabase("TestEmployee");
-        //    ApplicationDbContext dbContext = new ApplicationDbContext(optionBuilder.Options);
-        //    return dbContext;
-        // }
+    public class EmployeeServiceTests
+    {
+        private Mock<UserManager<ApplicationUser>> mockUserManager;
 
-        // public EmployeeService GetEmployeeService()
-        // {
-        //    EfDeletableEntityRepository<Employee> employeeRepo = new EfDeletableEntityRepository<Employee>(this.GetDbContext());
+        public ApplicationDbContext GetDbContext()
+        {
+            DbContextOptionsBuilder<ApplicationDbContext> optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase("TestEmployee");
+            ApplicationDbContext dbContext = new ApplicationDbContext(optionBuilder.Options);
+            return dbContext;
+        }
 
-        // EfDeletableEntityRepository<Office> officeRepo = new EfDeletableEntityRepository<Office>(this.GetDbContext());
+        public EmployeeService GetEmployeeService()
+        {
+            EfDeletableEntityRepository<Employee> employeeRepo = new EfDeletableEntityRepository<Employee>(this.GetDbContext());
 
-        // EfDeletableEntityRepository<Position> positionRepo = new EfDeletableEntityRepository<Position>(this.GetDbContext());
+            EfDeletableEntityRepository<Office> officeRepo = new EfDeletableEntityRepository<Office>(this.GetDbContext());
 
-        // EfDeletableEntityRepository<Vehicle> vehicleRepo = new EfDeletableEntityRepository<Vehicle>(this.GetDbContext());
+            EfDeletableEntityRepository<Position> positionRepo = new EfDeletableEntityRepository<Position>(this.GetDbContext());
 
-        // Mock<UserManager<ApplicationUser>> userManagerMock = new Mock<UserManager<ApplicationUser>>();
+            EfDeletableEntityRepository<Vehicle> vehicleRepo = new EfDeletableEntityRepository<Vehicle>(this.GetDbContext());
 
-        // UserManager<ApplicationUser> userManager = userManagerMock.Object;
+            this.mockUserManager = new Mock<UserManager<ApplicationUser>>(
+                Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
 
-        // EmployeeService employeeService = new EmployeeService(employeeRepo, officeRepo, positionRepo, vehicleRepo, userManager);
+            EmployeeService employeeService = new EmployeeService(employeeRepo, officeRepo, positionRepo, vehicleRepo, this.mockUserManager.Object);
 
-        // return employeeService;
-        // }
+            return employeeService;
+        }
 
-        // public EmployeeFormModel GetEmployeeFormModel()
-        // {
+        public EmployeeFormModel GetEmployeeFormModel()
+        {
+            EmployeeFormModel model = new EmployeeFormModel()
+            {
+                FirstName = "Martin",
+                MiddleName = "Martinov",
+                LastName = "Martinov",
+                Address = "Zornitsa block 15",
+                City = "Bourgas",
+                Country = "Bulgaria",
+                HiredOn = DateTime.Now.AddDays(-2),
+                PhoneNumber = "00359888999999",
+                OfficeId = 1,
+                PositionId = 8,
+                VehicleId = null,
+                ResignOn = null,
+                Salary = 1200,
+            };
+
+            return model;
+        }
+
+        [Fact]
+
+        public async Task CreateEmployeeAsyncTest()
+        {
+            await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
+
+            Employee employee = await this.GetDbContext().Employees
+                .Where(x => x.PhoneNumber == "00359888999999").FirstOrDefaultAsync();
+
+            Assert.Equal(this.GetEmployeeFormModel().PhoneNumber, employee.PhoneNumber);
+        }
+
+        [Fact]
+        public async Task GetEmployeeByIdTest()
+        {
+            await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
+
+            Employee employeeDb = await this.GetDbContext().Employees.FirstOrDefaultAsync();
+
+            Employee employee = await this.GetEmployeeService().GetEmployeeById(employeeDb.Id);
+
+            Assert.Equal(employeeDb.Id, employee.Id);
+        }
+
+        //[Fact]
+
+        //public async Task GetEmployeeDetailsTest()
+        //{
+        //    // ??????????????????????????????????????
         //    EmployeeFormModel model = new EmployeeFormModel()
         //    {
-        //        Id = "e7b58676-550a-449e-b390-e21fb7e47f94",
-        //        FirstName = "Martin",
+        //        //Id = "e7b58676-550a-449e-b390-e21fb7e47f94",
+        //        FirstName = "Kiro",
         //        MiddleName = "Martinov",
-        //        LastName = "Martinov",
+        //        LastName = "Peshov",
         //        Address = "Zornitsa block 15",
         //        City = "Bourgas",
         //        Country = "Bulgaria",
         //        HiredOn = DateTime.Now.AddDays(-2),
-        //        PhoneNumber = "00359888222222",
+        //        PhoneNumber = "00359000000000",
         //        OfficeId = 1,
-        //        PositionId = 1,
-        //        VehicleId = 1,
+        //        PositionId = 8,
+        //        VehicleId = null,
         //        ResignOn = null,
         //        Salary = 1200,
         //    };
 
-        // return model;
-        // }
+        //    await this.GetEmployeeService().CreateEmployeeAsync(model);
 
-        // public static Mock<UserManager<ApplicationUser>> MockUserManager()
-        //    //where TApplicationUser : class
+        //    Employee employeeDb = await this.GetDbContext().Employees
+        //        //.Where(x => x.PhoneNumber == model.PhoneNumber)
+        //        .FirstOrDefaultAsync();
+
+        //    EmployeeDetailsViewModel newModel = await this.GetEmployeeService().GetEmployeeDetails(employeeDb.Id);
+
+        //    Assert.Equal(model.FirstName + " " + model.MiddleName + " " + model.LastName, newModel.FullName);
+        //}
+
+        [Fact]
+
+        public async Task GetEmployeeForEditAsyncTest()
+        {
+            await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
+
+            Employee employee = await this.GetDbContext().Employees
+                .Where(x => x.PhoneNumber == "00359888999999").FirstOrDefaultAsync();
+
+            EmployeeFormModel model = await this.GetEmployeeService()
+            .GetEmployeeForEditAsync(employee.Id);
+
+            Assert.Equal(employee.FirstName, model.FirstName);
+            Assert.Equal(employee.Country, model.Country);
+        }
+
+        [Fact]
+
+        public async Task GetEmployeeForEditAsyncExceptionTest()
+        {
+            await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
+
+            Employee employeeDb = await this.GetDbContext().Employees
+                .Where(x => x.PhoneNumber == "00359888999999").FirstOrDefaultAsync();
+
+            await Assert.ThrowsAsync<NullReferenceException>(() =>
+             this.GetEmployeeService().GetEmployeeForEditAsync("d9096aa5-2c0a-414f-8050-5c8c73b3f17a"));
+        }
+
+        [Fact]
+
+        public async Task EditEmployeeAsync()
+        {
+            EmployeeFormModel inputModel = new EmployeeFormModel()
+            {
+                FirstName = "Haralambi",
+                MiddleName = "Haralambov",
+                LastName = "Haralbamov",
+                Address = "Slaveikov block 15",
+                City = "Bourgas",
+                Country = "Bulgaria",
+                PhoneNumber = "00111111111111",
+                HiredOn = DateTime.Now.AddDays(-2),
+                Salary = 1200,
+                OfficeId = 1,
+                PositionId = 8,
+                ResignOn = null,
+                VehicleId = null,
+            };
+
+            await this.GetEmployeeService().CreateEmployeeAsync(inputModel);
+
+            Employee employeeDb = await this.GetDbContext().Employees
+                .Where(x => x.PhoneNumber == "00111111111111").FirstOrDefaultAsync();
+
+            EmployeeFormModel model = await this.GetEmployeeService().GetEmployeeForEditAsync(employeeDb.Id);
+
+            await this.GetEmployeeService().EditEmployeeAsync(new EmployeeFormModel()
+            {
+                Id = model.Id,
+                FirstName = model.FirstName,
+                MiddleName = model.MiddleName,
+                LastName = "Goshev",
+                Address = model.Address,
+                City = model.City,
+                Country = model.Country,
+                PhoneNumber = model.PhoneNumber,
+                HiredOn = model.HiredOn,
+                Salary = model.Salary,
+                OfficeId = model.OfficeId,
+                PositionId = model.PositionId,
+                ResignOn = model.ResignOn,
+                VehicleId = model.VehicleId,
+            });
+
+            Employee employeeNew = await this.GetDbContext().Employees.LastOrDefaultAsync();
+
+            Assert.Equal("Goshev", employeeNew.LastName);
+        }
+
+        [Fact]
+
+        public async Task EditEmployeeAsyncExceptionTest()
+        {
+            Employee employee = await this.GetDbContext().Employees.Where(x => x.FirstName == "Boci").FirstOrDefaultAsync();
+
+            await Assert.ThrowsAsync<NullReferenceException>(() =>
+            this.GetEmployeeService().GetEmployeeForEditAsync(employee.Id));
+        }
+
+        [Fact]
+
+        public async Task DeleteEmployeeAsyncTest()
+        {
+            EmployeeFormModel inputModel = new EmployeeFormModel()
+            {
+                FirstName = "Ivo",
+                MiddleName = "Ivov",
+                LastName = "Ivov",
+                Address = "Zornitsa block 15",
+                City = "Bourgas",
+                Country = "Bulgaria",
+                PhoneNumber = "00222222222222",
+                HiredOn = DateTime.Now.AddDays(-2),
+                Salary = 1200,
+                OfficeId = 2,
+                PositionId = 8,
+                ResignOn = null,
+                VehicleId = null,
+            };
+
+            await this.GetEmployeeService().CreateEmployeeAsync(inputModel);
+
+            Employee employeeDb = await this.GetDbContext().Employees
+                .Where(x => x.PhoneNumber == "00222222222222")
+                .FirstOrDefaultAsync();
+
+            await this.GetEmployeeService().DeleteEmployeeAsync(employeeDb.Id);
+
+            Assert.False(await this.GetDbContext().Employees
+                .AnyAsync(x => x.Id == employeeDb.Id));
+        }
+
+        [Fact]
+        public async Task DeleteEmployeeAsyncExceptionTest()
+        {
+            await Assert.ThrowsAsync<NullReferenceException>(() =>
+             this.GetEmployeeService().DeleteEmployeeAsync("e0b758b0-2f5e-4f9c-bc49-a1e03a26065e"));
+        }
+
+        //[Fact]
+        //public async Task GetAllAsyncTest()
+        //{
+        //    EmployeeFormModel inputModel = new EmployeeFormModel()
         //    {
-        //        var store = new Mock<IUserStore<ApplicationUser>>();
-        //        var mgr = new Mock<UserManager<ApplicationUser>>(store.Object,
-        //            null, null, null, null, null, null, null);
-        //        mgr.Object.UserValidators.Add(new UserValidator<ApplicationUser>());
-        //        mgr.Object.PasswordValidators.Add(new PasswordValidator<ApplicationUser>());
-
-        // mgr.Setup(x => x.DeleteAsync(It.IsAny<ApplicationUser>())).ReturnsAsync(IdentityResult.Success);
-        //        //mgr.Setup(x => x.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success).Callback<ApplicationUser, string>((x, y) => userList.Add(x));
-        //        mgr.Setup(x => x.UpdateAsync(It.IsAny<ApplicationUser>())).ReturnsAsync(IdentityResult.Success);
-
-        // return mgr;
-        //    }
-
-        // [Fact]
-
-        // public async Task GetEmployeeDetailsTest()
-        // {
-        //    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        //        .UseInMemoryDatabase(databaseName: "EmployeeDb").Options;
-        //    using var dbContext = new ApplicationDbContext(options);
-        //    dbContext.Employees.Add(new Employee()
-        //    {
-        //        Id = "e7b58676-550a-449e-b390-e21fb7e47f94",
-        //        FirstName = "Martin",
-        //        MiddleName = "Martinov",
-        //        LastName = "Martinov",
+        //        FirstName = "Marto",
+        //        MiddleName = "Martov",
+        //        LastName = "Martov",
         //        Address = "Zornitsa block 15",
         //        City = "Bourgas",
         //        Country = "Bulgaria",
         //        HiredOn = DateTime.Now.AddDays(-2),
-        //        PhoneNumber = "00359888222222",
+        //        PhoneNumber = "000999888888888",
         //        OfficeId = 1,
-        //        PositionId = 1,
-        //        VehicleId = 1,
+        //        PositionId = 8,
+        //        VehicleId = null,
         //        ResignOn = null,
         //        Salary = 1200,
-        //    });
+        //    };
 
-        // await dbContext.SaveChangesAsync();
+        //    await this.GetEmployeeService().CreateEmployeeAsync(inputModel);
 
-        // using var repository = new EfDeletableEntityRepository<Employee>(dbContext);
+        //    IEnumerable<EmployeeAllViewModel> resultModel = await this.GetEmployeeService().GetAllAsync(5);
 
-        // EfDeletableEntityRepository<Office> officeRepo = new EfDeletableEntityRepository<Office>(dbContext);
-
-        // EfDeletableEntityRepository<Position> positionRepo = new EfDeletableEntityRepository<Position>(dbContext);
-
-        // EfDeletableEntityRepository<Vehicle> vehicleRepo = new EfDeletableEntityRepository<Vehicle>(dbContext);
-        //   var result = MockUserManager();
-
-        // var service = new EmployeeService(repository, officeRepo, positionRepo, vehicleRepo, result.Object);
-        //    //Assert.Equal(3, service.GetCount());
-
-        // EmployeeDetailsViewModel model = await service.GetEmployeeDetails(dbContext.Employees.FirstOrDefaultAsync().Result.Id);
-
-        // Assert.Equal("Martin Martinov", model.FullName);
-        // }
-    // }
+        //    Assert.Equal(inputModel.PhoneNumber, resultModel.First().PhoneNumber);
+        //}
+    }
 }
