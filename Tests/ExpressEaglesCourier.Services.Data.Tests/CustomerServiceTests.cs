@@ -199,5 +199,26 @@
         {
             await Assert.ThrowsAsync<NullReferenceException>(() => this.GetCustomerService().DeleteCustomerAsync("61c175da-1a86-4cd1-aa1f-e3807bb41f53"));
         }
+
+        [Fact]
+
+        public async Task FindCustomerByPhoneNumberTest()
+        {
+            await this.GetCustomerService().CreateCustomerAsync(this.GetCustomerFormModel());
+            
+            Customer customer = await this.GetCustomerService()
+                .FindCustomerByPhoneNumber(this.GetCustomerFormModel().PhoneNumber);
+
+            Assert.NotNull(customer);
+        }
+
+        [Fact]
+
+        public async Task FindCustomerByPhoneNumberReturnNullTest()
+        {
+            Customer customer = await this.GetCustomerService().FindCustomerByPhoneNumber("000000100000");
+
+            Assert.Null(customer);
+        }
     }
 }

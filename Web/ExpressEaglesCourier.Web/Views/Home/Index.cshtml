@@ -21,11 +21,14 @@
                 <h1 class="fw-normal fs-6 fs-xxl-7">A trusted provider of </h1>
                 <h1 class="fw-bolder fs-6 fs-xxl-7 mb-2">courier services.</h1>
                 <p class="fs-1 mb-5">We deliver your products safely to <br />your home in a reasonable time. </p>
-                @if(this.User.Identity.IsAuthenticated)
+                @if(this.User.Identity.IsAuthenticated &&
+                 (this.User.IsInRole(CustomerUserRoleName) 
+                || this.User.IsInRole(EmployeeRoleName)
+                || this.User.IsInRole(ManagerRoleName)
+                || this.User.IsInRole(AdministratorRoleName)))
                 {
                     <a asp-area="" asp-controller="Search" asp-action="SearchTrackingPath" class="btn btn-primary me-2" role="button">Track a shipment<i class="fas fa-arrow-right ms-2"></i></a>
-                }
-              
+                }             
             </div>
         </div>
     </div>

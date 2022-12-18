@@ -4,9 +4,6 @@
          <br />
     </div>
 
-    <form method="get" asp-area="" asp-controller="Search" asp-action="SearchTrackingPath">
-        <div class="text-center mt-5"><button type="submit" class="btn btn-danger wrn-btn" style="margin-left:10px">Search Again</button></div>
-    </form>
 
     @if (this.User.Identity.IsAuthenticated && this.User.IsInRole(EmployeeRoleName))
     {
@@ -14,11 +11,16 @@
         <div class="text-center mt-5 mb-8"><button type="submit" class="btn btn-outline-warning wrn-btn" style="margin-left:10px">To Staff Board</button></div>
     </form>
     }
-@if (this.User.Identity.IsAuthenticated && this.User.IsInRole(AdministratorRoleName))
-{
+    @if (this.User.Identity.IsAuthenticated && this.User.IsInRole(AdministratorRoleName))
+    {
     <form method="get" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">
         <div class="text-center mt-5 mb-8"><button type="submit" class="btn btn-outline-warning wrn-btn" style="margin-left:10px">To Admin Dashboard</button></div>
     </form>
-}
+    }
+
+
+<form method="get" asp-area="" asp-controller="Search" asp-action="SearchTrackingPath">
+    <div class="text-center mt-5 mb-8"><button type="submit" class="btn btn-danger wrn-btn" style="margin-left:10px">Search Again</button></div>
+</form>
   
 

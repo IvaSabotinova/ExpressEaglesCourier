@@ -125,5 +125,10 @@
             this.customerRepo.Delete(customer);
             await this.customerRepo.SaveChangesAsync();
         }
+
+        public async Task<Customer> FindCustomerByPhoneNumber(string phoneNumber)
+        {
+            return await this.customerRepo.All().Where(x => x.PhoneNumber == phoneNumber).FirstOrDefaultAsync();
+        }
     }
 }

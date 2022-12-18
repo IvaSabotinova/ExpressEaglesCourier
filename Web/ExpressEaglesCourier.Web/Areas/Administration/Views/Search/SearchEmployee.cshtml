@@ -7,23 +7,19 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<div class="text-center mt-5 mb-5">
+<div class="text-center mt-5 mb-3">
     <img class="card-img-top" style="width: 30rem;"
          src="~/img/gallery/employeeSearch.jpg" alt="">
 </div>
 
 <form method="get" asp-area="Administration" asp-controller="Search" asp-action="EmployeeByPhoneNumber">
-    <div class="row">
-
-        <div class="form-group col-md-3 offset-4">
-            <label asp-for="PhoneNumber">Enter Phone Number (incl. country and area code)</label>
+    <div class="form-group col-md-3 offset-4">
+            <label asp-for="PhoneNumber">Enter Phone Number (incl. country and area code 00359xxxxxxxxx)</label>
             <input asp-for="PhoneNumber" class="form-control" placeholder="...">
         </div>
-        <div class="col-md-3">
-            <div class="form-group mt-4 p-2">
+    <div class="col-md-3 offset-5">
+        <div class="form-group mt-2 p-2">
                 <input type="submit" value="Search" class="btn btn-primary" />
             </div>
         </div>
-
-    </div>
 </form>

@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Web.ViewModels;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -17,15 +18,18 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly ICustomerService customerService;
 
         public UserController(
                 UserManager<ApplicationUser> userManager,
                 SignInManager<ApplicationUser> signInManager,
-                RoleManager<ApplicationRole> roleManager)
+                RoleManager<ApplicationRole> roleManager,
+                ICustomerService customerService)
         {
                 this.userManager = userManager;
                 this.signInManager = signInManager;
                 this.roleManager = roleManager;
+                this.customerService = customerService;
         }
 
         [HttpGet]
@@ -60,7 +64,18 @@
                         Email = registerViewModel.Email,
                         PhoneNumber = registerViewModel.TelephoneNumber,
                     };
-                    result = await this.userManager.CreateAsync(newUser, registerViewModel.Password);
+
+                    result = await this.userManager.CreateAsync(newUser);
+                    Customer customer = await this.customerService.FindCustomerByPhoneNumber(newUser.PhoneNumber);
+
+                    if (customer != null)
+                    {
+                      result = await this.userManager.AddToRoleAsync(newUser, CustomerUserRoleName);
+                      customer.ApplicationUserId = newUser.Id;
+                      newUser.CustomerId = customer.Id;
+                    }
+
+                    result = await this.userManager.AddPasswordAsync(newUser, registerViewModel.Password);
               }
 
               if (result.Succeeded)

@@ -18,5 +18,7 @@
         Task EditCustomerAsync(CustomerFormModel model);
 
         Task DeleteCustomerAsync(string customerId);
+
+        Task<Customer> FindCustomerByPhoneNumber(string phoneNumber);
     }
 }

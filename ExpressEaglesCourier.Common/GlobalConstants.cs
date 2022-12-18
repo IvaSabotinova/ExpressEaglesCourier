@@ -10,6 +10,8 @@
 
         public const string EmployeeRoleName = "Employee";
 
+        public const string CustomerUserRoleName = "CustomerUser";
+
         public static class EntitiesConstants
         {
             public const string HomeAddress = "Home Address";
