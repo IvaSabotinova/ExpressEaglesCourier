@@ -205,6 +205,56 @@
 
         [Fact]
 
+        public async Task CreateShipmentTrackingPathAsyncWhenTrackingPathAlreadyExistsExceptionTest()
+        {
+            ShipmentFormModel shipmentModel = new ShipmentFormModel()
+            {
+                TrackingNumber = "11111111130",
+                SenderFirstName = this.GetCustomer1().Result.FirstName,
+                SenderLastName = this.GetCustomer1().Result.LastName,
+                SenderPhoneNumber = this.GetCustomer1().Result.PhoneNumber,
+                ReceiverFirstName = this.GetCustomer2().Result.FirstName,
+                ReceiverLastName = this.GetCustomer2().Result.LastName,
+                ReceiverPhoneNumber = this.GetCustomer2().Result.PhoneNumber,
+                PickUpAddress = this.GetCustomer1().Result.Address,
+                PickUpTown = this.GetCustomer1().Result.City,
+                PickUpCountry = this.GetCustomer1().Result.Country,
+                DestinationAddress = this.GetCustomer2().Result.Address,
+                DestinationTown = this.GetCustomer2().Result.City,
+                DestinationCountry = this.GetCustomer2().Result.Country,
+                Weight = 0.90,
+                DeliveryWay = 0,
+                DeliveryType = 0,
+                ProductType = (ProductType)4,
+                Price = 4.90m,
+            };
+
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+
+            Shipment shipment = await this.GetDbContext().Shipments
+                .Where(x => x.TrackingNumber == shipmentModel.TrackingNumber).FirstOrDefaultAsync();
+
+            ShipmentTrackingPathFormModel shipmentTrackingPathModel = new ShipmentTrackingPathFormModel()
+            {
+                ShipmentId = shipment.Id,
+                TrackingNumber = shipment.TrackingNumber,
+                AcceptanceFromCustomer = DateTime.Now.AddDays(-2),
+                PickedUpByCourier = DateTime.Now.AddDays(-2),
+                SendingOfficeId = 1,
+                SentFromDispatchingOffice = DateTime.Now.AddDays(-2),
+                ReceivingOfficeId = 3,
+                ArrivalInReceivingOffice = DateTime.Now.AddDays(-2),
+                FinalDeliveryPreparation = DateTime.Now.AddDays(-2),
+                FinalDelivery = DateTime.Now.AddDays(-2),
+            };
+
+            await this.GetShipmentTrackingPathService().CreateShipmentTrackingPathAsync(shipmentTrackingPathModel);
+
+            await Assert.ThrowsAsync<ArgumentException>(() =>
+                this.GetShipmentTrackingPathService().CreateShipmentTrackingPathAsync(shipmentTrackingPathModel));
+        }
+
+        [Fact]
         public async Task CreateShipmentTrackingPathAsyncExceptionTest()
         {
             ShipmentFormModel shipmentModel = new ShipmentFormModel()
@@ -237,7 +287,7 @@
             ShipmentTrackingPathFormModel shipmentTrackingPathModel = new ShipmentTrackingPathFormModel()
             {
                 ShipmentId = shipment.Id,
-                TrackingNumber = "00000000011",
+                TrackingNumber = "10000000000",
                 AcceptanceFromCustomer = DateTime.Now.AddDays(-2),
                 PickedUpByCourier = DateTime.Now.AddDays(-2),
                 SendingOfficeId = 1,

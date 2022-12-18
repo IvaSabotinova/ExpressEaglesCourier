@@ -70,6 +70,14 @@
 
         [Fact]
 
+        public async Task GetCustomerDetailsByIdExceptionTest()
+        {
+            await Assert.ThrowsAsync<NullReferenceException>(() =>
+                this.GetCustomerService().GetCustomerDetailsById("a6759ca2-fecc-41ee-ba8b-d39235584594"));
+        }
+
+        [Fact]
+
         public async Task GetCustomerDetailsByIdTest()
         {
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomerFormModel());
@@ -89,7 +97,7 @@
             Customer customer = await this.GetDbContext().Customers.FirstOrDefaultAsync();
 
             CustomerFormModel model = await this.GetCustomerService()
-                .GetCustomerForEditAsync(customer.Id);
+                  .GetCustomerForEditAsync(customer.Id);
 
             Assert.Equal(customer.FirstName, model.FirstName);
             Assert.Equal(customer.Country, model.Country);
@@ -98,10 +106,8 @@
         [Fact]
         public async Task GetCustomerForEditExceptionTest()
         {
-            Customer customer = await this.GetDbContext().Customers.Where(x => x.FirstName == "Martin").FirstOrDefaultAsync();
-
             await Assert.ThrowsAsync<NullReferenceException>(() =>
-            this.GetCustomerService().GetCustomerForEditAsync(customer.Id));
+                  this.GetCustomerService().GetCustomerForEditAsync("c987fb53-c533-468c-80c0-21fc1862ab76"));
         }
 
         [Fact]
@@ -145,6 +151,24 @@
 
         [Fact]
 
+        public async Task EditCustomerAsyncExceptionTest()
+        {
+            CustomerFormModel inputModel = new CustomerFormModel()
+            {
+                FirstName = "Proben",
+                MiddleName = "Probov",
+                LastName = "Probov",
+                Address = "Zornitsa block 15",
+                City = "Bourgas",
+                Country = "Bulgaria",
+                CompanyName = string.Empty,
+                PhoneNumber = "000000000001",
+            };
+            await Assert.ThrowsAsync<NullReferenceException>(() => this.GetCustomerService().EditCustomerAsync(inputModel));
+        }
+
+        [Fact]
+
         public async Task DeleteCustomerAsyncTest()
         {
             CustomerFormModel model = new CustomerFormModel()
@@ -167,6 +191,13 @@
 
             Assert.False(await this.GetDbContext().Customers
                 .AnyAsync(x => x.Id == customer.Id));
+        }
+
+        [Fact]
+
+        public async Task DeleteCustomerAsyncExceptionTest()
+        {
+            await Assert.ThrowsAsync<NullReferenceException>(() => this.GetCustomerService().DeleteCustomerAsync("61c175da-1a86-4cd1-aa1f-e3807bb41f53"));
         }
     }
 }

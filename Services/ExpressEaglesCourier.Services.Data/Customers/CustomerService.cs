@@ -71,7 +71,7 @@
         {
             Customer customer = await this.GetCustomerById(customerId);
 
-            if (customerId == null)
+            if (customer == null)
             {
                 throw new NullReferenceException(ClientNotExist);
             }

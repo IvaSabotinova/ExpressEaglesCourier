@@ -94,14 +94,35 @@
             Assert.Equal(employeeDb.Id, employee.Id);
         }
 
-        //[Fact]
+        // [Fact]
 
-        //public async Task GetEmployeeDetailsTest()
-        //{
+        // public async Task GetEmployeeDetailsTest()
+        // {
         //    // ??????????????????????????????????????
-        //    EmployeeFormModel model = new EmployeeFormModel()
+        //    //EmployeeFormModel model = new EmployeeFormModel()
+        //    //{
+        //    //    //Id = "e7b58676-550a-449e-b390-e21fb7e47f94",
+        //    //    FirstName = "Kiro",
+        //    //    MiddleName = "Martinov",
+        //    //    LastName = "Peshov",
+        //    //    Address = "Zornitsa block 15",
+        //    //    City = "Bourgas",
+        //    //    Country = "Bulgaria",
+        //    //    HiredOn = DateTime.Now.AddDays(-2),
+        //    //    PhoneNumber = "00359000000000",
+        //    //    OfficeId = 1,
+        //    //    PositionId = 8,
+        //    //    VehicleId = null,
+        //    //    ResignOn = null,
+        //    //    Salary = 1200,
+        //    //};
+
+        // //await this.GetEmployeeService().CreateEmployeeAsync(model);
+
+        // EfDeletableEntityRepository<Employee> employeeRepo = new EfDeletableEntityRepository<Employee>(this.GetDbContext());
+
+        // await employeeRepo.AddAsync(new Employee()
         //    {
-        //        //Id = "e7b58676-550a-449e-b390-e21fb7e47f94",
         //        FirstName = "Kiro",
         //        MiddleName = "Martinov",
         //        LastName = "Peshov",
@@ -115,19 +136,17 @@
         //        VehicleId = null,
         //        ResignOn = null,
         //        Salary = 1200,
-        //    };
+        //    });
+        //    await employeeRepo.SaveChangesAsync();
 
-        //    await this.GetEmployeeService().CreateEmployeeAsync(model);
+        // Employee employeeDb = await this.GetDbContext().Employees
+        //       .Where(x => x.PhoneNumber == "00359000000000")
+        //       .FirstOrDefaultAsync();
 
-        //    Employee employeeDb = await this.GetDbContext().Employees
-        //        //.Where(x => x.PhoneNumber == model.PhoneNumber)
-        //        .FirstOrDefaultAsync();
+        // EmployeeDetailsViewModel newModel = await this.GetEmployeeService().GetEmployeeDetails(employeeDb.Id);
 
-        //    EmployeeDetailsViewModel newModel = await this.GetEmployeeService().GetEmployeeDetails(employeeDb.Id);
-
-        //    Assert.Equal(model.FirstName + " " + model.MiddleName + " " + model.LastName, newModel.FullName);
-        //}
-
+        // Assert.Equal("Kiro Martinov Peshov", newModel.FullName);
+        // }
         [Fact]
 
         public async Task GetEmployeeForEditAsyncTest()
@@ -258,9 +277,9 @@
              this.GetEmployeeService().DeleteEmployeeAsync("e0b758b0-2f5e-4f9c-bc49-a1e03a26065e"));
         }
 
-        //[Fact]
-        //public async Task GetAllAsyncTest()
-        //{
+        // [Fact]
+        // public async Task GetAllAsyncTest()
+        // {
         //    EmployeeFormModel inputModel = new EmployeeFormModel()
         //    {
         //        FirstName = "Marto",
@@ -278,11 +297,11 @@
         //        Salary = 1200,
         //    };
 
-        //    await this.GetEmployeeService().CreateEmployeeAsync(inputModel);
+        // await this.GetEmployeeService().CreateEmployeeAsync(inputModel);
 
-        //    IEnumerable<EmployeeAllViewModel> resultModel = await this.GetEmployeeService().GetAllAsync(5);
+        // IEnumerable<EmployeeAllViewModel> resultModel = await this.GetEmployeeService().GetAllAsync(5);
 
-        //    Assert.Equal(inputModel.PhoneNumber, resultModel.First().PhoneNumber);
-        //}
+        // Assert.Equal(inputModel.PhoneNumber, resultModel.First().PhoneNumber);
+        // }
     }
 }

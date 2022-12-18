@@ -139,10 +139,18 @@
         {
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
 
-            Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
-            await this.GetShipmentService().CustomerWithPhoneNumberExists(customer1.FirstName, customer1.LastName, customer1.PhoneNumber);
+            Customer customer = await this.GetDbContext().Customers.FirstOrDefaultAsync();
 
-            Assert.True(await this.GetShipmentService().CustomerWithPhoneNumberExists(customer1.FirstName, customer1.LastName, customer1.PhoneNumber));
+            Assert.True(await this.GetShipmentService().CustomerWithPhoneNumberExists(customer.FirstName, customer.LastName, customer.PhoneNumber));
+        }
+
+        [Fact]
+
+        public async Task CustomerWithPhoneNumberDoesntExistTest()
+        {
+            bool result = await this.GetShipmentService()
+                .CustomerWithPhoneNumberExists("Kiril", "Kirilov", "020202020202");
+            Assert.False(result);
         }
 
         [Fact]
@@ -534,6 +542,21 @@
 
         [Fact]
 
+        public async Task AddEmployeeToShipmentArgumentExceptionTest()
+        {
+            await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
+            Employee employee = await this.GetDbContext().Employees
+                .Where(x => x.PhoneNumber == "00359987654314")
+                .FirstOrDefaultAsync();
+
+            await this.GetShipmentService().AddEmployeeToShipment(2, employee.Id);
+
+            await Assert.ThrowsAsync<ArgumentException>(() =>
+                this.GetShipmentService().AddEmployeeToShipment(2, employee.Id));
+        }
+
+        [Fact]
+
         public async Task RemoveEmployeeFromShipmentAsyncExceptionTest()
         {
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
@@ -580,7 +603,6 @@
 
             Employee employee = new Employee()
             {
-                Id = "007e8598-ff81-42f2-bc2b-2f01009d5fff",
                 FirstName = "Martin",
                 MiddleName = "Peshov",
                 LastName = "Peshov",
@@ -613,7 +635,6 @@
 
             Assert.False(await employeeShipmentRepo.All().AnyAsync(x => x.EmployeeId == employee.Id && x.ShipmentId == 15));
         }
-
 
         [Fact]
         public async Task DeleteShipmentAsyncTest()
@@ -663,6 +684,49 @@
         public async Task DeleteShipmentAsyncExceptionTest()
         {
             await Assert.ThrowsAsync<NullReferenceException>(() => this.GetShipmentService().DeleteShipmentAsync(15));
+        }
+
+        [Fact]
+
+        public async Task DeleteShipmentWithVehicleAsyncFromVehicleEmployeeRepo()
+        {
+            EfDeletableEntityRepository<Shipment> shipmentRepo = new EfDeletableEntityRepository<Shipment>(this.GetDbContext());
+
+            await shipmentRepo.AddAsync(new Shipment()
+            {
+                TrackingNumber = "11111111117",
+                SenderId = "450a5606-d413-4638-9909-b1efefe76be7",
+                ReceiverId = "ecd19831-3f30-428b-a154-f6a0408f1214",
+                PickupAddress = "Sender address",
+                PickUpTown = "Bourgas",
+                PickUpCountry = "Bulgaria",
+                DestinationAddress = "Receiver address",
+                DestinationTown = "Varna",
+                DestinationCountry = "Bulgaria",
+                Weight = 0.90,
+                DeliveryWay = 0,
+                DeliveryType = 0,
+                ProductType = (ProductType)4,
+                Price = 4.90m,
+            });
+
+            await shipmentRepo.SaveChangesAsync();
+
+            Shipment shipment = await this.GetDbContext().Shipments.Where(x => x.TrackingNumber == "11111111117").FirstOrDefaultAsync();
+
+            EfDeletableEntityRepository<ShipmentVehicle> shipmentVehicleRepo = new EfDeletableEntityRepository<ShipmentVehicle>(this.GetDbContext());
+
+            await shipmentVehicleRepo.AddAsync(new ShipmentVehicle()
+            {
+                ShipmentId = shipment.Id,
+                VehicleId = 1,
+            });
+
+            await shipmentVehicleRepo.SaveChangesAsync();
+
+            await this.GetShipmentService().DeleteShipmentAsync(shipment.Id);
+
+            Assert.False(await shipmentVehicleRepo.All().AnyAsync(x => x.ShipmentId == shipment.Id && x.VehicleId == 1));
         }
     }
 }
