@@ -4,24 +4,24 @@
     ViewData["Title"] = "Login Form";
 }
 
-<h2 class="mb-lg-n1">@ViewData["Title"]</h2>
+<h2 class="mb-lg-n1 offset-5 mb-2">@ViewData["Title"]</h2>
 <br />
 <div class="row">
-    <div class="col-md-4">
-        <h4 class="mb-3">Please enter your login details</h4>   
+    <div class="col-md-4 offset-4">
+        <h4 class="mb-4">Please enter your login details</h4>   
             <form id="account" method="post">      
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="UserName"></label>
-                <input asp-for="UserName" class="form-control mb-2" autocomplete="username" aria-required="true" placeholder="Enter your username" />
+                    <label class="offset-4 mb-3" asp-for="UserName"></label>
+                <input asp-for="UserName" class="form-control mb-3" autocomplete="username" aria-required="true" placeholder="Enter your username" />
                     <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Password"></label>
-                <input asp-for="Password" type="password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Enter your password" />
+                    <label class="offset-4 mb-3" asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-control mb-3" autocomplete="current-password" aria-required="true" placeholder="Enter your password" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>              
-                <button type="submit" class="btn btn-primary mb-4 mt-3">Login</button>           
+                <button type="submit" class="btn btn-primary mb-4 mt-3 offset-4">Login</button>           
                 </form>
        </div>
 </div>
