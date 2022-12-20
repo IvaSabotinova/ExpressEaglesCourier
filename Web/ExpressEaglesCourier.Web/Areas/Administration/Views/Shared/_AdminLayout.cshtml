@@ -24,6 +24,10 @@
                         <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index"
                            class="btn btn-outline-warning btn-lg me-3">To Admin Dashboard</a>
                     </li>
+                    <li>
+                        <a asp-area="Staff" asp-controller="Board" asp-action="Index"
+                           class="btn btn-outline-warning btn-lg me-3">To Staff Board</a>
+                    </li>
                     <li class="nav-item dropdown me-3">
                         <a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Customers</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -67,26 +71,20 @@
     </footer>
     <main>     
         <section class="bg-900 pb-0 pt-5">
-
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0">
-
+                        <a class="text-decoration-none" href="#"><img src="~/img/gallery/net.png" height="51" alt="" /></a>
+                        <p class="text-500 my-4">The most trusted Courier<br />company in your area.</p>
                     </div>
                     <div class="col-6 col-sm-4 col-lg-2 mb-3 order-2 order-sm-1">
-                        <h5 class="lh-lg fw-bold mb-4 text-light font-sans-serif">Other links </h5>
-                        <ul class="list-unstyled mb-md-4 mb-lg-0">
-                            <li class="lh-lg"><a class="text-500" href="#!">Blogs</a></li>
-                            <li class="lh-lg"><a class="text-500" href="#!">Movers website</a></li>
-                            <li class="lh-lg"><a class="text-500" href="#!">Traffic Update</a></li>
-                        </ul>
                     </div>
                     <div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
-                        <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif">Services</h5>
+                        <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif">Other links</h5>
                         <ul class="list-unstyled mb-md-4 mb-lg-0">
-                            <li class="lh-lg"><a class="text-500" href="#!">Corporate goods</a></li>
-                            <li class="lh-lg"><a class="text-500" href="#!">Artworks</a></li>
-                            <li class="lh-lg"><a class="text-500" href="#!">Documents</a></li>
+                            <li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Home" asp-action="Testimonial">Testimonials</a></li>
+                            <li class="lh-lg"><a class="text-500" href="#!"></a></li>
+                            <li class="lh-lg"><a class="text-500" href="#!"></a></li>
                         </ul>
                     </div>
                     <div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
@@ -94,11 +92,13 @@
                         <ul class="list-unstyled mb-md-4 mb-lg-0">
                             <li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a></li>
                             <li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Home" asp-action="FindUs">Contact US</a></li>
-                            <li class="lh-lg"><a class="text-500" href="#!">Get Update</a></li>
+                            <li class="lh-lg">
+                                <a class="text-500" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
-            </div>          
+            </div>           
         </section>       
         <section class="py-0 bg-1000">
 

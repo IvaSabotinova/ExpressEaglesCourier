@@ -115,7 +115,7 @@
 
             public const string CompanyName = "Company Name (optional)";
 
-            public const string PhoneNumber = "Phone Number";
+            public const string PhoneNumber = "Phone Number (00359xxxxxxxxx)";
 
             public const string TrackingNumber = "Tracking Number";
 
@@ -123,13 +123,13 @@
 
             public const string SenderLastName = "Sender Last Name";
 
-            public const string SenderPhoneNumber = "Sender Phone Number";
+            public const string SenderPhoneNumber = "Sender Phone Number (00359xxxxxxxxx)";
 
             public const string ReceiverFirstName = "Receiver First Name";
 
             public const string ReceiverLastName = "Receiver Last Name";
 
-            public const string ReceiverPhoneNumber = "Receiver Phone Number";
+            public const string ReceiverPhoneNumber = "Receiver Phone Number (00359xxxxxxxxx)";
 
             public const string PickUpAddress = "Pick-up Address";
 
