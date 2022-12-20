@@ -100,11 +100,5 @@
                 return this.View(model);
             }
         }
-
-        // [Authorize(Roles = ManagerRoleName + ", " + AdministratorRoleName)]
-        // public async Task<IActionResult> Delete(int id)
-        // {
-        //    await this.shipmentTrackingPathService.DeleteTrackingPathAsync(id);
-        //    return this.RedirectToAction("Index", "Dashboard", new { area = "Administration" });
     }
 }

@@ -8,6 +8,11 @@
 
     public class HomeController : BaseController
     {
+        public IActionResult Temp()
+        {
+            return this.View();
+        }
+
         public IActionResult Index()
         {
             return this.View();

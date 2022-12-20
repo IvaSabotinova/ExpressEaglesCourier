@@ -47,12 +47,9 @@
             <img class="card-img-top" style="width: 27rem;"
                  src="~/img/gallery/depositphotos_81284000-stock-photo-courier-delivering-package-by-van.jpg" alt="">
         </div>
-        <div class="form-inline offset-1 mt-4">
-            @* @if (this.User.Identity.IsAuthenticated)
-            {*@
+        <div class="form-inline offset-1 mt-4">         
             <a class="btn btn-warning" asp-area="Administration" asp-controller="Employee" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-            <a class="ms-2 btn btn-danger" asp-area="Administration" asp-controller="Employee" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that employee?')">Delete</a>
-            @* }*@
+            <a class="ms-2 btn btn-danger" asp-area="Administration" asp-controller="Employee" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that employee?')">Delete</a>     
         </div>
     </div>
 </div>
