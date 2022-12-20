@@ -13,6 +13,11 @@
             return this.View();
         }
 
+        public IActionResult Testimonial()
+        {
+            return this.View();
+        }
+
         public IActionResult Index()
         {
             return this.View();
