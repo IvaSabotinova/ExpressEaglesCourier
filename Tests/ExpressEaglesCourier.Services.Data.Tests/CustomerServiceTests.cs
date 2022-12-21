@@ -205,7 +205,7 @@
         public async Task FindCustomerByPhoneNumberTest()
         {
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomerFormModel());
-            
+
             Customer customer = await this.GetCustomerService()
                 .FindCustomerByPhoneNumber(this.GetCustomerFormModel().PhoneNumber);
 

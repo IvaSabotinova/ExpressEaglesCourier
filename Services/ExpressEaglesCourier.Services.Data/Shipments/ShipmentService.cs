@@ -44,7 +44,7 @@
         {
             if (await this.TrackingNumberExists(model.TrackingNumber))
             {
-                throw new NullReferenceException(TrackingNumberExistsInDB);
+                throw new ArgumentException(TrackingNumberExistsInDB);
             }
 
             if (await this.CustomerWithPhoneNumberExists(model.SenderFirstName, model.SenderLastName, model.SenderPhoneNumber) == false)

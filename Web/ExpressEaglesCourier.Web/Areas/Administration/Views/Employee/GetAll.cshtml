@@ -12,11 +12,12 @@
     <div class="alert alert-danger">@this.TempData[Message]</div>
 }
 
+
 <form method="post">
     @foreach (EmployeeAllViewModel employee in Model)
     {    
-       <div class="container" style="display:inline">
-           <div class="row">
+        <div class="container" style="display:inline">
+    <div class="row">       
                 <div class="card bg-soft-warning" style="width: 30rem;">
                     <div class="card-body">
                         <input type="hidden" asp-for="@employee.Id" />
@@ -32,11 +33,14 @@
                         <input type="submit" class="btn btn-primary" value="AddToShipment" asp-area="Staff" asp-controller="Shipment" asp-action="AddEmployee" asp-route-employeeId="@employee.Id" asp-route-shipmentId="@employee.ShipmentId"/>
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
-
+               
         }
 </form>
+   
+
+
 
 
 
