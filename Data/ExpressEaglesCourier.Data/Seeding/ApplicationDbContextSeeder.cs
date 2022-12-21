@@ -26,13 +26,13 @@
             var seeders = new List<ISeeder>
                           {
                               // new RolesSeeder(),
-
                               // new CountrySeeder(),
                               // new CitySeeder(),
                               // new OfficeSeeder(),
                               // new PositionSeeder(),
                               // new EmployeeSeeder(),
                               // new VehicleSeeder(),
+
                               // new CustomerSeeder(),
                                // new ShipmentSeeder(),
                               // new ShipmentTrackingPathSeeder(),
