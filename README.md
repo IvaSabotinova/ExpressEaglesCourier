@@ -3,8 +3,9 @@
 
 - Deploy in [Azure](https://expresseaglescourierweb20221219115043.azurewebsites.net/)
 
-Database Diagram
+- You can navigate through site as admin, employee, customer and just an user.
 
-![Diagram](DatabaseDiagram.png)
+
+
 
 
