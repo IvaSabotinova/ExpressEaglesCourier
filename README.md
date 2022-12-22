@@ -9,7 +9,7 @@
 
 ![Diagram](DatabaseDiagram.png)
 
--Some Views
+- Some Views
 
 ![Homepage](Homepage.png)
 
