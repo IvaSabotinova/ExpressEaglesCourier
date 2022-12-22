@@ -94,59 +94,6 @@
             Assert.Equal(employeeDb.Id, employee.Id);
         }
 
-        // [Fact]
-
-        // public async Task GetEmployeeDetailsTest()
-        // {
-        //    // ??????????????????????????????????????
-        //    //EmployeeFormModel model = new EmployeeFormModel()
-        //    //{
-        //    //    //Id = "e7b58676-550a-449e-b390-e21fb7e47f94",
-        //    //    FirstName = "Kiro",
-        //    //    MiddleName = "Martinov",
-        //    //    LastName = "Peshov",
-        //    //    Address = "Zornitsa block 15",
-        //    //    City = "Bourgas",
-        //    //    Country = "Bulgaria",
-        //    //    HiredOn = DateTime.Now.AddDays(-2),
-        //    //    PhoneNumber = "00359000000000",
-        //    //    OfficeId = 1,
-        //    //    PositionId = 8,
-        //    //    VehicleId = null,
-        //    //    ResignOn = null,
-        //    //    Salary = 1200,
-        //    //};
-
-        // //await this.GetEmployeeService().CreateEmployeeAsync(model);
-
-        // EfDeletableEntityRepository<Employee> employeeRepo = new EfDeletableEntityRepository<Employee>(this.GetDbContext());
-
-        // await employeeRepo.AddAsync(new Employee()
-        //    {
-        //        FirstName = "Kiro",
-        //        MiddleName = "Martinov",
-        //        LastName = "Peshov",
-        //        Address = "Zornitsa block 15",
-        //        City = "Bourgas",
-        //        Country = "Bulgaria",
-        //        HiredOn = DateTime.Now.AddDays(-2),
-        //        PhoneNumber = "00359000000000",
-        //        OfficeId = 1,
-        //        PositionId = 8,
-        //        VehicleId = null,
-        //        ResignOn = null,
-        //        Salary = 1200,
-        //    });
-        //    await employeeRepo.SaveChangesAsync();
-
-        // Employee employeeDb = await this.GetDbContext().Employees
-        //       .Where(x => x.PhoneNumber == "00359000000000")
-        //       .FirstOrDefaultAsync();
-
-        // EmployeeDetailsViewModel newModel = await this.GetEmployeeService().GetEmployeeDetails(employeeDb.Id);
-
-        // Assert.Equal("Kiro Martinov Peshov", newModel.FullName);
-        // }
         [Fact]
 
         public async Task GetEmployeeForEditAsyncTest()
@@ -276,32 +223,5 @@
             await Assert.ThrowsAsync<NullReferenceException>(() =>
              this.GetEmployeeService().DeleteEmployeeAsync("e0b758b0-2f5e-4f9c-bc49-a1e03a26065e"));
         }
-
-        // [Fact]
-        // public async Task GetAllAsyncTest()
-        // {
-        //    EmployeeFormModel inputModel = new EmployeeFormModel()
-        //    {
-        //        FirstName = "Marto",
-        //        MiddleName = "Martov",
-        //        LastName = "Martov",
-        //        Address = "Zornitsa block 15",
-        //        City = "Bourgas",
-        //        Country = "Bulgaria",
-        //        HiredOn = DateTime.Now.AddDays(-2),
-        //        PhoneNumber = "000999888888888",
-        //        OfficeId = 1,
-        //        PositionId = 8,
-        //        VehicleId = null,
-        //        ResignOn = null,
-        //        Salary = 1200,
-        //    };
-
-        // await this.GetEmployeeService().CreateEmployeeAsync(inputModel);
-
-        // IEnumerable<EmployeeAllViewModel> resultModel = await this.GetEmployeeService().GetAllAsync(5);
-
-        // Assert.Equal(inputModel.PhoneNumber, resultModel.First().PhoneNumber);
-        // }
     }
 }

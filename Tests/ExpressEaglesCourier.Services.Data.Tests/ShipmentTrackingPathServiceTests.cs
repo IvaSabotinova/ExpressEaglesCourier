@@ -298,7 +298,7 @@
                 FinalDelivery = DateTime.Now.AddDays(-2),
             };
 
-            await Assert.ThrowsAsync<ArgumentException>(() => this.GetShipmentTrackingPathService().CreateShipmentTrackingPathAsync(shipmentTrackingPathModel));
+            await Assert.ThrowsAsync<InvalidOperationException>(() => this.GetShipmentTrackingPathService().CreateShipmentTrackingPathAsync(shipmentTrackingPathModel));
         }
 
         [Fact]

@@ -44,7 +44,7 @@
         {
             if (await this.TrackingNumberExists(model.TrackingNumber))
             {
-                throw new ArgumentException(TrackingNumberExistsInDB);
+                throw new InvalidOperationException(TrackingNumberExistsInDB);
             }
 
             if (await this.CustomerWithPhoneNumberExists(model.SenderFirstName, model.SenderLastName, model.SenderPhoneNumber) == false)
@@ -261,7 +261,7 @@
         /// <param name="shipmentId"></param>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentException">Employee already assigned with this shipment!.</exception>
+        /// <exception cref="InvalidOperationException">Employee already assigned with this shipment!.</exception>
         public async Task AddEmployeeToShipment(int shipmentId, string employeeId)
         {
             Employee employee = await this.employeeRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == employeeId);
@@ -276,7 +276,7 @@
 
             if (employeeShipment != null)
             {
-                throw new ArgumentException(EmployeeAlreadyAssignedWithShipment);
+                throw new InvalidOperationException(EmployeeAlreadyAssignedWithShipment);
             }
 
             EmployeeShipment newShipmentEmployee = new EmployeeShipment()
@@ -302,7 +302,7 @@
 
                 if (shipmentVehicle != null)
                 {
-                    throw new ArgumentException(VehicleAssignedToShipment);
+                    throw new InvalidOperationException(VehicleAssignedToShipment);
                 }
 
                 await this.shipmentVehicleRepo.AddAsync(new ShipmentVehicle()

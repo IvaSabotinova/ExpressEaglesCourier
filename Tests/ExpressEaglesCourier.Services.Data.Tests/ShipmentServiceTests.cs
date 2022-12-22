@@ -551,7 +551,7 @@
 
             await this.GetShipmentService().AddEmployeeToShipment(2, employee.Id);
 
-            await Assert.ThrowsAsync<ArgumentException>(() =>
+            await Assert.ThrowsAsync<InvalidOperationException>(() =>
                 this.GetShipmentService().AddEmployeeToShipment(2, employee.Id));
         }
 

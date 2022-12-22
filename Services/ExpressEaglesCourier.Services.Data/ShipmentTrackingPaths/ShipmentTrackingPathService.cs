@@ -58,7 +58,7 @@
 
             if (shipment.TrackingNumber != model.TrackingNumber)
             {
-                throw new ArgumentException(TrackingNumberIncorrect);
+                throw new InvalidOperationException(TrackingNumberIncorrect);
             }
 
             if (shipment.ShipmentTrackingPathId != null)
@@ -178,7 +178,7 @@
 
             if (shipment.TrackingNumber != model.TrackingNumber)
             {
-                throw new ArgumentException(TrackingNumberIncorrect);
+                throw new InvalidOperationException(TrackingNumberIncorrect);
             }
 
             await this.shipmentTrackingPathRepo.SaveChangesAsync();
