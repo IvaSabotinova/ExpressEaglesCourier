@@ -9,12 +9,7 @@
 
 ![Diagram](DatabaseDiagram.png)
 
-- Some Views
 
-![Homepage](Homepage.png)
-
-
-**![StaffBoard] (StaffBoard.png)**
 
 
 
