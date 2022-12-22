@@ -9,6 +9,15 @@
 
 ![Diagram](DatabaseDiagram.png)
 
+-Some Views
+
+![Homepage](Homepage.png)
+
+![TrackShipment] (Track_shipment.png)
+
+![StaffBoard] (StaffBoard.png)
+
+
 
 
 
