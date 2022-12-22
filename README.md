@@ -5,6 +5,6 @@
 
 Database Diagram
 
-![Diagram](C:\Users\Asus\source\repos\Web\WEB-PROJECT\MyImages\DatabaseDiagram.png)
+![Diagram](DatabaseDiagram.png)
 
 
