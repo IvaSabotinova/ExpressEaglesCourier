@@ -6,21 +6,58 @@ namespace ExpressEaglesCourier.Data.Migrations
 
     using Microsoft.EntityFrameworkCore.Migrations;
 
-    public partial class CreateTables : Migration
+    public partial class CreateAnew : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "CustomerId",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
 
-            migrationBuilder.AddColumn<string>(
-                name: "EmployeeId",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CustomerId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmployeeId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Countries",
@@ -41,6 +78,129 @@ namespace ExpressEaglesCourier.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Positions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    JobTitle = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Positions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
                 {
@@ -48,9 +208,9 @@ namespace ExpressEaglesCourier.Data.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false, comment: "Home address"),
-                    City = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: false, comment: "Home city"),
-                    Country = table.Column<string>(type: "nvarchar(56)", maxLength: 56, nullable: false, comment: "Home country"),
+                    Address = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false, comment: "Home Address"),
+                    City = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: false, comment: "Home City"),
+                    Country = table.Column<string>(type: "nvarchar(56)", maxLength: 56, nullable: false, comment: "Home Country"),
                     CompanyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "The name of the company should shipment is ordered by a company"),
                     PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "The Id of the Customer should he/she become user of the site"),
@@ -67,23 +227,6 @@ namespace ExpressEaglesCourier.Data.Migrations
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Positions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    JobTitle = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Positions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,15 +263,18 @@ namespace ExpressEaglesCourier.Data.Migrations
                     TrackingNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     SenderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReceiverId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PickupAddress = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
-                    PickUpTown = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: true),
-                    DestinationAddress = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
-                    DestinationTown = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: true),
+                    PickupAddress = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    PickUpTown = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: false),
+                    PickUpCountry = table.Column<string>(type: "nvarchar(56)", maxLength: 56, nullable: false),
+                    DestinationAddress = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    DestinationTown = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: false),
+                    DestinationCountry = table.Column<string>(type: "nvarchar(56)", maxLength: 56, nullable: false),
                     DeliveryType = table.Column<int>(type: "int", nullable: false),
                     ProductType = table.Column<int>(type: "int", nullable: false),
+                    DeliveryWay = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ShipmentTrackingPathId = table.Column<int>(type: "int", nullable: false),
+                    ShipmentTrackingPathId = table.Column<int>(type: "int", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -213,8 +359,12 @@ namespace ExpressEaglesCourier.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ShipmentId = table.Column<int>(type: "int", nullable: false, comment: "The shipment that tracking path is related to."),
-                    PickedUpByCourier = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date and time of picking up shipment from customer."),
+                    TrackingNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false, comment: "Tracking number of the shipment."),
+                    AcceptanceFromCustomer = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date and time of accepting the shipment from customer."),
+                    PickedUpByCourier = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date and time of picking up shipment by courier."),
+                    SendingOfficeId = table.Column<int>(type: "int", nullable: true),
                     SentFromDispatchingOffice = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date and time of sending shipment from dispatching office."),
+                    ReceivingOfficeId = table.Column<int>(type: "int", nullable: true),
                     ArrivalInReceivingOffice = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date and time of shipment arrival in receiving office."),
                     FinalDeliveryPreparation = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date and time of shipment final processing / preparation for final delivery to customer."),
                     FinalDelivery = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date and time of shipment's final delivery / handover to customer."),
@@ -242,9 +392,9 @@ namespace ExpressEaglesCourier.Data.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false, comment: "Home address"),
-                    City = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: false, comment: "Home city"),
-                    Country = table.Column<string>(type: "nvarchar(56)", maxLength: 56, nullable: false, comment: "Home country"),
+                    Address = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false, comment: "Home Address"),
+                    City = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: false, comment: "Home City"),
+                    Country = table.Column<string>(type: "nvarchar(56)", maxLength: 56, nullable: false, comment: "Home Country"),
                     PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     HiredOn = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "The date on which the employee was hired."),
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -252,7 +402,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     OfficeId = table.Column<int>(type: "int", nullable: false),
                     PositionId = table.Column<int>(type: "int", nullable: false),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "The id of the Employee when he/she becomes user of the site."),
-                    VehicleId = table.Column<int>(type: "int", nullable: false, comment: "The vehicle used by the employee courier."),
+                    VehicleId = table.Column<int>(type: "int", nullable: true, comment: "The vehicle used by the employee courier."),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -286,6 +436,8 @@ namespace ExpressEaglesCourier.Data.Migrations
                 {
                     ShipmentId = table.Column<int>(type: "int", nullable: false),
                     EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -310,7 +462,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Model = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     PlateNumber = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "The employee assigned with the vehicle."),
+                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "The employee assigned with the vehicle."),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -323,8 +475,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                         name: "FK_Vehicles_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -333,6 +484,8 @@ namespace ExpressEaglesCourier.Data.Migrations
                 {
                     ShipmentId = table.Column<int>(type: "int", nullable: false),
                     VehicleId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -348,6 +501,55 @@ namespace ExpressEaglesCourier.Data.Migrations
                         principalTable: "Vehicles",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoles_IsDeleted",
+                table: "AspNetRoles",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_IsDeleted",
+                table: "AspNetUsers",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cities_CountryId",
@@ -397,6 +599,11 @@ namespace ExpressEaglesCourier.Data.Migrations
                 name: "IX_Employees_PositionId",
                 table: "Employees",
                 column: "PositionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeesShipments_IsDeleted",
+                table: "EmployeesShipments",
+                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeesShipments_ShipmentId",
@@ -455,6 +662,11 @@ namespace ExpressEaglesCourier.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShipmentsVehicles_IsDeleted",
+                table: "ShipmentsVehicles",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ShipmentsVehicles_VehicleId",
                 table: "ShipmentsVehicles",
                 column: "VehicleId");
@@ -463,7 +675,8 @@ namespace ExpressEaglesCourier.Data.Migrations
                 name: "IX_Vehicles_EmployeeId",
                 table: "Vehicles",
                 column: "EmployeeId",
-                unique: true);
+                unique: true,
+                filter: "[EmployeeId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_IsDeleted",
@@ -473,6 +686,21 @@ namespace ExpressEaglesCourier.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
             migrationBuilder.DropTable(
                 name: "EmployeesShipments");
 
@@ -484,6 +712,9 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ShipmentsVehicles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Shipments");
@@ -498,6 +729,9 @@ namespace ExpressEaglesCourier.Data.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Offices");
 
             migrationBuilder.DropTable(
@@ -508,14 +742,6 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Countries");
-
-            migrationBuilder.DropColumn(
-                name: "CustomerId",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "EmployeeId",
-                table: "AspNetUsers");
         }
     }
 }

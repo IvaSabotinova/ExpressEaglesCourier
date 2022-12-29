@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Net.Mail;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
@@ -132,13 +134,12 @@
             const int ItemsPerPage = 3;
             try
             {
-                // IEnumerable<EmployeeAllViewModel> model = await  this.employeeService.GetAllAsync(id, page, 3);
                 EmployeeListAllViewModel model = new EmployeeListAllViewModel()
                 {
                     ItemsPerPage = ItemsPerPage,
                     CurrentPageNumber = page,
                     AllItemsCount = await this.employeeService.GetEmployeesCountAsync(),
-                    Employees = await this.employeeService.GetAllAsync(shipmentId, page, ItemsPerPage),
+                    Employees = await this.employeeService.GetAllAsync<EmployeeAllViewModel>(page, ItemsPerPage),
                     ShipmentId = shipmentId,
                 };
 

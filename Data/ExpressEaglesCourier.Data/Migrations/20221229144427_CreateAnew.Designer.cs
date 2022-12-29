@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpressEaglesCourier.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221115081056_RequiredFieldsToShipment")]
-    partial class RequiredFieldsToShipment
+    [Migration("20221229144427_CreateAnew")]
+    partial class CreateAnew
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -236,7 +236,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)")
-                        .HasComment("Home address");
+                        .HasComment("Home Address");
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)")
@@ -246,7 +246,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(28)
                         .HasColumnType("nvarchar(28)")
-                        .HasComment("Home city");
+                        .HasComment("Home City");
 
                     b.Property<string>("CompanyName")
                         .HasMaxLength(100)
@@ -257,7 +257,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(56)
                         .HasColumnType("nvarchar(56)")
-                        .HasComment("Home country");
+                        .HasComment("Home Country");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -309,7 +309,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)")
-                        .HasComment("Home address");
+                        .HasComment("Home Address");
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)")
@@ -319,13 +319,13 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(28)
                         .HasColumnType("nvarchar(28)")
-                        .HasComment("Home city");
+                        .HasComment("Home City");
 
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasMaxLength(56)
                         .HasColumnType("nvarchar(56)")
-                        .HasComment("Home country");
+                        .HasComment("Home Country");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -374,7 +374,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("VehicleId")
+                    b.Property<int?>("VehicleId")
                         .HasColumnType("int")
                         .HasComment("The vehicle used by the employee courier.");
 
@@ -401,7 +401,15 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<int>("ShipmentId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("EmployeeId", "ShipmentId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("ShipmentId");
 
@@ -532,39 +540,6 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.ToTable("Positions");
                 });
 
-            modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Setting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Settings");
-                });
-
             modelBuilder.Entity("ExpressEaglesCourier.Data.Models.Shipment", b =>
                 {
                     b.Property<int>("Id")
@@ -582,10 +557,18 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<int>("DeliveryType")
                         .HasColumnType("int");
 
+                    b.Property<int>("DeliveryWay")
+                        .HasColumnType("int");
+
                     b.Property<string>("DestinationAddress")
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("DestinationCountry")
+                        .IsRequired()
+                        .HasMaxLength(56)
+                        .HasColumnType("nvarchar(56)");
 
                     b.Property<string>("DestinationTown")
                         .IsRequired()
@@ -597,6 +580,11 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("PickUpCountry")
+                        .IsRequired()
+                        .HasMaxLength(56)
+                        .HasColumnType("nvarchar(56)");
 
                     b.Property<string>("PickUpTown")
                         .IsRequired()
@@ -622,7 +610,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ShipmentTrackingPathId")
+                    b.Property<int?>("ShipmentTrackingPathId")
                         .HasColumnType("int");
 
                     b.Property<string>("TrackingNumber")
@@ -652,6 +640,10 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime?>("AcceptanceFromCustomer")
+                        .HasColumnType("datetime2")
+                        .HasComment("Date and time of accepting the shipment from customer.");
+
                     b.Property<DateTime?>("ArrivalInReceivingOffice")
                         .HasColumnType("datetime2")
                         .HasComment("Date and time of shipment arrival in receiving office.");
@@ -678,7 +670,13 @@ namespace ExpressEaglesCourier.Data.Migrations
 
                     b.Property<DateTime?>("PickedUpByCourier")
                         .HasColumnType("datetime2")
-                        .HasComment("Date and time of picking up shipment from customer.");
+                        .HasComment("Date and time of picking up shipment by courier.");
+
+                    b.Property<int?>("ReceivingOfficeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SendingOfficeId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("SentFromDispatchingOffice")
                         .HasColumnType("datetime2")
@@ -687,6 +685,12 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<int>("ShipmentId")
                         .HasColumnType("int")
                         .HasComment("The shipment that tracking path is related to.");
+
+                    b.Property<string>("TrackingNumber")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
+                        .HasComment("Tracking number of the shipment.");
 
                     b.HasKey("Id");
 
@@ -706,7 +710,15 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("ShipmentId", "VehicleId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("VehicleId");
 
@@ -728,7 +740,6 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmployeeId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasComment("The employee assigned with the vehicle.");
 
@@ -751,7 +762,8 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.HasIndex("IsDeleted");
 
@@ -999,9 +1011,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                 {
                     b.HasOne("ExpressEaglesCourier.Data.Models.Employee", "Employee")
                         .WithOne("Vehicle")
-                        .HasForeignKey("ExpressEaglesCourier.Data.Models.Vehicle", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("ExpressEaglesCourier.Data.Models.Vehicle", "EmployeeId");
 
                     b.Navigation("Employee");
                 });

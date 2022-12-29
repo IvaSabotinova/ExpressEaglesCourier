@@ -293,47 +293,15 @@
             return this.employeeRepo.AllAsNoTracking().CountAsync();
         }
 
-        public async Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId, int page = 1, int itemsPerPage = 3)
+        public async Task<IEnumerable<T>> GetAllAsync<T>(int page = 1, int itemsPerPage = 3)
         {
-            // List<Employee> employees = await this.employeeRepo.AllAsNoTracking()
-            //   .Include(x => x.Position)
-            //   .Include(x => x.Vehicle)
-            //   .Include(x => x.Office)
-            //   .ThenInclude(x => x.City)
-            //  .ToListAsync();
-            List<EmployeeAllViewModel> model = await this.employeeRepo.AllAsNoTracking()
-
-                // .Include(x => x.Position)
-                // .Include(x => x.Vehicle)
-                // .Include(x => x.Office)
-                // .ThenInclude(x => x.City)
-                .To<EmployeeAllViewModel>()
-
-                 // .Select(x => new EmployeeAllViewModel()
-                 // {
-                 //    Id = x.Id,
-                 //    FullName = $"{x.FirstName} {x.LastName}",
-                 //    Position = x.Position.JobTitle,
-                 //    PhoneNumber = x.PhoneNumber,
-                 //    OfficeCity = x.Office.City.Name,
-                 //    ShipmentId = shipmentId,
-                 //    Vehicle = new VehicleEmployeeViewModel()
-                 // {
-                 //    Id = x.Vehicle?.Id ?? 0,
-                 //    Model = x.Vehicle?.Model ?? null,
-                 //    PlateNumber = x.Vehicle?.PlateNumber ?? null,
-                 // },
-                 // })
-                .OrderBy(x => x.OfficeCityName)
-                .ThenBy(x => x.FullName)
+            List<T> model = await this.employeeRepo.AllAsNoTracking()
+                .OrderBy(x => x.Office.City.Name)
+                .ThenBy(x => x.FirstName + " " + x.LastName)
+                .To<T>()
                 .Skip((page - 1) * itemsPerPage)
                 .Take(itemsPerPage)
                 .ToListAsync();
-
-            foreach (EmployeeAllViewModel employee in model)
-            {
-                employee.ShipmentId = shipmentId;
-            }
 
             return model;
         }

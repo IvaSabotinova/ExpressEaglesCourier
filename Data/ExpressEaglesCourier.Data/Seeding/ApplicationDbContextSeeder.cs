@@ -32,9 +32,8 @@
                               // new PositionSeeder(),
                               // new EmployeeSeeder(),
                               // new VehicleSeeder(),
-
                               // new CustomerSeeder(),
-                               // new ShipmentSeeder(),
+                              // new ShipmentSeeder(),
                               // new ShipmentTrackingPathSeeder(),
                               // new EmployeeShipmentSeeder(),
                               // new ShipmentVehicleSeeder(),

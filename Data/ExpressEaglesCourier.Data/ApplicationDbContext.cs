@@ -1,20 +1,14 @@
 ﻿namespace ExpressEaglesCourier.Data
 {
     using System;
-    using System.Diagnostics.Metrics;
     using System.Linq;
     using System.Reflection;
-    using System.Reflection.Emit;
-    using System.Reflection.Metadata;
-    using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Common.Models;
     using ExpressEaglesCourier.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>

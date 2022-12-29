@@ -1,7 +1,7 @@
 ﻿@model EmployeeListAllViewModel
 
 @{
-    ViewBag.Title = "All Employees, Page " + Model.CurrentPageNumber;
+    ViewBag.Title = "All Employees, Page " + Model.CurrentPageNumber; 
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -11,6 +11,7 @@
 {
     <div class="alert alert-danger">@this.TempData[Message]</div>
 }
+
 
 <div class="row">
         @foreach (EmployeeAllViewModel employee in Model.Employees)
@@ -22,19 +23,20 @@
                         <p class="text-center" style="font-size:20px;"><u>@employee.OfficeCityName</u></p>
                         <p class="card-title"><b>Employee Name: </b>@employee.FullName</p>
                         <p class="card-text"><b>Position: </b>@employee.Position</p>
-                        <p class="card-text"><b>Phone Number: </b>@employee.PhoneNumber</p>
-                @*       @if (employee.Vehicle.Id != 0 && employee.Vehicle.Model != null && employee.Vehicle.PlateNumber != null)*@
+                        <p class="card-text"><b>Phone Number: </b>@employee.PhoneNumber</p>                              
                         @if (employee.Vehicle != null)
                         {
                             <p><b>Car Model:</b> @employee.Vehicle.Model</p>
                             <p><b>Car Plate Number:</b>@employee.Vehicle.PlateNumber</p>
                         }
-                        <form method="post">
-                              <div class="text-center mb-1">
+
+                        <div class="text-center">
+                                  <form method="post">
                                 <input type="hidden" asp-for="@employee.Id" />
-                                <input type="submit" class="btn btn-primary" value="AddToShipment" asp-area="Staff" asp-controller="Shipment" asp-action="AddEmployee" asp-route-employeeId="@employee.Id" asp-route-shipmentId="@employee.ShipmentId" />
+                                <input type="submit" class="btn btn-primary" value="AddToShipment" asp-area="Staff" asp-controller="Shipment" asp-action="AddEmployee" asp-route-employeeId="@employee.Id" asp-route-shipmentId="@Model.ShipmentId" />
+                                    </form>
                               </div>                    
-                        </form>
+                        
                     </div>
                 </div>
             </div>      
@@ -42,7 +44,11 @@
         }   
 </div>
 
+
+
 <partial name="_PagingPartialEmployees" model="@Model" />
+
+
 
    
 

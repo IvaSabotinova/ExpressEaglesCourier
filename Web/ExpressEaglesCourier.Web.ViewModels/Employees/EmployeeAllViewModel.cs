@@ -16,8 +16,6 @@
 
         public string OfficeCityName { get; set; }
 
-        public int ShipmentId { get; set; }
-
         public VehicleEmployeeViewModel Vehicle { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

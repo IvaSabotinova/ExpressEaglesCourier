@@ -15,7 +15,7 @@
         {
             UserManager<ApplicationUser> staffSeeder = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            if (staffSeeder.Users.Count() > 2)
+            if (staffSeeder.Users.Count() > 1)
             {
                 return;
             }

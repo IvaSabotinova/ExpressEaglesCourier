@@ -32,6 +32,6 @@
 
         Task<int> GetEmployeesCountAsync();
 
-        Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId, int page, int itemsPerPage);
+        Task<IEnumerable<T>> GetAllAsync<T>(int page, int itemsPerPage);
     }
 }
