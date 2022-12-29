@@ -1,7 +1,7 @@
 # ExpressEaglesCourier
 
 
-- Deploy in [Azure](https://expresseaglescourierweb20221219115043.azurewebsites.net/)
+- Deploy in [Azure](https://expresseaglescourierweb20221219115043.azurewebsites.net/) - N/A
 
 - You can navigate through site as admin, employee, customer and just an user.
 

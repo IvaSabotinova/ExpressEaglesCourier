@@ -31,64 +31,67 @@
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
-<div class="container" style="display:inline">
-    <div class="row">
-        <div class="col-5">
-            <img class="card-img-top" style="width: 25rem;"
-                 src="~/img/gallery/netCourier.jpg" alt="">                      
-        </div>
-        <div class="card col-6 border-0">
-            <p style="font-size:26px;">Tracking Number: @Model.TrackingNumber</p>
-            <p><b>Sender: </b>@Model.SenderFullName - <b>Phone number: </b>@Model.SenderPhoneNumber</p>
-            <p><b>Receiver: </b>@Model.ReceiverFullName - <b>Phone number: </b>@Model.ReceiverPhoneNumber</p>
-            <p><b>Origin: </b>@Model.FullPickUpAddress</p>
-            <p><b>Destination: </b>@Model.FullDestinationAddress</p>
-            <p><b>Delivery: </b>@dropDownEnums[Model.DeliveryWay]</p>
-            <p><b>Product Type: </b>@dropDownEnums[Model.ProductType]</p>
-            <p><b>Delivery Type: </b>@dropDownEnums[Model.DeliveryType]</p>
-            <p><b>Weight: </b>@Model.Weight kg</p>
-            <p><b>Price: </b>@Model.Price lv</p>
-            <p class="text-center"><b>Assigned To Employees: </b></p>
-            @foreach (EmployeeShipmentViewModel employee in this.Model.EmployeesShipments)
-            {               
-                  <div class="card mb-1" style="max-width:1140px;max-height:150px;">
-                     <div class="card-body d-md-inline-block">
-                        <input type="hidden" asp-for="@employee.EmployeeId" />
-                        <input type="hidden" asp-for="@Model.Id" />
-                               <p><b>Name: </b>@employee.FullName</p>                      
-                               <p><b>Position: </b>@employee.Position, <b>Office: </b> @employee.OfficeCity</p>
-                               @if(this.User.IsInRole(AdministratorRoleName) 
-                               || this.User.IsInRole(ManagerRoleName))
-                               {
-                            <ul class="btn-group-toggle" style="list-style:none">
-                                <li class="single-meta">
-                                    <form asp-area="Staff" asp-controller="Shipment" asp-action="RemoveEmployee" id="deleteForm" asp-route-shipmentId="@Model.Id" asp-route-employeeId="@employee.EmployeeId" onclick="return confirm('Are you sure you want to withdraw employee from that shipment?')">
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Remove</button>
-                                    </form>
-                                </li>
-                            </ul>
-                               }                     
-                    </div>           
-                  </div>                
-            }
-        </div>
-        <div class="form-inline offset-4 mt-3">
-            @if (this.User.Identity.IsAuthenticated && (this.User.IsInRole(AdministratorRoleName) 
-            || this.User.IsInRole(EmployeeRoleName)
-            || this.User.IsInRole(ManagerRoleName)))
-            {
-            <a class="ms-2 btn btn-warning" asp-area="Staff" asp-controller="ShipmentTrackingPath" asp-action="Create"
-               asp-route-id="@Model.Id">Create Tracking Path</a>                
-            <a class="btn btn-warning" asp-area="Staff" asp-controller="Shipment" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-                if (this.User.IsInRole(AdministratorRoleName)                
-                || this.User.IsInRole(ManagerRoleName))
-                {
-                    <a class="ms-2 btn btn-danger" asp-area="Staff" asp-controller="Shipment" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that shipment?')">Delete</a>
+<div class="row">
+    <div class="container" style="display:inline">
+        <div class="row">          
+            <div class="card col-5 border-2 bg-soft-warning text-900 ms-3 me-5">
+                <p class="text-center" style="font-size:26px;">Tracking Number: @Model.TrackingNumber</p>
+                <p><b>Sender: </b>@Model.SenderFullName - <b>Phone number: </b>@Model.SenderPhoneNumber</p>
+                <p><b>Receiver: </b>@Model.ReceiverFullName - <b>Phone number: </b>@Model.ReceiverPhoneNumber</p>
+                <p><b>Origin: </b>@Model.FullPickUpAddress</p>
+                <p><b>Destination: </b>@Model.FullDestinationAddress</p>
+                <p><b>Delivery: </b>@dropDownEnums[Model.DeliveryWay]</p>
+                <p><b>Product Type: </b>@dropDownEnums[Model.ProductType]</p>
+                <p><b>Delivery Type: </b>@dropDownEnums[Model.DeliveryType]</p>
+                <p><b>Weight: </b>@Model.Weight kg</p>
+                <p><b>Price: </b>@Model.Price lv</p>
 
-                    <a class="ms-2 btn btn-warning" asp-area="Administration" asp-controller="Employee" asp-action="GetAll" asp-route-shipmentId="@Model.Id">Assign Employee</a>
-                }   
-            }
+            </div>
+            <div class="card col-6 border-2 bg-soft-warning text-900" style="max-width:1400px">
+                <p class="text-center"><b>Assigned To Employees: </b></p>
+                @foreach (EmployeeShipmentViewModel employee in this.Model.EmployeesShipments)
+                {
+                    <div class="card mb-1 bg-soft-warning" style="max-width:1150px;max-height:150px;">
+                        <div class="card-body d-md-inline-block">
+                            <input type="hidden" asp-for="@employee.EmployeeId" />
+                            <input type="hidden" asp-for="@Model.Id" />
+                            <p><b>Name: </b>@employee.FullName</p>
+                            <p><b>Position: </b>@employee.Position, <b>Office: </b> @employee.OfficeCity</p>
+                            @if (this.User.IsInRole(AdministratorRoleName)
+                           || this.User.IsInRole(ManagerRoleName))
+                            {
+                                <ul class="btn-group-toggle" style="list-style:none">
+                                    <li class="single-meta">
+                                        <form asp-area="Staff" asp-controller="Shipment" asp-action="RemoveEmployee" id="deleteForm" asp-route-shipmentId="@Model.Id" asp-route-employeeId="@employee.EmployeeId" onclick="return confirm('Are you sure you want to withdraw employee from that shipment?')">
+                                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Remove</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="form-inline offset-4 mt-3">
+                @if (this.User.Identity.IsAuthenticated && (this.User.IsInRole(AdministratorRoleName)
+                || this.User.IsInRole(EmployeeRoleName)
+                || this.User.IsInRole(ManagerRoleName)))
+                {
+                    <a class="ms-2 btn btn-warning" asp-area="Staff" asp-controller="ShipmentTrackingPath" asp-action="Create"
+                   asp-route-id="@Model.Id">Create Tracking Path</a>
+                    <a class="ms-2 btn btn-warning" asp-area="Staff" asp-controller="Shipment" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                    if (this.User.IsInRole(AdministratorRoleName)
+                    || this.User.IsInRole(ManagerRoleName))
+                    {
+                        <a class="ms-2 btn btn-danger" asp-area="Staff" asp-controller="Shipment" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that shipment?')">Delete</a>
+
+                        <a class="ms-2 btn btn-warning" asp-area="Administration" asp-controller="Employee" asp-action="GetAll" asp-route-shipmentId="@Model.Id">Assign Employee</a>
+                    }
+                }
+            </div>
         </div>
-    </div>
+   </div>
+
 </div>
 
