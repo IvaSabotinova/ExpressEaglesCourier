@@ -9,7 +9,7 @@
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
-    using ExpressEaglesCourier.Web.ViewModels.Employee;
+    using ExpressEaglesCourier.Web.ViewModels.Employees;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
     using Microsoft.EntityFrameworkCore;

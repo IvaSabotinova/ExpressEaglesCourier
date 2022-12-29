@@ -1,11 +1,15 @@
-﻿namespace ExpressEaglesCourier.Web.ViewModels.Employee
+﻿namespace ExpressEaglesCourier.Web.ViewModels.Employees
 {
-    public class VehicleEmployeeViewModel
+    using AutoMapper;
+    using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Services.Mapping;
+
+    public class VehicleEmployeeViewModel : IMapFrom<Vehicle>
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = 0;
 
-        public string Model { get; set; }
+        public string Model { get; set; } = null;
 
-        public string PlateNumber { get; set; }
+        public string PlateNumber { get; set; } = null;
     }
 }

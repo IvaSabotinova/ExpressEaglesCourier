@@ -1,4 +1,4 @@
-﻿namespace ExpressEaglesCourier.Web.ViewModels.Employee
+﻿namespace ExpressEaglesCourier.Web.ViewModels.Employees
 {
     public class EmployeeDetailsViewModel
     {

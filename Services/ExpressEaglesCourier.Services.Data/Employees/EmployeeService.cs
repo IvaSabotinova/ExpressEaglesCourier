@@ -7,7 +7,8 @@
 
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
-    using ExpressEaglesCourier.Web.ViewModels.Employee;
+    using ExpressEaglesCourier.Services.Mapping;
+    using ExpressEaglesCourier.Web.ViewModels.Employees;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
@@ -287,31 +288,52 @@
             }
         }
 
-        public async Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId)
+        public Task<int> GetEmployeesCountAsync()
         {
-            List<Employee> employees = await this.employeeRepo.AllAsNoTracking()
-               .Include(x => x.Position)
-               .Include(x => x.Vehicle)
-               .Include(x => x.Office)
-               .ThenInclude(x => x.City)
-               .ToListAsync();
+            return this.employeeRepo.AllAsNoTracking().CountAsync();
+        }
 
-            List<EmployeeAllViewModel> model = employees.Select(x => new EmployeeAllViewModel()
+        public async Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId, int page = 1, int itemsPerPage = 3)
+        {
+            // List<Employee> employees = await this.employeeRepo.AllAsNoTracking()
+            //   .Include(x => x.Position)
+            //   .Include(x => x.Vehicle)
+            //   .Include(x => x.Office)
+            //   .ThenInclude(x => x.City)
+            //  .ToListAsync();
+            List<EmployeeAllViewModel> model = await this.employeeRepo.AllAsNoTracking()
+
+                // .Include(x => x.Position)
+                // .Include(x => x.Vehicle)
+                // .Include(x => x.Office)
+                // .ThenInclude(x => x.City)
+                .To<EmployeeAllViewModel>()
+
+                 // .Select(x => new EmployeeAllViewModel()
+                 // {
+                 //    Id = x.Id,
+                 //    FullName = $"{x.FirstName} {x.LastName}",
+                 //    Position = x.Position.JobTitle,
+                 //    PhoneNumber = x.PhoneNumber,
+                 //    OfficeCity = x.Office.City.Name,
+                 //    ShipmentId = shipmentId,
+                 //    Vehicle = new VehicleEmployeeViewModel()
+                 // {
+                 //    Id = x.Vehicle?.Id ?? 0,
+                 //    Model = x.Vehicle?.Model ?? null,
+                 //    PlateNumber = x.Vehicle?.PlateNumber ?? null,
+                 // },
+                 // })
+                .OrderBy(x => x.OfficeCityName)
+                .ThenBy(x => x.FullName)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .ToListAsync();
+
+            foreach (EmployeeAllViewModel employee in model)
             {
-                Id = x.Id,
-                FullName = $"{x.FirstName} {x.LastName}",
-                Position = x.Position.JobTitle,
-                PhoneNumber = x.PhoneNumber,
-                OfficeCity = x.Office.City.Name,
-                ShipmentId = shipmentId,
-                Vehicle = new VehicleEmployeeViewModel()
-                {
-                    Id = x.Vehicle?.Id ?? 0,
-                    Model = x.Vehicle?.Model ?? null,
-                    PlateNumber = x.Vehicle?.PlateNumber ?? null,
-                },
-            }).OrderBy(x => x.OfficeCity)
-               .ToList();
+                employee.ShipmentId = shipmentId;
+            }
 
             return model;
         }

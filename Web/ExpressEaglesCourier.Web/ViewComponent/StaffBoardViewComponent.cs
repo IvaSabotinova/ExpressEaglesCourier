@@ -1,4 +1,4 @@
-﻿namespace ExpressEaglesCourier.Web.ViewComponents
+﻿namespace ExpressEaglesCourier.Web.ViewComponent
 {
     using System.Threading.Tasks;
 

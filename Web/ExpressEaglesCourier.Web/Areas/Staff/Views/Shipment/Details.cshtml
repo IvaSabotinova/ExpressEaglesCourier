@@ -85,7 +85,7 @@
                 {
                     <a class="ms-2 btn btn-danger" asp-area="Staff" asp-controller="Shipment" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that shipment?')">Delete</a>
 
-                    <a class="ms-2 btn btn-warning" asp-area="Administration" asp-controller="Employee" asp-action="GetAll" asp-route-Id="@Model.Id">Assign Employee</a>
+                    <a class="ms-2 btn btn-warning" asp-area="Administration" asp-controller="Employee" asp-action="GetAll" asp-route-shipmentId="@Model.Id">Assign Employee</a>
                 }   
             }
         </div>

@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Services.Data.Searches;
-    using ExpressEaglesCourier.Web.ViewModels.Employee;
+    using ExpressEaglesCourier.Web.ViewModels.Employees;
     using Microsoft.AspNetCore.Mvc;
 
     public class SearchController : AdministrationController

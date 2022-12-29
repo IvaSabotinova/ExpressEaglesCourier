@@ -1,4 +1,4 @@
-﻿namespace ExpressEaglesCourier.Web.ViewModels.Employee
+﻿namespace ExpressEaglesCourier.Web.ViewModels.Employees
 {
     using System;
     using System.Collections.Generic;

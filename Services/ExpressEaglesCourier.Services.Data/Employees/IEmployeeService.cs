@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
-    using ExpressEaglesCourier.Web.ViewModels.Employee;
+    using ExpressEaglesCourier.Web.ViewModels.Employees;
 
     public interface IEmployeeService
     {
@@ -30,6 +30,8 @@
 
         Task DeleteEmployeeApplicationUser(Employee employee);
 
-        Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId);
+        Task<int> GetEmployeesCountAsync();
+
+        Task<IEnumerable<EmployeeAllViewModel>> GetAllAsync(int shipmentId, int page, int itemsPerPage);
     }
 }

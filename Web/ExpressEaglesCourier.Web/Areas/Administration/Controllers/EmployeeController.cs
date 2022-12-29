@@ -6,7 +6,7 @@
 
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Data.Employees;
-    using ExpressEaglesCourier.Web.ViewModels.Employee;
+    using ExpressEaglesCourier.Web.ViewModels.Employees;
     using Microsoft.AspNetCore.Mvc;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
@@ -23,10 +23,12 @@
         [HttpGet]
         public IActionResult Add()
         {
-            var model = new EmployeeFormModel();
-            model.Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
-            model.Positions = this.employeeService.GetAllPositionsAsKeyValuePairs();
-            model.Vehicles = this.employeeService.GetVehiclesAsKeyValuePairs();
+            EmployeeFormModel model = new EmployeeFormModel
+            {
+                Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs(),
+                Positions = this.employeeService.GetAllPositionsAsKeyValuePairs(),
+                Vehicles = this.employeeService.GetVehiclesAsKeyValuePairs(),
+            };
             return this.View(model);
         }
 
@@ -120,21 +122,31 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(int id)
+        public async Task<IActionResult> GetAll(int shipmentId, int page = 1)
         {
-            if (id < 1)
+            if (shipmentId < 1)
             {
                 return this.NotFound();
             }
 
+            const int ItemsPerPage = 3;
             try
             {
-                IEnumerable<EmployeeAllViewModel> model = await this.employeeService.GetAllAsync(id);
+                // IEnumerable<EmployeeAllViewModel> model = await  this.employeeService.GetAllAsync(id, page, 3);
+                EmployeeListAllViewModel model = new EmployeeListAllViewModel()
+                {
+                    ItemsPerPage = ItemsPerPage,
+                    CurrentPageNumber = page,
+                    AllItemsCount = await this.employeeService.GetEmployeesCountAsync(),
+                    Employees = await this.employeeService.GetAllAsync(shipmentId, page, ItemsPerPage),
+                    ShipmentId = shipmentId,
+                };
+
                 return this.View(model);
             }
             catch (Exception)
             {
-                return this.RedirectToAction("Details", "Shipment", new { id });
+                return this.RedirectToAction("Details", "Shipment", new { shipmentId });
             }
         }
     }

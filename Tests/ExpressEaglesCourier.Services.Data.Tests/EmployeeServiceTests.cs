@@ -12,7 +12,7 @@
     using ExpressEaglesCourier.Data.Repositories;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
-    using ExpressEaglesCourier.Web.ViewModels.Employee;
+    using ExpressEaglesCourier.Web.ViewModels.Employees;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Moq;
