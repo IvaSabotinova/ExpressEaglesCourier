@@ -1,0 +1,36 @@
+﻿@model ShipmentPagingAndSearchViewModel
+
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @if (!Model.HasPreviousPage){ <text>disabled</text> }">
+            <a class="page-link" asp-action="GetAndSearchAllShipments" asp-route-page="@Model.PreviousPageNumber" asp-route-productType="@Model.ProductType" asp-route-searchCustomerName="@Model.SearchCustomerName" asp-route-shipmentSortingCriterion="@Model.ShipmentSortingCriterion.">Previous</a>
+        </li>
+        @for (int i = Model.CurrentPageNumber - 2; i < Model.CurrentPageNumber; i++)
+        {
+            if (i > 0)
+            {
+                <li class="page-item"><a class="page-link" asp-action="GetAndSearchAllShipments" asp-route-page="@i" asp-route-productType="@Model.ProductType" asp-route-searchCustomerName="@Model.SearchCustomerName" asp-route-shipmentSortingCriterion="@Model.ShipmentSortingCriterion">@i</a></li>
+            }
+
+        }
+
+        <li class="page-item active" aria-current="page">
+            <span class="page-link">
+                @Model.CurrentPageNumber
+                <span class="sr-only"></span>
+            </span>
+        </li>
+        @for (int i = Model.CurrentPageNumber + 1; i <= Model.CurrentPageNumber + 2; i++)
+        {
+            if (i <= Model.PagesCount)
+            {
+                <li class="page-item"><a class="page-link" asp-action="GetAndSearchAllShipments" asp-route-page="@i" asp-route-productType="@Model.ProductType" asp-route-searchCustomerName="@Model.SearchCustomerName" asp-route-shipmentSortingCriterion="@Model.ShipmentSortingCriterion">@i</a></li>
+            }
+
+        }
+        <li class="page-item @if(!Model.HasNextPage) { <text>disabled</text> }">
+            <a class="page-link" asp-action="GetAndSearchAllShipments" asp-route-page="@Model.NextPageNumber" asp-route-productType="@Model.ProductType" asp-route-searchCustomerName="@Model.SearchCustomerName" asp-route-shipmentSortingCriterion="@Model.ShipmentSortingCriterion">Next</a>
+        </li>
+    </ul>
+</nav>

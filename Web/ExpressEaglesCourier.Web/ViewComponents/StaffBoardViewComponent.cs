@@ -1,9 +1,9 @@
-﻿namespace ExpressEaglesCourier.Web.ViewComponent
+﻿namespace ExpressEaglesCourier.Web.ViewComponents
 {
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Services.Data.Stats;
-    using ExpressEaglesCourier.Web.ViewModels.ViewComponent;
+    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.StaffBoard;
     using Microsoft.AspNetCore.Mvc;
 
     public class StaffBoardViewComponent : ViewComponent

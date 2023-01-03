@@ -6,10 +6,8 @@
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using static ExpressEaglesCourier.Common.GlobalConstants;
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
     public class ShipmentTrackingPathController : StaffController

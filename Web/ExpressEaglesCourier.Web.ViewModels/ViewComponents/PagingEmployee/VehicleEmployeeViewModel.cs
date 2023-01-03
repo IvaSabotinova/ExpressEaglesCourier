@@ -1,4 +1,4 @@
-﻿namespace ExpressEaglesCourier.Web.ViewModels.Employees
+﻿namespace ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingEmployee
 {
     using AutoMapper;
     using ExpressEaglesCourier.Data.Models;

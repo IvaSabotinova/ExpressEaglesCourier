@@ -14,7 +14,7 @@
     using ExpressEaglesCourier.Web.ViewModels.Administration.Dashboard;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
-    using ExpressEaglesCourier.Web.ViewModels.ViewComponent;
+    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.StaffBoard;
     using Microsoft.EntityFrameworkCore;
     using Xunit;
 

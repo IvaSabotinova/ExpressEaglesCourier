@@ -1,17 +1,23 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Searches
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Data.Models.Enums;
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
+    using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Employees;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
+    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingSearchShipment;
     using Microsoft.EntityFrameworkCore;
 
     public class SearchService : ISearchService
@@ -101,6 +107,79 @@
             }
 
             return null;
+        }
+
+        public async Task<int> ShipmentsCountAsyncBySearchCriteria(string productType = null, string searchCustomerName = null, ShipmentSortingCriterion shipmentSortingCriterion = 0)
+        {
+            IQueryable<Shipment> shipments = this.shipmentRepo.AllAsNoTracking().AsQueryable();
+
+            if (string.IsNullOrEmpty(productType) == false)
+            {
+                shipments = shipments.Where(x => x.ProductType == Enum.Parse<ProductType>(productType));
+            }
+
+            if (string.IsNullOrEmpty(searchCustomerName) == false)
+            {
+                searchCustomerName = $"%{searchCustomerName.ToLower()}%";
+
+                shipments = shipments.Where(x => EF.Functions.Like(x.Sender.FirstName.ToLower(), searchCustomerName)
+                || EF.Functions.Like(x.Sender.LastName.ToLower(), searchCustomerName)
+                || EF.Functions.Like(x.Receiver.FirstName.ToLower(), searchCustomerName)
+                || EF.Functions.Like(x.Receiver.LastName.ToLower(), searchCustomerName));
+            }
+
+            shipments = shipmentSortingCriterion switch
+            {
+                ShipmentSortingCriterion.Newest => shipments
+                    .OrderByDescending(x => x.Id),
+                ShipmentSortingCriterion.HighestPrice => shipments
+                    .OrderByDescending(x => x.Price),
+                _ => shipments,
+            };
+
+            return await shipments.CountAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAllShipmentsBySearchCriteria<T>(
+            string productType = null,
+            string searchCustomerName = null,
+            ShipmentSortingCriterion shipmentSortingCriterion = 0,
+            int page = 1,
+            int itemsPerPage = 2)
+        {
+            IQueryable<Shipment> shipments = this.shipmentRepo.AllAsNoTracking().AsQueryable();
+
+            if (string.IsNullOrEmpty(productType) == false)
+            {
+                shipments = shipments.Where(x => x.ProductType == Enum.Parse<ProductType>(productType));
+            }
+
+            if (string.IsNullOrEmpty(searchCustomerName) == false)
+            {
+                searchCustomerName = $"%{searchCustomerName.ToLower()}%";
+
+                shipments = shipments.Where(x => EF.Functions.Like(x.Sender.FirstName.ToLower(), searchCustomerName)
+                || EF.Functions.Like(x.Sender.LastName.ToLower(), searchCustomerName)
+                || EF.Functions.Like(x.Receiver.FirstName.ToLower(), searchCustomerName)
+                || EF.Functions.Like(x.Receiver.LastName.ToLower(), searchCustomerName));
+            }
+
+            shipments = shipmentSortingCriterion switch
+            {
+                 ShipmentSortingCriterion.Newest => shipments
+                    .OrderByDescending(x => x.Id),
+                 ShipmentSortingCriterion.HighestPrice => shipments
+                    .OrderByDescending(x => x.Price),
+                 _ => shipments,
+            };
+
+            List<T> model = await shipments
+                .To<T>()
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .ToListAsync();
+
+            return model;
         }
     }
 }

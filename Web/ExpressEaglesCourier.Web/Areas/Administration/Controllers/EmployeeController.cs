@@ -1,14 +1,12 @@
 ﻿namespace ExpressEaglesCourier.Web.Areas.Administration.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Net.Mail;
-    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Web.ViewModels.Employees;
+    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingEmployee;
     using Microsoft.AspNetCore.Mvc;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
@@ -126,7 +124,7 @@
         [HttpGet]
         public async Task<IActionResult> GetAll(int shipmentId, int page = 1)
         {
-            if (shipmentId < 1)
+            if (shipmentId < 1 || page < 1)
             {
                 return this.NotFound();
             }
@@ -134,12 +132,12 @@
             const int ItemsPerPage = 3;
             try
             {
-                EmployeeListAllViewModel model = new EmployeeListAllViewModel()
+                EmployeeAllPagingViewModel model = new EmployeeAllPagingViewModel()
                 {
                     ItemsPerPage = ItemsPerPage,
                     CurrentPageNumber = page,
                     AllItemsCount = await this.employeeService.GetEmployeesCountAsync(),
-                    Employees = await this.employeeService.GetAllAsync<EmployeeAllViewModel>(page, ItemsPerPage),
+                    Employees = await this.employeeService.GetAllAsync<SingleEmployeePagingViewModel>(page, ItemsPerPage),
                     ShipmentId = shipmentId,
                 };
 

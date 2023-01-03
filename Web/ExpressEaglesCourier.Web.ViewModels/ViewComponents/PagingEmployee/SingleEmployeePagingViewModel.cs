@@ -1,10 +1,10 @@
-﻿namespace ExpressEaglesCourier.Web.ViewModels.Employees
+﻿namespace ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingEmployee
 {
     using AutoMapper;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Mapping;
 
-    public class EmployeeAllViewModel : IMapFrom<Employee>, IHaveCustomMappings
+    public class SingleEmployeePagingViewModel : IMapFrom<Employee>, IHaveCustomMappings
     {
         public string Id { get; set; }
 
@@ -20,7 +20,7 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Employee, EmployeeAllViewModel>()
+            configuration.CreateMap<Employee, SingleEmployeePagingViewModel>()
                 .ForMember(x => x.FullName, opt => opt.MapFrom(x => x.FirstName + " " + x.LastName))
                 .ForMember(x => x.Position, opt => opt.MapFrom(x => x.Position.JobTitle));
         }

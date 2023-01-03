@@ -1,4 +1,4 @@
-﻿namespace ExpressEaglesCourier.Web.ViewModels.Pagination
+﻿namespace ExpressEaglesCourier.Web.ViewModels
 {
     using System;
 

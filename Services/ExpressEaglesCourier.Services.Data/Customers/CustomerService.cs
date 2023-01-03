@@ -60,7 +60,7 @@
                 FullAddress = $"{customer.Address}, {customer.City}, {customer.Country}",
                 CompanyName = customer.CompanyName,
                 PhoneNumber = customer.PhoneNumber,
-                TotalNumberOfShipments = customer.SentShipments.Count() + customer.ReceivedShipments.Count(),
+                TotalNumberOfShipments = customer.SentShipments.Count + customer.ReceivedShipments.Count,
             };
         }
 

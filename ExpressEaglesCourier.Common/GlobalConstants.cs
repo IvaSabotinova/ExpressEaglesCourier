@@ -166,6 +166,8 @@
             public const string DateTimePrepForFinalDelivery = "Date and time of preparation for final delivery";
 
             public const string DateTimeFinalDelivery = "Date and time of final delivery";
+
+            public const string OrderByHighestPrice = "Highest Price";
         }
 
         public static class ServicesConstants

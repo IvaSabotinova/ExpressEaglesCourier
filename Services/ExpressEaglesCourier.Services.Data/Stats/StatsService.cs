@@ -9,7 +9,7 @@
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Models.Enums;
     using ExpressEaglesCourier.Web.ViewModels.Administration.Dashboard;
-    using ExpressEaglesCourier.Web.ViewModels.ViewComponent;
+    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.StaffBoard;
     using Microsoft.EntityFrameworkCore;
 
     public class StatsService : IStatsService

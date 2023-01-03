@@ -1,4 +1,4 @@
-﻿namespace ExpressEaglesCourier.Web.ViewModels.ViewComponent
+﻿namespace ExpressEaglesCourier.Web.ViewModels.ViewComponents.StaffBoard
 {
     public class StaffBoardViewModel
     {

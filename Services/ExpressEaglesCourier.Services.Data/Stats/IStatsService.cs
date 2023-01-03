@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Web.ViewModels.Administration.Dashboard;
-    using ExpressEaglesCourier.Web.ViewModels.ViewComponent;
+    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.StaffBoard;
 
     public interface IStatsService
     {

@@ -6,6 +6,7 @@
     using ExpressEaglesCourier.Web.Areas.Employee.Controllers;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
+    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingSearchShipment;
     using Microsoft.AspNetCore.Mvc;
 
     public class SearchController : StaffController
@@ -50,6 +51,28 @@
             }
 
             return this.View();
+        }
+
+        public async Task<IActionResult> GetAndSearchAllShipments(string productType, string searchCustomerName, ShipmentSortingCriterion shipmentSortingCriterion = 0, int page = 1)
+        {
+            if (page < 1)
+            {
+                return this.NotFound();
+            }
+
+            const int itemsPerPage = 2;
+            ShipmentAllPagingAndSearchViewModel model = new ShipmentAllPagingAndSearchViewModel()
+            {
+                ItemsPerPage = itemsPerPage,
+                CurrentPageNumber = page,
+                AllItemsCount = await this.searchService.ShipmentsCountAsyncBySearchCriteria(productType, searchCustomerName, shipmentSortingCriterion),
+                Shipments = await this.searchService.GetAllShipmentsBySearchCriteria<SingleShipmentSearchViewModel>(productType, searchCustomerName, shipmentSortingCriterion, page, itemsPerPage),
+                ProductType = productType,
+                SearchCustomerName = searchCustomerName,
+                ShipmentSortingCriterion = shipmentSortingCriterion,
+            };
+
+            return this.View(model);
         }
     }
 }

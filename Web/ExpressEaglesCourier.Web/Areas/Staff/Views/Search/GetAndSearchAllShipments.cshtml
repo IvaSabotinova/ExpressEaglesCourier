@@ -1,0 +1,75 @@
+﻿@model ShipmentAllPagingAndSearchViewModel
+
+@{
+    ViewBag.Title = "All Shipments";
+
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<form method="get">
+    <div class="row ms-8">
+        <div class="form-group col-md-3">
+            <div class="form-group">
+                <label asp-for="ProductType">Product Type</label>
+                <select asp-for="ProductType" class="form-control" asp-items="@Html.GetEnumSelectList<ProductType>()">
+                    <option value="" selected>Select Product Type...</option>
+                </select>
+                <span asp-validation-for="ProductType" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label asp-for="SearchCustomerName">Search In Customers' Names</label>
+            <input asp-for="SearchCustomerName" class="form-control" placeholder="...">
+        </div>
+
+        <div class="form-group col-md-3">
+            <div class="form-group">
+                <label asp-for="ShipmentSortingCriterion">Sorting Criterion</label>
+                <select asp-for="ShipmentSortingCriterion" class="form-control" asp-items="@Html.GetEnumSelectList<ShipmentSortingCriterion>()">
+                    <option>Select Sorting Criterion...</option>
+                </select>                
+            </div>
+         
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@if (!Model.Shipments.Any())
+{
+    <h2 class="text-center mt-6 mb-7">No shipments found by the given criteria!</h2>
+}
+
+
+<div class="row">
+    @foreach (SingleShipmentSearchViewModel shipment in Model.Shipments)
+    {
+        <div class="media col-md-6">
+            <div class="container" style="display:inline">
+                <div class="row card border-2 bg-soft-warning text-900 ms-3 me-2" style="height:24rem">
+                    <p class="text-center mt-2" style="font-size:24px;"><b>Tracking Number: @shipment.TrackingNumber</b></p>
+                    <p class="text-center" style="font-size:20px;"><b>Product Type: @shipment.ProductType</b></p>
+                    <p><b>Sender: </b>@shipment.SenderFirstName @shipment.SenderLastName - <b>Phone number: </b>@shipment.SenderPhoneNumber</p>
+                    <p><b>Pick-Up Address: </b>@shipment.PickUpAddress</p>
+                    <p><b>Receiver: </b>@shipment.ReceiverFirstName @shipment.ReceiverLastName - <b>Phone number: </b>@shipment.ReceiverPhoneNumber</p>                          <p><b>Destination: </b>@shipment.DestinationAddress</p>
+                    <p><b>Price: </b>@shipment.Price lv</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<vc:paging-search-shipment page="@Model.CurrentPageNumber" product-type="@Model.ProductType" search-customer-name="@Model.SearchCustomerName" shipment-sorting-criterion="@Model.ShipmentSortingCriterion"></vc:paging-search-shipment>
+
+
+
+

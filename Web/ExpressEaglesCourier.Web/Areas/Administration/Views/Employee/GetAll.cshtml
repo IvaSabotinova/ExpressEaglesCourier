@@ -1,4 +1,4 @@
-﻿@model EmployeeListAllViewModel
+﻿@model EmployeeAllPagingViewModel
 
 @{
     ViewBag.Title = "All Employees, Page " + Model.CurrentPageNumber; 
@@ -14,7 +14,7 @@
 
 
 <div class="row">
-        @foreach (EmployeeAllViewModel employee in Model.Employees)
+        @foreach (SingleEmployeePagingViewModel employee in Model.Employees)
         {
         <div class="media col-md-4">
         <div class="container" style="display:inline">             
@@ -40,13 +40,11 @@
                     </div>
                 </div>
             </div>      
-           </div>   
+           </div>  
         }   
 </div>
 
-
-
-<partial name="_PagingPartialEmployees" model="@Model" />
+<vc:paging-employee shipment-id="@Model.ShipmentId" page="@Model.CurrentPageNumber"></vc:paging-employee>
 
 
 
