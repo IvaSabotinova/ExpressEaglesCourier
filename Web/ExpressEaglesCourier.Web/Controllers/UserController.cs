@@ -89,7 +89,7 @@
               }
 
               return this.View(registerViewModel);
-            }
+        }
 
         [HttpGet]
         public IActionResult Login()

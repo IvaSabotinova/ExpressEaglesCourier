@@ -128,7 +128,25 @@
 
         public async Task<Customer> FindCustomerByPhoneNumber(string phoneNumber)
         {
-            return await this.customerRepo.All().Where(x => x.PhoneNumber == phoneNumber).FirstOrDefaultAsync();
+            phoneNumber = phoneNumber.Replace(" ", string.Empty);
+            Customer customer = null;
+            if (phoneNumber.Length == 9)
+            {
+                customer = await this.customerRepo.All()
+               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 9) == phoneNumber);
+            }
+            else if (phoneNumber.Length >= 10 && phoneNumber[^10] == '0')
+            {
+                customer = await this.customerRepo.All()
+               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 9) == phoneNumber.Substring(phoneNumber.Length - 9));
+            }
+            else if (phoneNumber.Length >= 10 && phoneNumber[^10] != '0')
+            {
+                customer = await this.customerRepo.All()
+               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 10) == phoneNumber.Substring(phoneNumber.Length - 10));
+            }
+
+            return customer;
         }
     }
 }

@@ -12,7 +12,7 @@
         <form asp-route-returnUrl="" method="post">                   
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                    <label asp-for="UserName"></label>
+                    <label asp-for="UserName">Username</label>
                 <input asp-for="UserName" class="form-control" placeholder="Enter your username" />
                     <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
@@ -27,13 +27,13 @@
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ConfirmPassword"></label>
+                    <label asp-for="ConfirmPassword">Confirm Password</label>
                 <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                <label asp-for="TelephoneNumber" ></label>
-                <input asp-for="TelephoneNumber" class="form-control" placeholder="Incl. country and area code (00359xxxxxxxxx)" />
+                <label asp-for="TelephoneNumber">Telephone Number</label>
+                <input asp-for="TelephoneNumber" class="form-control" placeholder="Enter your phone number" />
                     <span asp-validation-for="TelephoneNumber" class="text-danger"></span>
                 </div>
                 <button type="submit" class="btn btn-primary mt-2">Register</button>            

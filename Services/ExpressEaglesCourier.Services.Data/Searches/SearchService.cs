@@ -83,8 +83,23 @@
 
         public async Task<EmployeeDetailsViewModel> SearchEmployeeByPhoneNumberAsync(string phoneNumber)
         {
-            Employee employee = await this.employeeRepo.AllAsNoTracking()
-               .FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
+            phoneNumber = phoneNumber.Replace(" ", string.Empty);
+            Employee employee = null;
+            if (phoneNumber.Length == 9)
+            {
+                employee = await this.employeeRepo.AllAsNoTracking()
+               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 9) == phoneNumber);
+            }
+            else if (phoneNumber.Length >= 10 && phoneNumber[^10] == '0')
+            {
+                employee = await this.employeeRepo.AllAsNoTracking()
+               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 9) == phoneNumber.Substring(phoneNumber.Length - 9));
+            }
+            else if (phoneNumber.Length >= 10 && phoneNumber[^10] != '0')
+            {
+                employee = await this.employeeRepo.AllAsNoTracking()
+               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 10) == phoneNumber.Substring(phoneNumber.Length - 10));
+            }
 
             if (employee != null)
             {
@@ -97,8 +112,23 @@
 
         public async Task<CustomerDetailsViewModel> SearchCustomerByPhoneNumberAsync(string phoneNumber)
         {
-            Customer customer = await this.customerRepo.AllAsNoTracking()
-               .FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
+            phoneNumber = phoneNumber.Replace(" ", string.Empty);
+            Customer customer = null;
+            if (phoneNumber.Length == 9)
+            {
+                customer = await this.customerRepo.AllAsNoTracking()
+               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 9) == phoneNumber);
+            }
+            else if (phoneNumber.Length >= 10 && phoneNumber[^10] == '0')
+            {
+                customer = await this.customerRepo.AllAsNoTracking()
+               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 9) == phoneNumber.Substring(phoneNumber.Length - 9));
+            }
+            else if (phoneNumber.Length >= 10 && phoneNumber[^10] != '0')
+            {
+                customer = await this.customerRepo.AllAsNoTracking()
+               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 10) == phoneNumber.Substring(phoneNumber.Length - 10));
+            }
 
             if (customer != null)
             {
