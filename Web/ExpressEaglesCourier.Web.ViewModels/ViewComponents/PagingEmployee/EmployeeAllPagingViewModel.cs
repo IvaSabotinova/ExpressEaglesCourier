@@ -4,6 +4,6 @@
 
     public class EmployeeAllPagingViewModel : EmployeeWithShipmentPagingViewModel
     {
-        public IEnumerable<SingleEmployeePagingViewModel> Employees { get; set; }
+        public IEnumerable<SingleEmployeePagingViewModel> Employees { get; set; } = new List<SingleEmployeePagingViewModel>();
     }
 }

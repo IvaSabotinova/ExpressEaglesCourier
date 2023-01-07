@@ -4,6 +4,6 @@
 
     public class ShipmentAllPagingAndSearchViewModel : ShipmentPagingAndSearchViewModel
     {
-        public IEnumerable<SingleShipmentSearchViewModel> Shipments { get; set; }
+        public IEnumerable<SingleShipmentSearchViewModel> Shipments { get; set; } = new List<SingleShipmentSearchViewModel>();
     }
 }
