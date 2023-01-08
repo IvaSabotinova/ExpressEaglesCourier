@@ -12,7 +12,7 @@
 
         Task<bool> CustomerWithPhoneNumberExists(string firstName, string lastName, string phoneNumber);
 
-        Task<int> CreateShipmentAsync(ShipmentFormModel addNewShipmentModel);
+        Task<int> CreateShipmentAsync(ShipmentFormModel addNewShipmentModel, string imagePath);
 
         Task<bool> ShipmentExists(int id);
 

@@ -7,6 +7,7 @@
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
     using static ExpressEaglesCourier.Common.GlobalConstants;
@@ -16,13 +17,16 @@
     {
         private readonly IShipmentService shipmentService;
         private readonly IEmployeeService employeeService;
+        private readonly IWebHostEnvironment environment;
 
         public ShipmentController(
             IShipmentService shipmentService,
-            IEmployeeService employeeService)
+            IEmployeeService employeeService,
+            IWebHostEnvironment environment)
         {
             this.shipmentService = shipmentService;
             this.employeeService = employeeService;
+            this.environment = environment;
         }
 
         [HttpGet]
@@ -44,7 +48,7 @@
 
             try
             {
-                id = await this.shipmentService.CreateShipmentAsync(model);
+                id = await this.shipmentService.CreateShipmentAsync(model, $"{this.environment.WebRootPath}/images");
             }
             catch (Exception ex)
             {

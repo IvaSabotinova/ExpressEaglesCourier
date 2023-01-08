@@ -1,9 +1,12 @@
 ﻿namespace ExpressEaglesCourier.Web.ViewModels.Shipments
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using ExpressEaglesCourier.Common;
+    using ExpressEaglesCourier.Common.ValidationAttributes;
     using ExpressEaglesCourier.Data.Models.Enums;
+    using Microsoft.AspNetCore.Http;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
@@ -94,5 +97,10 @@
         [Required]
         [Range(typeof(decimal), "0.01", "79228162514264337593543950335", ConvertValueInInvariantCulture = true)]
         public decimal Price { get; set; }
+
+        // ??ErrorMessage
+        [MaxFileSize(5 * 1024 * 1024)]
+        [AllowedExtensions(new string[] { ".jpg", ".webp", ".png" })]
+        public IEnumerable<IFormFile> Images { get; set; } = new List<IFormFile>();
     }
 }

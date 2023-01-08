@@ -2,12 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
@@ -21,6 +23,7 @@
         private readonly IDeletableEntityRepository<ShipmentVehicle> shipmentVehicleRepo;
         private readonly IDeletableEntityRepository<Vehicle> vehicleRepo;
         private readonly IDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo;
+        private readonly IDeletableEntityRepository<ShipmentImage> shipmentImageRepo;
 
         public ShipmentService(
             IDeletableEntityRepository<Shipment> shipmentRepo,
@@ -29,7 +32,8 @@
             IDeletableEntityRepository<EmployeeShipment> shipmentEmployeeRepo,
             IDeletableEntityRepository<ShipmentVehicle> shipmentVehicleRepo,
             IDeletableEntityRepository<Vehicle> vehicleRepo,
-            IDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo)
+            IDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo,
+            IDeletableEntityRepository<ShipmentImage> shipmentImageRepo)
         {
             this.shipmentRepo = shipmentRepo;
             this.customerRepo = customerRepo;
@@ -38,9 +42,10 @@
             this.shipmentVehicleRepo = shipmentVehicleRepo;
             this.vehicleRepo = vehicleRepo;
             this.shipmentTrackingPathRepo = shipmentTrackingPathRepo;
+            this.shipmentImageRepo = shipmentImageRepo;
         }
 
-        public async Task<int> CreateShipmentAsync(ShipmentFormModel model)
+        public async Task<int> CreateShipmentAsync(ShipmentFormModel model, string imagePath)
         {
             if (await this.TrackingNumberExists(model.TrackingNumber))
             {
@@ -78,6 +83,26 @@
                 ProductType = model.ProductType,
                 Price = model.Price,
             };
+
+            Directory.CreateDirectory($"{imagePath}/shipments/");
+
+            foreach (IFormFile image in model.Images)
+            {
+                string extension = Path.GetExtension(image.FileName).TrimStart('.');
+                int imageSize = (int)image.Length;
+
+                ShipmentImage dbImage = new ShipmentImage()
+                {
+                    ShipmentId = newShipment.Id,
+                    Extension = extension,
+                    Size = imageSize,
+                };
+                newShipment.Images.Add(dbImage);
+
+                string physicalPath = $"{imagePath}/shipments/{dbImage.Id}.{extension}";
+                using FileStream fileStream = new FileStream(physicalPath, FileMode.Create);
+                await image.CopyToAsync(fileStream);
+            }
 
             await this.shipmentRepo.AddAsync(newShipment);
             await this.shipmentRepo.SaveChangesAsync();
@@ -132,6 +157,7 @@
             Shipment shipment = await this.shipmentRepo.All()
                 .Include(x => x.Sender)
                 .Include(x => x.Receiver)
+                .Include(x => x.Images)
                 .FirstOrDefaultAsync(x => x.Id == shipmentId);
 
             if (shipment == null)
@@ -392,7 +418,9 @@
                 await this.shipmentVehicleRepo.SaveChangesAsync();
             }
 
-            Shipment shipment = await this.shipmentRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentId);
+            Shipment shipment = await this.shipmentRepo.All()
+                .Include(x => x.Images)
+                .FirstOrDefaultAsync(x => x.Id == shipmentId);
 
             ShipmentTrackingPath shipmentTrackingPath = await this.shipmentTrackingPathRepo.All()
                 .FirstOrDefaultAsync(x => x.Id == shipment.ShipmentTrackingPathId);
@@ -401,6 +429,15 @@
             {
                 this.shipmentTrackingPathRepo.Delete(shipmentTrackingPath);
                 await this.shipmentTrackingPathRepo.SaveChangesAsync();
+            }
+
+            if (shipment.Images.Count > 0)
+            {
+                foreach (ShipmentImage image in shipment.Images)
+                {
+                    this.shipmentImageRepo.Delete(image);
+                    await this.shipmentImageRepo.SaveChangesAsync();
+                }
             }
 
             this.shipmentRepo.Delete(shipment);

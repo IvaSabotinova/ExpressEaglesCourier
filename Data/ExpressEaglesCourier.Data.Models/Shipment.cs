@@ -7,6 +7,7 @@ namespace ExpressEaglesCourier.Data.Models
 
     using ExpressEaglesCourier.Data.Common.Models;
     using ExpressEaglesCourier.Data.Models.Enums;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -19,6 +20,7 @@ namespace ExpressEaglesCourier.Data.Models
             this.EmployeesShipments = new HashSet<EmployeeShipment>();
             this.Feedbacks = new HashSet<Feedback>();
             this.ShipmentsVehicles = new HashSet<ShipmentVehicle>();
+            this.Images = new HashSet<ShipmentImage>();
         }
 
         [Required]
@@ -102,5 +104,11 @@ namespace ExpressEaglesCourier.Data.Models
         /// </summary>
         [Comment("Collection of vehicles used to deliver the shipment.")]
         public virtual ICollection<ShipmentVehicle> ShipmentsVehicles { get; set; }
+
+        /// <summary>
+        /// Gets or sets collection of images related to the shipment.
+        /// </summary>
+        [Comment("Collection of images related to the shipment.")]
+        public virtual ICollection<ShipmentImage> Images { get; set; }
     }
 }

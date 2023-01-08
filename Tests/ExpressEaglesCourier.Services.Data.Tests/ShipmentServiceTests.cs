@@ -65,7 +65,9 @@
 
             EfDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo = new EfDeletableEntityRepository<ShipmentTrackingPath>(this.GetDbContext());
 
-            ShipmentService shipmentService = new ShipmentService(shipmentRepo, customerRepo, employeeRepo, employeeShipmentRepo, shipmentVehicleRepo, vehicleRepo, shipmentTrackingPathRepo);
+            EfDeletableEntityRepository<ShipmentImage> shipmentImageRepo = new EfDeletableEntityRepository<ShipmentImage>(this.GetDbContext());
+
+            ShipmentService shipmentService = new ShipmentService(shipmentRepo, customerRepo, employeeRepo, employeeShipmentRepo, shipmentVehicleRepo, vehicleRepo, shipmentTrackingPathRepo, shipmentImageRepo);
             return shipmentService;
         }
 
@@ -210,7 +212,7 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
-            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
                 .LastOrDefaultAsync();
@@ -265,7 +267,7 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
-            await this.GetShipmentService().CreateShipmentAsync(model);
+            await this.GetShipmentService().CreateShipmentAsync(model, null);
 
             Shipment shipment = await this.GetDbContext().Shipments.LastOrDefaultAsync();
 
@@ -317,7 +319,7 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
-            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments.Where(x => x.TrackingNumber == "11111111113").FirstOrDefaultAsync();
 
@@ -414,7 +416,7 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
-            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
                 .Where(x => x.TrackingNumber == "11111111114").FirstOrDefaultAsync();
@@ -458,7 +460,7 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
-            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
                 .Where(x => x.TrackingNumber == "11111111115").FirstOrDefaultAsync();
@@ -532,7 +534,7 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
-            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
                 .Where(x => x.TrackingNumber == "11111111116").FirstOrDefaultAsync();
@@ -588,7 +590,7 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
-            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
                 .Where(x => x.TrackingNumber == "11111111117").FirstOrDefaultAsync();
@@ -668,7 +670,7 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
-            await this.GetShipmentService().CreateShipmentAsync(shipmentModel);
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
                 .Where(x => x.TrackingNumber == "11111111118").FirstOrDefaultAsync();

@@ -52,7 +52,9 @@
 
             EfDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo = new EfDeletableEntityRepository<ShipmentTrackingPath>(this.GetDbContext());
 
-            ShipmentService shipmentService = new ShipmentService(shipmentRepo, customerRepo, employeeRepo, employeeShipmentRepo, shipmentVehicleRepo, vehicleRepo, shipmentTrackingPathRepo);
+            EfDeletableEntityRepository<ShipmentImage> shipmentImageRepo = new EfDeletableEntityRepository<ShipmentImage>(this.GetDbContext());
+
+            ShipmentService shipmentService = new ShipmentService(shipmentRepo, customerRepo, employeeRepo, employeeShipmentRepo, shipmentVehicleRepo, vehicleRepo, shipmentTrackingPathRepo, shipmentImageRepo);
             return shipmentService;
         }
 
@@ -170,7 +172,7 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
-            await this.GetShipmentService().CreateShipmentAsync(shipmentModel1);
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel1, null);
 
             ShipmentFormModel shipmentModel2 = new ShipmentFormModel()
             {
@@ -194,7 +196,7 @@
                 Price = 4.90m,
             };
 
-            await this.GetShipmentService().CreateShipmentAsync(shipmentModel2);
+            await this.GetShipmentService().CreateShipmentAsync(shipmentModel2, null);
 
             int shipmentsCount = await this.GetStatsService().ShipmentsCountAsync();
 

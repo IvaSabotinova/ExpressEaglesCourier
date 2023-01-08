@@ -1,7 +1,7 @@
 ﻿@model ShipmentFormModel
 
 <div class="row">
-    <form method="post">    
+    <form method="post" enctype="multipart/form-data">    
         <div class="row">
             <div class="col-6">
                 <input type="hidden" asp-for="@Model.Id" />
@@ -50,15 +50,14 @@
                     <input asp-for="PickUpTown" class="form-control" placeholder="Enter town of dispatch" />
                     <span asp-validation-for="PickUpTown" class="text-danger"></span>
                 </div>
-            </div>
-
-            <div class="col-6">
-
                 <div class="form-group">
                     <label asp-for="PickUpCountry"></label>
                     <input asp-for="PickUpCountry" class="form-control" placeholder="Enter country of dispatch" />
                     <span asp-validation-for="PickUpCountry" class="text-danger"></span>
                 </div>
+            </div>
+
+            <div class="col-6">               
                 <div class="form-group">
                     <label asp-for="DestinationAddress"></label>
                     <input asp-for="DestinationAddress" class="form-control" placeholder="Enter destination full address" />
@@ -87,7 +86,7 @@
                     <label class="input-group-text" asp-for="DeliveryType">Choose Delivery Type</label>
                     <select class="form-select" asp-for="DeliveryType" asp-items="@Html.GetEnumSelectList<DeliveryType>()"></select>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-4">
                     <label class="input-group-text" asp-for="ProductType">Choose Product Type</label>
                     <select class="form-select" asp-for="ProductType" asp-items="@Html.GetEnumSelectList<ProductType>()"></select>
                 </div>
@@ -96,6 +95,11 @@
                     <label asp-for="Price"></label>
                     <input asp-for="Price" class="form-control" placeholder="Enter price of shipment in Euro" />
                     <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <label asp-for="Images">Photo(s) (optional)</label>
+                    <input asp-for="Images" class="form-control"/>
+                    <span asp-validation-for="Images" class="text-danger"></span>
                 </div>
 
             </div>
