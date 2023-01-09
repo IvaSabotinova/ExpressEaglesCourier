@@ -4,7 +4,7 @@
 <nav aria-label="...">
     <ul class="pagination justify-content-center">
         <li class="page-item @if (!Model.HasPreviousPage){ <text>disabled</text> }">
-            <a class="page-link" asp-action="GetAndSearchAllShipments" asp-route-page="@Model.PreviousPageNumber" asp-route-productType="@Model.ProductType" asp-route-searchCustomerName="@Model.SearchCustomerName" asp-route-shipmentSortingCriterion="@Model.ShipmentSortingCriterion.">Previous</a>
+            <a class="page-link" asp-action="GetAndSearchAllShipments" asp-route-page="@Model.PreviousPageNumber" asp-route-productType="@Model.ProductType" asp-route-searchCustomerName="@Model.SearchCustomerName" asp-route-shipmentSortingCriterion="@Model.ShipmentSortingCriterion">Previous</a>
         </li>
         @for (int i = Model.CurrentPageNumber - 2; i < Model.CurrentPageNumber; i++)
         {

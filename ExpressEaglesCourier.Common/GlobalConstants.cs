@@ -233,6 +233,10 @@
             public const string ShipmentTrackingPathUpdated = "Shipment Tracking Path Details Updated Successfully!";
 
             public const string TrackingPathNotFound = "Tracking path not found!";
+
+            public const string CannotFindImages = "Images cannot be found!";
+
+            public const string ImageNotFound = "Image not found!";
         }
     }
 }

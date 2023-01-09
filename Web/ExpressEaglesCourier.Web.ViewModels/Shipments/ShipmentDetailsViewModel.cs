@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using ExpressEaglesCourier.Data.Models;
+
     public class ShipmentDetailsViewModel
     {
         public int Id { get; set; }
@@ -31,5 +33,7 @@
         public decimal Price { get; set; }
 
         public IEnumerable<EmployeeShipmentViewModel> EmployeesShipments { get; set; } = new List<EmployeeShipmentViewModel>();
+
+        public IEnumerable<ShipmentImage> Images { get; set; } = new List<ShipmentImage>();
     }
 }

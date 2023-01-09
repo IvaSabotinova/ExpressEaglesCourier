@@ -1,7 +1,7 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Shipments
 {
     using System.Threading.Tasks;
-
+    using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
 
     public interface IShipmentService
@@ -17,6 +17,8 @@
         Task<bool> ShipmentExists(int id);
 
         Task<ShipmentDetailsViewModel> GetShipmentDetails(int id);
+
+        Task<Shipment> GetShipmentById(int id);
 
         Task<ShipmentFormModel> GetShipmentForEditAsync(int shipmentId);
 

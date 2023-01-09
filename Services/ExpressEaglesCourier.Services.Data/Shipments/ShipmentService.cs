@@ -157,7 +157,8 @@
             Shipment shipment = await this.shipmentRepo.All()
                 .Include(x => x.Sender)
                 .Include(x => x.Receiver)
-                .Include(x => x.Images)
+
+               // .Include(x => x.Images)
                 .FirstOrDefaultAsync(x => x.Id == shipmentId);
 
             if (shipment == null)
@@ -256,6 +257,7 @@
                     ProductType = x.ProductType.ToString(),
                     Weight = x.Weight,
                     Price = x.Price,
+                    Images = x.Images,
                     EmployeesShipments = x.EmployeesShipments.Select(es =>
                     new EmployeeShipmentViewModel()
                     {
@@ -266,6 +268,11 @@
                     }),
                 }).FirstOrDefaultAsync();
         }
+
+        public async Task<Shipment> GetShipmentById(int id)
+        => await this.shipmentRepo.All()
+            .Include(x => x.Images)
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<bool> ShipmentExists(int id)
         => await this.shipmentRepo.AllAsNoTracking().AnyAsync(x => x.Id == id);

@@ -1,0 +1,19 @@
+﻿@model ShipmentImagesPagingViewModel
+
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @if (!Model.HasPreviousPage){ <text>disabled</text> }">
+            <a class="page-link" asp-action="GetAllByShipmentId" asp-route-page="@Model.PreviousPageNumber" asp-route-shipmentId="@Model.ShipmentId" >Previous</a>
+        </li>   
+        <li class="page-item active" aria-current="page">
+            <span class="page-link">
+                @Model.CurrentPageNumber
+                <span class="sr-only"></span>
+            </span>
+        </li>
+         <li class="page-item @if(!Model.HasNextPage) { <text>disabled</text> }">
+            <a class="page-link" asp-action="GetAllByShipmentId" asp-route-page="@Model.NextPageNumber" asp-route-shipmentId="@Model.ShipmentId">Next</a>
+        </li>
+    </ul>
+</nav>

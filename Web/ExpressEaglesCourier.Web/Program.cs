@@ -13,6 +13,7 @@
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Searches;
+    using ExpressEaglesCourier.Services.Data.ShipmentImages;
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Services.Data.Stats;
@@ -89,6 +90,7 @@
             services.AddTransient<IShipmentTrackingPathService, ShipmentTrackingPathService>();
             services.AddTransient<IStatsService, StatsService>();
             services.AddTransient<ISearchService, SearchService>();
+            services.AddTransient<IShipmentImageService, ShipmentImageService>();
         }
 
         private static void Configure(WebApplication app)

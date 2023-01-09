@@ -16,16 +16,13 @@
     public class ShipmentController : StaffController
     {
         private readonly IShipmentService shipmentService;
-        private readonly IEmployeeService employeeService;
         private readonly IWebHostEnvironment environment;
 
         public ShipmentController(
             IShipmentService shipmentService,
-            IEmployeeService employeeService,
             IWebHostEnvironment environment)
         {
             this.shipmentService = shipmentService;
-            this.employeeService = employeeService;
             this.environment = environment;
         }
 
