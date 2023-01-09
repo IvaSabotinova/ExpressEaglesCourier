@@ -77,7 +77,7 @@
 
             try
             {
-                await this.shipmentService.EditShipmentAsync(model);
+                await this.shipmentService.EditShipmentAsync(model, $"{this.environment.WebRootPath}/images");
                 this.TempData[Message] = ShipmentAmendedSuccessfully;
                 return this.RedirectToAction(nameof(this.Details), new { id = model.Id });
             }

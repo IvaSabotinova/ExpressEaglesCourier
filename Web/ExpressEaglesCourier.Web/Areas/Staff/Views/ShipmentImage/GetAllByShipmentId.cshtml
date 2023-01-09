@@ -17,16 +17,16 @@
 <div class="row ms-6">
     @foreach (SingleShipmentImageViewModel image in Model.Images)
     {
-        <div class="card col-md-5 mt-3 me-7 mb-3">
+        <div class="card col-md-5 mt-3 me-6 mb-5">
             <img src="@image.ImageUrl" width="170" height="200" class="card-img-top" alt="...">
-            <div class="card-body">
-                <form asp-area="Staff" asp-controller="ShipmentImage" asp-action="Delete" id="deleteForm" asp-route-Id="@image.Id" asp-route-shipmentId="@Model.ShipmentId" asp-route-page="@Model.CurrentPageNumber" onclick="return confirm('Are you sure you want to delete that image?')">
-                    <button class="btn btn-danger">Delete
+            <div class="card-body">              
+                    <form asp-area="Staff" asp-controller="ShipmentImage" asp-action="Delete" id="deleteForm" asp-route-Id="@image.Id" asp-route-shipmentId="@Model.ShipmentId" asp-route-page="@Model.CurrentPageNumber" onclick="return confirm('Are you sure you want to delete that image?')">
+                        <button class="btn btn-danger">
+                            Delete
 
-                    </button>
-                </form>
-
-            </div>
+                        </button>
+                    </form>            
+             </div>
         </div>
     }
 </div>

@@ -326,8 +326,9 @@
             ShipmentFormModel editModel = await this.GetShipmentService()
                 .GetShipmentForEditAsync(shipment.Id);
 
-            await this.GetShipmentService().EditShipmentAsync(new ShipmentFormModel()
-            {
+            await this.GetShipmentService().EditShipmentAsync(
+                new ShipmentFormModel()
+                {
                 Id = editModel.Id,
                 TrackingNumber = editModel.TrackingNumber,
                 SenderFirstName = customer1.FirstName,
@@ -347,7 +348,8 @@
                 DeliveryType = 0,
                 ProductType = (ProductType)4,
                 Price = 4.90m,
-            });
+                },
+                null);
 
             Shipment shipmenNew = await this.GetDbContext().Shipments.Where(x => x.Id == editModel.Id).FirstOrDefaultAsync();
 
@@ -380,7 +382,7 @@
             };
 
             await Assert.ThrowsAsync<NullReferenceException>(() =>
-            this.GetShipmentService().EditShipmentAsync(shipmentModel));
+            this.GetShipmentService().EditShipmentAsync(shipmentModel, null));
         }
 
         [Fact]

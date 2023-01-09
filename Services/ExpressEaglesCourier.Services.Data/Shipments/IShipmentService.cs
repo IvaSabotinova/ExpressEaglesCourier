@@ -1,6 +1,7 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Shipments
 {
     using System.Threading.Tasks;
+
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
 
@@ -22,7 +23,7 @@
 
         Task<ShipmentFormModel> GetShipmentForEditAsync(int shipmentId);
 
-        Task EditShipmentAsync(ShipmentFormModel model);
+        Task EditShipmentAsync(ShipmentFormModel model, string imagePath);
 
         Task<bool> EmployeeHasVehicle(string employeeId);
 

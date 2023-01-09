@@ -157,8 +157,6 @@
             Shipment shipment = await this.shipmentRepo.All()
                 .Include(x => x.Sender)
                 .Include(x => x.Receiver)
-
-               // .Include(x => x.Images)
                 .FirstOrDefaultAsync(x => x.Id == shipmentId);
 
             if (shipment == null)
@@ -192,7 +190,7 @@
             return model;
         }
 
-        public async Task EditShipmentAsync(ShipmentFormModel model)
+        public async Task EditShipmentAsync(ShipmentFormModel model, string imagePath)
         {
             if (await this.CustomerWithPhoneNumberExists(model.SenderFirstName, model.SenderLastName, model.SenderPhoneNumber) == false)
             {
@@ -229,6 +227,26 @@
             shipment.DeliveryType = model.DeliveryType;
             shipment.ProductType = model.ProductType;
             shipment.Price = model.Price;
+
+            Directory.CreateDirectory($"{imagePath}/shipments/");
+
+            foreach (IFormFile image in model.Images)
+            {
+                string extension = Path.GetExtension(image.FileName).TrimStart('.');
+                int imageSize = (int)image.Length;
+
+                ShipmentImage dbImage = new ShipmentImage()
+                {
+                    ShipmentId = shipment.Id,
+                    Extension = extension,
+                    Size = imageSize,
+                };
+                shipment.Images.Add(dbImage);
+
+                string physicalPath = $"{imagePath}/shipments/{dbImage.Id}.{extension}";
+                using FileStream fileStream = new FileStream(physicalPath, FileMode.Create);
+                await image.CopyToAsync(fileStream);
+            }
 
             await this.shipmentRepo.SaveChangesAsync();
         }
