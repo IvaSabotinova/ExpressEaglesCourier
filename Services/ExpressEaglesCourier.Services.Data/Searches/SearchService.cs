@@ -150,12 +150,10 @@
 
             if (string.IsNullOrEmpty(searchCustomerName) == false)
             {
-                searchCustomerName = $"%{searchCustomerName.ToLower()}%";
+                searchCustomerName = $"%{searchCustomerName.Trim().ToLower()}%";
 
-                shipments = shipments.Where(x => EF.Functions.Like(x.Sender.FirstName.ToLower(), searchCustomerName)
-                || EF.Functions.Like(x.Sender.LastName.ToLower(), searchCustomerName)
-                || EF.Functions.Like(x.Receiver.FirstName.ToLower(), searchCustomerName)
-                || EF.Functions.Like(x.Receiver.LastName.ToLower(), searchCustomerName));
+                shipments = shipments.Where(x => EF.Functions.Like(x.Sender.FirstName.ToLower() + " " + x.Sender.LastName.ToLower(), searchCustomerName)
+                || EF.Functions.Like(x.Receiver.FirstName.ToLower() + " " + x.Receiver.LastName.ToLower(), searchCustomerName));
             }
 
             shipments = shipmentSortingCriterion switch
@@ -186,12 +184,10 @@
 
             if (string.IsNullOrEmpty(searchCustomerName) == false)
             {
-                searchCustomerName = $"%{searchCustomerName.ToLower()}%";
+                searchCustomerName = $"%{searchCustomerName.Trim().ToLower()}%";
 
-                shipments = shipments.Where(x => EF.Functions.Like(x.Sender.FirstName.ToLower(), searchCustomerName)
-                || EF.Functions.Like(x.Sender.LastName.ToLower(), searchCustomerName)
-                || EF.Functions.Like(x.Receiver.FirstName.ToLower(), searchCustomerName)
-                || EF.Functions.Like(x.Receiver.LastName.ToLower(), searchCustomerName));
+                shipments = shipments.Where(x => EF.Functions.Like(x.Sender.FirstName.ToLower() + " " + x.Sender.LastName.ToLower(), searchCustomerName)
+                || EF.Functions.Like(x.Receiver.FirstName.ToLower() + " " + x.Receiver.LastName.ToLower(), searchCustomerName));
             }
 
             shipments = shipmentSortingCriterion switch
