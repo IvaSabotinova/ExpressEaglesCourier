@@ -1,7 +1,7 @@
 ﻿@model ShipmentAllImagesViewModel
 
 @{
-    ViewBag.Title = "All Images Of The Shipment";
+    ViewBag.Title = "Shipment photos (Tracking No. " + Model.Images.Select(x => x.ShipmentTrackingNumber).First().ToString() + ")";
 }
 
 
@@ -25,7 +25,7 @@
                             Delete
 
                         </button>
-                    </form>            
+                    </form>          
              </div>
         </div>
     }

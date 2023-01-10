@@ -9,6 +9,7 @@
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
+    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingShipmentImages;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
 
@@ -275,7 +276,12 @@
                     ProductType = x.ProductType.ToString(),
                     Weight = x.Weight,
                     Price = x.Price,
-                    Images = x.Images,
+                    Images = x.Images.Select(im => new SingleShipmentImageViewModel()
+                    {
+                        Id = im.Id,
+                        ImageUrl = "/images/shipments/" + im.Id + "." + im.Extension,
+                        ShipmentTrackingNumber = im.Shipment.TrackingNumber,
+                    }),
                     EmployeesShipments = x.EmployeesShipments.Select(es =>
                     new EmployeeShipmentViewModel()
                     {

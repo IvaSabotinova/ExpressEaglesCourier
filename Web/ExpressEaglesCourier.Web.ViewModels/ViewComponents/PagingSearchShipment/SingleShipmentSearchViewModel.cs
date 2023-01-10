@@ -1,9 +1,12 @@
 ﻿namespace ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingSearchShipment
 {
+    using System.Collections.Generic;
+
     using AutoMapper;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Models.Enums;
     using ExpressEaglesCourier.Services.Mapping;
+    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingShipmentImages;
 
     public class SingleShipmentSearchViewModel : IMapFrom<Shipment>, IHaveCustomMappings
     {
@@ -30,6 +33,8 @@
         public ProductType ProductType { get; set; }
 
         public decimal Price { get; set; }
+
+        public IEnumerable<SingleShipmentImageViewModel> Images { get; set; } = new List<SingleShipmentImageViewModel>();
 
         public void CreateMappings(IProfileExpression configuration)
         {

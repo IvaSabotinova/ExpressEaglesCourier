@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingShipmentImages;
 
     public class ShipmentDetailsViewModel
     {
@@ -34,6 +34,6 @@
 
         public IEnumerable<EmployeeShipmentViewModel> EmployeesShipments { get; set; } = new List<EmployeeShipmentViewModel>();
 
-        public IEnumerable<ShipmentImage> Images { get; set; } = new List<ShipmentImage>();
+        public IEnumerable<SingleShipmentImageViewModel> Images { get; set; } = new List<SingleShipmentImageViewModel>();
     }
 }
