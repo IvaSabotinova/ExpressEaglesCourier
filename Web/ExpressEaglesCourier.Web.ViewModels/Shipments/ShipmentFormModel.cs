@@ -99,7 +99,7 @@
         public decimal Price { get; set; }
 
         // ??ErrorMessage
-        [MaxFileSize(5 * 1024 * 1024)]
+        [MaxFileSize(30 * 1024 * 1024)]
         [AllowedExtensions(new string[] { ".jpg", ".webp", ".png" })]
         public IEnumerable<IFormFile> Images { get; set; } = new List<IFormFile>();
     }

@@ -17,13 +17,15 @@
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             IEnumerable<IFormFile> files = value as IEnumerable<IFormFile>;
+            long totalFileSize = 0;
             foreach (IFormFile file in files)
             {
                 if (file != null)
                 {
-                    if (file.Length > this.maxFileSize)
+                    totalFileSize += file.Length;
+                    if (totalFileSize > this.maxFileSize)
                     {
-                        return new ValidationResult($"{file.FileName} should have maximum size of {this.maxFileSize} bytes!");
+                        return new ValidationResult($"Total files size should not exceed {this.maxFileSize} bytes!");
                     }
                 }
             }
