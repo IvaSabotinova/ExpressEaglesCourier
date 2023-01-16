@@ -145,7 +145,7 @@
             }
             catch (Exception)
             {
-                return this.RedirectToAction("Details", "Shipment", new { shipmentId });
+                return this.RedirectToAction("Details", "Shipment", new { area = "Staff", id = shipmentId });
             }
         }
     }

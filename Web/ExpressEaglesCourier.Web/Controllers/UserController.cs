@@ -66,7 +66,8 @@
                     };
 
                     result = await this.userManager.CreateAsync(newUser);
-                    Customer customer = await this.customerService.FindCustomerByPhoneNumber(newUser.PhoneNumber);
+
+                    Customer customer = await this.customerService.FindCustomerByPhoneNumber(registerViewModel.TelephoneNumber);
 
                     if (customer != null)
                     {

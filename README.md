@@ -7,7 +7,7 @@
 
 - Database Diagram
 
-![Diagram](DatabaseDiagram.png)
+![Diagram](Database-Diagram.png)
 
 - Before creating a new shipment record you must have registered as clients the sender and the receiver of the goods. After doing so and the shipment is created by an employee then he/she can edit details, create / update tracking path for the shipment. The manager can assign employees responsible for handling the shipment.
 

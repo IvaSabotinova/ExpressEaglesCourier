@@ -49,7 +49,13 @@
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
+        [Display(Name = BirthDate)]
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
+
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = HireOnDate)]
+        [DataType(DataType.Date)]
         public DateTime HiredOn { get; set; }
 
         [Display(Name = SalaryEmployee)]
@@ -57,6 +63,7 @@
         public decimal Salary { get; set; }
 
         [Display(Name = ResignOnDate)]
+        [DataType(DataType.Date)]
         public DateTime? ResignOn { get; set; }
 
         [Required(ErrorMessage = "The field is required")]

@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -11,10 +10,10 @@
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Repositories;
     using ExpressEaglesCourier.Services.Data.Employees;
-    using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Employees;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using MockQueryable.Moq;
     using Moq;
     using Xunit;
 
@@ -80,6 +79,125 @@
                 .Where(x => x.PhoneNumber == "00359888999999").FirstOrDefaultAsync();
 
             Assert.Equal(this.GetEmployeeFormModel().PhoneNumber, employee.PhoneNumber);
+        }
+
+        [Fact]
+
+        public async Task AddRolesToEmployeesTest()
+        {
+            Mock<IDeletableEntityRepository<Employee>> employeeMockRepo = new Mock<IDeletableEntityRepository<Employee>>();
+
+            Mock<IDeletableEntityRepository<Office>> officeMockRepo = new Mock<IDeletableEntityRepository<Office>>();
+
+            Mock<IDeletableEntityRepository<Position>> positionMockRepo = new Mock<IDeletableEntityRepository<Position>>();
+
+            Mock<IDeletableEntityRepository<Vehicle>> vehicleMockRepo = new Mock<IDeletableEntityRepository<Vehicle>>();
+
+            Mock<UserManager<ApplicationUser>> mockUserManager = new Mock<UserManager<ApplicationUser>>(
+               Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
+
+            EmployeeService employeeService = new EmployeeService(
+                employeeMockRepo.Object,
+                officeMockRepo.Object,
+                positionMockRepo.Object,
+                vehicleMockRepo.Object,
+                mockUserManager.Object);
+
+            Employee employee = new Employee()
+            {
+                Id = "c087ed3a-10eb-47ff-bc38-65682f7d1dd4",
+                FirstName = "Martin",
+                MiddleName = "Goshev",
+                LastName = "Goshev",
+                Address = "Slaveykov block 33",
+                City = "Bourgas",
+                Country = "Bulgaria",
+                HiredOn = DateTime.Now.AddDays(-2),
+                PhoneNumber = "00333111111111",
+                PositionId = 1,
+                OfficeId = 2,
+                VehicleId = null,
+                ResignOn = null,
+                Salary = 1200,
+            };
+
+            mockUserManager.Setup(x => x.CreateAsync(It.IsAny<ApplicationUser>())).ReturnsAsync(IdentityResult.Success);
+
+            mockUserManager.Setup(x => x.AddToRoleAsync(
+                It.IsAny<ApplicationUser>(),
+                It.IsAny<string>()))
+                .ReturnsAsync((ApplicationUser user, string role) =>
+                {
+                    user.Employee = new Employee() { PositionId = 1 };
+                    role = "Manager";
+                    return IdentityResult.Success;
+                });
+
+            mockUserManager.Setup(x => x.IsInRoleAsync(
+                It.IsAny<ApplicationUser>(),
+                It.IsAny<string>()))
+                .ReturnsAsync((ApplicationUser user, string role) =>
+                {
+                    user.Employee = new Employee() { PositionId = 1 };
+                    role = "Manager";
+                    return true;
+                });
+
+            await employeeService.AddRolesToEmployees(employee);
+
+            Assert.NotNull(employee.ApplicationUser);
+
+            Assert.True(await mockUserManager.Object.IsInRoleAsync(employee.ApplicationUser, "Manager"));
+        }
+
+        [Fact]
+        public async Task GetEmployeeDetailsTest()
+        {
+            Mock<IDeletableEntityRepository<Employee>> employeeMockRepo = new Mock<IDeletableEntityRepository<Employee>>();
+
+            Mock<IDeletableEntityRepository<Office>> officeMockRepo = new Mock<IDeletableEntityRepository<Office>>();
+
+            Mock<IDeletableEntityRepository<Position>> positionMockRepo = new Mock<IDeletableEntityRepository<Position>>();
+
+            Mock<IDeletableEntityRepository<Vehicle>> vehicleMockRepo = new Mock<IDeletableEntityRepository<Vehicle>>();
+
+            Mock<UserManager<ApplicationUser>> mockUserManager = new Mock<UserManager<ApplicationUser>>(
+               Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
+            List<Employee> employeesList = new List<Employee>()
+            {
+                new Employee()
+                {
+                    Id = "14a5cf87-ca5c-48b9-a84d-d72ceae42c18",
+                    FirstName = "Gosho",
+                    MiddleName = "Goshev",
+                    LastName = "Goshev",
+                    Address = "Lazur block 33",
+                    City = "Bourgas",
+                    Country = "Bulgaria",
+                    HiredOn = DateTime.Now.AddDays(-2),
+                    PhoneNumber = "00359111111111",
+                    VehicleId = null,
+                    ResignOn = null,
+                    Salary = 1200,
+                    Position = new Position() { JobTitle = "Manager" },
+                    Office = new Office() { Address = "Izgrev block 55", City = new City() { Name = "Bourgas", Country = new Country { Name = "Bulgaria" } } },
+                },
+            };
+
+            employeeMockRepo.Setup(x => x.AllAsNoTracking())
+                .Returns(employeesList.AsQueryable().BuildMock());
+
+            EmployeeService employeeService = new EmployeeService(
+                employeeMockRepo.Object,
+                officeMockRepo.Object,
+                positionMockRepo.Object,
+                vehicleMockRepo.Object,
+                mockUserManager.Object);
+
+            EmployeeDetailsViewModel model = await employeeService.GetEmployeeDetails("14a5cf87-ca5c-48b9-a84d-d72ceae42c18");
+
+            Assert.Equal("Gosho Goshev Goshev", model.FullName);
+            Assert.Equal("Izgrev block 55, Bourgas, Bulgaria", model.OfficeDetails);
         }
 
         [Fact]

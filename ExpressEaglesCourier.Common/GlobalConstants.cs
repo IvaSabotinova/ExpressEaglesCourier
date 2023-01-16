@@ -143,6 +143,8 @@
 
             public const string DestinationCountry = "Destination Country";
 
+            public const string BirthDate = "The Date Of Birth";
+
             public const string HireOnDate = "The Date Of Hiring";
 
             public const string SalaryEmployee = "Gross Salary In Leva";

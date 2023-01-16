@@ -86,6 +86,7 @@
                 City = model.City,
                 Country = model.Country,
                 PhoneNumber = model.PhoneNumber,
+                DateOfBirth = model.DateOfBirth,
                 HiredOn = model.HiredOn,
                 Salary = model.Salary,
                 ResignOn = model.ResignOn,
@@ -116,22 +117,46 @@
             if (employee.PositionId == 1 || employee.PositionId == 2
                 || employee.PositionId == 3 || employee.PositionId == 5)
             {
-                ApplicationUser user = new ApplicationUser()
-                {
-                    UserName = employee.FirstName + employee.LastName,
-                    Email = employee.FirstName + employee.LastName + "@" + "expresseagles.com",
-                    PhoneNumber = employee.PhoneNumber,
-                    EmployeeId = employee.Id,
-                };
-
-                IdentityResult result = await this.userManager.CreateAsync(user);
-
-                employee.ApplicationUserId = user.Id;
-
-                if (result.Succeeded)
-                {
-                    _ = employee.PositionId == 1 ? await this.userManager.AddToRoleAsync(user, ManagerRoleName) : await this.userManager.AddToRoleAsync(user, EmployeeRoleName);
+               ApplicationUser dbUser = await this.userManager.FindByNameAsync(employee.FirstName + employee.LastName);
+               ApplicationUser dbUserWithBirthDate = await this.userManager.FindByNameAsync(employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty));
+               ApplicationUser user;
+               if (dbUser == null)
+               {
+                    user = new ApplicationUser()
+                    {
+                        UserName = employee.FirstName + employee.LastName,
+                        Email = employee.FirstName + employee.LastName + "@" + "expresseagles.com",
+                    };
                 }
+                else if (dbUserWithBirthDate == null)
+                {
+                    user = new ApplicationUser()
+                    {
+                        UserName = employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty),
+                        Email = employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty) + "@" + "expresseagles.com",
+                    };
+                }
+                else
+                {
+                    user = new ApplicationUser()
+                    {
+                        UserName = employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty) + employee.City,
+                        Email = employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty) + employee.City + "@" + "expresseagles.com",
+                    };
+                }
+
+               user.PhoneNumber = employee.PhoneNumber;
+               user.EmployeeId = employee.Id;
+
+               IdentityResult result = await this.userManager.CreateAsync(user);
+
+               employee.ApplicationUserId = user.Id;
+               employee.ApplicationUser = user;
+
+               if (result.Succeeded)
+               {
+                    _ = employee.PositionId == 1 ? await this.userManager.AddToRoleAsync(user, ManagerRoleName) : await this.userManager.AddToRoleAsync(user, EmployeeRoleName);
+               }
             }
         }
 
@@ -141,6 +166,7 @@
                 .AllAsNoTracking()
                 .Include(x => x.Vehicle)
                 .Include(x => x.Position)
+                .Include(x => x.ApplicationUser)
                 .Include(x => x.Office)
                 .ThenInclude(x => x.City)
                 .ThenInclude(x => x.Country)
@@ -156,6 +182,8 @@
                 Id = employee.Id,
                 FullName = $"{employee.FirstName} {employee.MiddleName} {employee.LastName}",
                 PhoneNumber = employee.PhoneNumber,
+                UserName = employee.ApplicationUser?.UserName ?? null,
+                CompanyEmail = employee.ApplicationUser?.Email ?? null,
                 Position = employee.Position.JobTitle,
                 OfficeDetails = $"{employee.Office.Address}, {employee.Office.City.Name}, {employee.Office.City.Country.Name}",
                 VehicleModel = employee.Vehicle?.Model ?? null,
@@ -187,6 +215,7 @@
                 City = employee.City,
                 Country = employee.Country,
                 PhoneNumber = employee.PhoneNumber,
+                DateOfBirth = employee.DateOfBirth,
                 HiredOn = employee.HiredOn,
                 Salary = employee.Salary,
                 ResignOn = employee.ResignOn,
@@ -215,6 +244,7 @@
             employee.City = model.City;
             employee.Country = model.Country;
             employee.PhoneNumber = model.PhoneNumber;
+            employee.DateOfBirth = model.DateOfBirth;
             employee.HiredOn = model.HiredOn;
             employee.Salary = model.Salary;
             employee.ResignOn = model.ResignOn;

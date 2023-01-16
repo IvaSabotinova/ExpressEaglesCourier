@@ -111,14 +111,14 @@
             return newShipment.Id;
         }
 
-       /// <summary>
-       /// Checks whether one exists as tracking numbers should not be duplicated.
-       /// </summary>
-       /// <param name="trackingNumber"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// Checks whether one exists as tracking numbers should not be duplicated.
+        /// </summary>
+        /// <param name="trackingNumber"></param>
+        /// <returns></returns>
         public async Task<bool> TrackingNumberExists(string trackingNumber)
         {
-            return await this.shipmentRepo.AllAsNoTracking().Select(x => x.TrackingNumber).ContainsAsync(trackingNumber);
+            return await this.shipmentRepo.AllAsNoTracking().AnyAsync(x => x.TrackingNumber == trackingNumber);
         }
 
         /// <summary>
@@ -294,12 +294,12 @@
         }
 
         public async Task<Shipment> GetShipmentById(int id)
-        => await this.shipmentRepo.All()
-            .Include(x => x.Images)
-            .FirstOrDefaultAsync(x => x.Id == id);
+            => await this.shipmentRepo.All()
+                .Include(x => x.Images)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<bool> ShipmentExists(int id)
-        => await this.shipmentRepo.AllAsNoTracking().AnyAsync(x => x.Id == id);
+            => await this.shipmentRepo.AllAsNoTracking().AnyAsync(x => x.Id == id);
 
         /// <summary>
         /// Defines whether the employee is assigned with a vehicle, mainly whether the employee is a driver-courier.

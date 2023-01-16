@@ -1,55 +1,67 @@
 ﻿@model EmployeeDetailsViewModel
 
 @{
-    ViewBag.Title = "Employee Details";
+	ViewBag.Title = "Employee Details";
 }
 
 <script>
-    var msg = '@TempData[Message]';
-    if (msg.length) {
-        alert(msg);
-    }
+	var msg = '@TempData[Message]';
+	if (msg.length) {
+		alert(msg);
+	}
 </script>
 
 
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
-<div class="container" style="display:inline">
-    <div class="row">
-        <div class="card text-body bg-soft-warning col-6">
-            <input type="hidden" asp-for="@Model.Id" />
-            <table class="table table-striped table-hover" table-name="Employee Details">
-                    <tbody>               
-                        <tr><td><u>Employee Name</u></td></tr>
-                        <tr><td>@Model.FullName</td> </tr>
-                        <tr><td><u>Phone Number</u></td> </tr>
-                        <tr><td>@Model.PhoneNumber</td> </tr>
-                        <tr><td><u>Employee Position</u></td> </tr>
-                        <tr><td>@Model.Position</td> </tr>
-                        <tr><td><u>Office Details</u></td> </tr>
-                        <tr><td>@Model.OfficeDetails</td> </tr>
-                        <tr><td><u>Employee Vehicle (if any assigned)</u></td> </tr>
-                        <tr>
-                            @if (Model.VehicleModel == null && Model.VehiclePlateNumber == null)
-                            {
-                                <td>None</td>
-                            }
-                            else
-                            {
-                                <td>@Model.VehicleModel, @Model.VehiclePlateNumber</td>
-                            }
-                            </tr> 
-                    </tbody>
-                </table>          
-       </div>
-        <div class="col-5">
-            <img class="card-img-top" style="width: 27rem;"
-                 src="~/img/gallery/depositphotos_81284000-stock-photo-courier-delivering-package-by-van.jpg" alt="">
-        </div>
-        <div class="form-inline offset-1 mt-4">         
-            <a class="btn btn-warning" asp-area="Administration" asp-controller="Employee" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-            <a class="ms-2 btn btn-danger" asp-area="Administration" asp-controller="Employee" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that employee?')">Delete</a>     
-        </div>
-    </div>
+<div class="row ms-4">
+	<div class="col-6 text-900 ms-3 me-3 mt-3 mb-3">
+		<input type="hidden" asp-for="@Model.Id" />
+		<table class="table table-striped table-hover" table-name="Employee Details">
+			<tbody>
+				<tr><td><u>Employee Name</u></td></tr>
+				<tr><td>@Model.FullName</td> </tr>
+				<tr><td><u>Phone Number</u></td> </tr>
+				<tr><td>@Model.PhoneNumber</td> </tr>
+				<tr><td><u>Employee Position</u></td> </tr>
+				<tr><td>@Model.Position</td> </tr>
+				@if (this.User.Identity.IsAuthenticated && this.User.IsInRole(AdministratorRoleName))
+				{
+					@if (Model.UserName != null)
+					{
+						<tr><td><u>Employee Username</u></td> </tr>
+						<tr><td>@Model.UserName</td> </tr>
+					}
+					@if (Model.CompanyEmail != null)
+					{
+						<tr><td><u>Employee Email</u></td> </tr>
+						<tr><td>@Model.CompanyEmail</td> </tr>
+					}
+				}
+				<tr><td><u>Office Details</u></td> </tr>
+				<tr><td>@Model.OfficeDetails</td> </tr>
+				<tr><td><u>Employee Vehicle (if any assigned)</u></td> </tr>
+				<tr>
+					@if (Model.VehicleModel == null && Model.VehiclePlateNumber == null)
+					{
+						<td>None</td>
+					}
+					else
+					{
+						<td>@Model.VehicleModel, @Model.VehiclePlateNumber</td>
+					}
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-5 ms-3 me-3 mt-3 mb-3">
+		<img class="card-img-top" style="width: 27rem; height: 30rem;"
+			 src="~/img/gallery/employeedetails.jpg" alt="">
+	</div>
+	<div class="form-inline offset-4">
+		<a class="btn btn-warning" asp-area="Administration" asp-controller="Employee" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+		<a class="ms-2 btn btn-danger" asp-area="Administration" asp-controller="Employee" asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete that employee?')">Delete</a>
+	</div>
 </div>
+

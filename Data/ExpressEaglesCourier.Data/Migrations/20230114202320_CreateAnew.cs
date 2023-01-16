@@ -353,6 +353,30 @@ namespace ExpressEaglesCourier.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShipmentImages",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ShipmentId = table.Column<int>(type: "int", nullable: false),
+                    Extension = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Size = table.Column<int>(type: "int", nullable: false, comment: "The size of the image in bytes."),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShipmentImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShipmentImages_Shipments_ShipmentId",
+                        column: x => x.ShipmentId,
+                        principalTable: "Shipments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShipmentsTrackingPath",
                 columns: table => new
                 {
@@ -396,6 +420,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     City = table.Column<string>(type: "nvarchar(28)", maxLength: 28, nullable: false, comment: "Home City"),
                     Country = table.Column<string>(type: "nvarchar(56)", maxLength: 56, nullable: false, comment: "Home Country"),
                     PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HiredOn = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "The date on which the employee was hired."),
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ResignOn = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "The date on which the employee resigns / retires."),
@@ -636,6 +661,16 @@ namespace ExpressEaglesCourier.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShipmentImages_IsDeleted",
+                table: "ShipmentImages",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShipmentImages_ShipmentId",
+                table: "ShipmentImages",
+                column: "ShipmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Shipments_IsDeleted",
                 table: "Shipments",
                 column: "IsDeleted");
@@ -706,6 +741,9 @@ namespace ExpressEaglesCourier.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Feedbacks");
+
+            migrationBuilder.DropTable(
+                name: "ShipmentImages");
 
             migrationBuilder.DropTable(
                 name: "ShipmentsTrackingPath");

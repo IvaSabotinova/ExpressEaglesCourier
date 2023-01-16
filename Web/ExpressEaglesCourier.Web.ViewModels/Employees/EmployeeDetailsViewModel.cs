@@ -10,6 +10,10 @@
 
         public string Position { get; set; }
 
+        public string UserName { get; set; }
+
+        public string CompanyEmail { get; set; }
+
         public string OfficeDetails { get; set; }
 
         public string VehicleModel { get; set; }

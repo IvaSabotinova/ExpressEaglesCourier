@@ -59,6 +59,9 @@ namespace ExpressEaglesCourier.Data.Models
         [MaxLength(PhoneNumberMaxLenght)]
         public string PhoneNumber { get; set; }
 
+        [Required]
+        public DateTime DateOfBirth { get; set; }
+
         /// <summary>
         /// Gets or sets the date on which the employee was hired.
         /// </summary>

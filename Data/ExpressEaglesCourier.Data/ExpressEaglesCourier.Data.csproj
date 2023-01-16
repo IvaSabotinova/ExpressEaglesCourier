@@ -44,4 +44,8 @@
     <ProjectReference Include="..\ExpressEaglesCourier.Data.Models\ExpressEaglesCourier.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

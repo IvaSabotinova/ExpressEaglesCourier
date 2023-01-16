@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpressEaglesCourier.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230108133757_AddedShipmentImageEntity")]
-    partial class AddedShipmentImageEntity
+    [Migration("20230114202320_CreateAnew")]
+    partial class CreateAnew
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -328,6 +328,9 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .HasComment("Home Country");
 
                     b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedOn")

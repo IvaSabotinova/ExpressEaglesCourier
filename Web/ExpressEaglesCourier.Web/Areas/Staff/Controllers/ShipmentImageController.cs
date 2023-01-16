@@ -13,6 +13,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
+    using static ExpressEaglesCourier.Common.GlobalConstants.ViewModelConstants;
 
     public class ShipmentImageController : StaffController
     {
@@ -32,7 +33,7 @@
 
         public async Task<IActionResult> GetAllByShipmentId(int shipmentId, int page = 1)
         {
-            if (shipmentId < 1)
+            if (shipmentId < 1 || page < 1)
             {
                 return this.NotFound();
             }
@@ -48,13 +49,14 @@
                     Images = await this.shipmentImageService.GetAllByShipmentId<SingleShipmentImageViewModel>(shipmentId, page, itemsPerPage),
                     ShipmentId = shipmentId,
                 };
+                this.ViewData[TrackingNumber] = this.shipmentService.GetShipmentById(shipmentId).Result.TrackingNumber;
                 return this.View(model);
             }
             catch (Exception ex)
             {
                 this.ModelState.AddModelError(string.Empty, CannotFindImages);
                 this.TempData[Message] = ex.Message;
-                return this.RedirectToAction("Details", "Shipment", new { shipmentId });
+                return this.RedirectToAction("Details", "Shipment", new { id = shipmentId });
             }
         }
 

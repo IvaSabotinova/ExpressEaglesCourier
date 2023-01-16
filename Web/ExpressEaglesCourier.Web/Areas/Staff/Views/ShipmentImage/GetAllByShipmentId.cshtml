@@ -1,7 +1,7 @@
 ﻿@model ShipmentAllImagesViewModel
 
 @{
-    ViewBag.Title = "Shipment photos (Tracking No. " + Model.Images.Select(x => x.ShipmentTrackingNumber).First().ToString() + ")";
+    ViewBag.Title = "Shipment photos (Tracking No. " + ViewData[TrackingNumber] + ")";
 }
 
 
@@ -10,7 +10,7 @@
 
 @if (!Model.Images.Any())
 {
-    <h2 class="text-center mt-6 mb-7">No images found for the shipment!</h2>
+    <h2 class="text-center mt-7 mb-7">No images available for the shipment!</h2>
 }
 
 

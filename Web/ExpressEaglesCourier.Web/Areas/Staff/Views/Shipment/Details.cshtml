@@ -45,10 +45,10 @@
                 <p><b>Delivery Type: </b>@dropDownEnums[Model.DeliveryType]</p>
                 <p><b>Weight: </b>@Model.Weight kg</p>
                 <p><b>Price: </b>@Model.Price lv</p>
-               @if (Model.Images.Count() > 0)
+                @if (Model.Images.Count() > 0)
                 {
                     <a class="ms-2 btn btn-warning" asp-area="Staff" asp-controller="ShipmentImage" asp-action="GetAllByShipmentId" asp-route-shipmentId="@Model.Id">View Shipment Images</a>
-                } 
+                }
             </div>
             <div class="card col-6 border-2 bg-soft-warning text-900" style="max-width:1400px">
                 <p class="text-center"><b>Assigned To Employees: </b></p>

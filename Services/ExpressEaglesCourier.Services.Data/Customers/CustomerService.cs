@@ -1,12 +1,10 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Customers
 {
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
-
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using Microsoft.EntityFrameworkCore;
 
@@ -128,22 +126,25 @@
 
         public async Task<Customer> FindCustomerByPhoneNumber(string phoneNumber)
         {
-            phoneNumber = phoneNumber.Replace(" ", string.Empty);
             Customer customer = null;
-            if (phoneNumber.Length == 9)
+            if (!string.IsNullOrWhiteSpace(phoneNumber))
             {
-                customer = await this.customerRepo.All()
-               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 9) == phoneNumber);
-            }
-            else if (phoneNumber.Length >= 10 && phoneNumber[^10] == '0')
-            {
-                customer = await this.customerRepo.All()
-               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 9) == phoneNumber.Substring(phoneNumber.Length - 9));
-            }
-            else if (phoneNumber.Length >= 10 && phoneNumber[^10] != '0')
-            {
-                customer = await this.customerRepo.All()
-               .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 10) == phoneNumber.Substring(phoneNumber.Length - 10));
+                phoneNumber = phoneNumber.Replace(" ", string.Empty);
+                if (phoneNumber.Length == 9)
+                {
+                    customer = await this.customerRepo.All()
+                   .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 9) == phoneNumber);
+                }
+                else if (phoneNumber.Length >= 10 && phoneNumber[^10] == '0')
+                {
+                    customer = await this.customerRepo.All()
+                   .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 9) == phoneNumber.Substring(phoneNumber.Length - 9));
+                }
+                else if (phoneNumber.Length >= 10 && phoneNumber[^10] != '0')
+                {
+                    customer = await this.customerRepo.All()
+                   .FirstOrDefaultAsync(x => x.PhoneNumber.Substring(x.PhoneNumber.Length - 10) == phoneNumber.Substring(phoneNumber.Length - 10));
+                }
             }
 
             return customer;
