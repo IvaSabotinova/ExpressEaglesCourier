@@ -29,7 +29,10 @@
                 {
                      Id = "9d6b9d8a-b979-4acf-9713-6313a14675e1",
                      ShipmentId = 15,
-                     Shipment = new Shipment() { TrackingNumber = "1111111111" },
+                     Shipment = new Shipment()
+                     {
+                         TrackingNumber = "1111111111",
+                     },
                      Size = 1050,
                      Extension = "png",
                 },
@@ -37,14 +40,20 @@
                 {
                      Id = "6526c59a-9d7d-4999-99d1-4666486d62b1",
                      ShipmentId = 15,
-                     Shipment = new Shipment() { TrackingNumber = "1111111111" },
+                     Shipment = new Shipment()
+                     {
+                         TrackingNumber = "1111111111",
+                     },
                      Size = 700,
                      Extension = "jpg",
                 },
                 new ShipmentImage()
                 {
                     Id = "a143d1ae-a5c0-4327-9d30-7f4f19aef634",
-                    Shipment = new Shipment() { TrackingNumber = "1111111111" },
+                    Shipment = new Shipment()
+                    {
+                        TrackingNumber = "1111111111",
+                    },
                     ShipmentId = 15,
                     Size = 850,
                     Extension = "webp",

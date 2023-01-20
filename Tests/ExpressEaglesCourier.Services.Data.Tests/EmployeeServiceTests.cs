@@ -128,7 +128,10 @@
                 It.IsAny<string>()))
                 .ReturnsAsync((ApplicationUser user, string role) =>
                 {
-                    user.Employee = new Employee() { PositionId = 1 };
+                    user.Employee = new Employee()
+                    {
+                        PositionId = 1,
+                    };
                     role = "Manager";
                     return IdentityResult.Success;
                 });
@@ -138,7 +141,10 @@
                 It.IsAny<string>()))
                 .ReturnsAsync((ApplicationUser user, string role) =>
                 {
-                    user.Employee = new Employee() { PositionId = 1 };
+                    user.Employee = new Employee()
+                    {
+                        PositionId = 1,
+                    };
                     role = "Manager";
                     return true;
                 });
@@ -179,8 +185,22 @@
                     VehicleId = null,
                     ResignOn = null,
                     Salary = 1200,
-                    Position = new Position() { JobTitle = "Manager" },
-                    Office = new Office() { Address = "Izgrev block 55", City = new City() { Name = "Bourgas", Country = new Country { Name = "Bulgaria" } } },
+                    Position = new Position()
+                    {
+                        JobTitle = "Manager",
+                    },
+                    Office = new Office()
+                    {
+                        Address = "Izgrev block 55",
+                        City = new City()
+                        {
+                            Name = "Bourgas",
+                            Country = new Country()
+                            {
+                            Name = "Bulgaria",
+                            },
+                        },
+                    },
                 },
             };
 

@@ -2,14 +2,12 @@
 {
     using System.Reflection;
 
-    using ExpressEaglesCourier.Common.ModelBinders;
     using ExpressEaglesCourier.Data;
     using ExpressEaglesCourier.Data.Common;
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Repositories;
     using ExpressEaglesCourier.Data.Seeding;
-    using ExpressEaglesCourier.Services.Data;
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Searches;
@@ -19,8 +17,8 @@
     using ExpressEaglesCourier.Services.Data.Stats;
     using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Services.Messaging;
+    using ExpressEaglesCourier.Web.Infrastructure.ModelBinders;
     using ExpressEaglesCourier.Web.ViewModels;
-    using HouseRentingSystem.ModelBinders;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;

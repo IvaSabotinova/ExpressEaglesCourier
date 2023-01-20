@@ -7,7 +7,6 @@ namespace ExpressEaglesCourier.Data.Models
 
     using ExpressEaglesCourier.Data.Common.Models;
     using ExpressEaglesCourier.Data.Models.Enums;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
 

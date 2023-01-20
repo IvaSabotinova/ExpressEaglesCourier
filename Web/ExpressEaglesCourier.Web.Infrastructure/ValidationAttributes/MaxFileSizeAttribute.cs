@@ -1,4 +1,4 @@
-﻿namespace ExpressEaglesCourier.Common.ValidationAttributes
+﻿namespace ExpressEaglesCourier.Web.Infrastructure.ValidationAttributes
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

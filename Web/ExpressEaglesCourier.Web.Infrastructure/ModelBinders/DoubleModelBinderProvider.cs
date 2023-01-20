@@ -1,4 +1,4 @@
-﻿namespace ExpressEaglesCourier.Common.ModelBinders
+﻿namespace ExpressEaglesCourier.Web.Infrastructure.ModelBinders
 {
     using System;
 

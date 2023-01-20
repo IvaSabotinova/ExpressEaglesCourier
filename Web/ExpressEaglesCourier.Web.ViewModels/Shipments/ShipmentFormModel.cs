@@ -4,8 +4,8 @@
     using System.ComponentModel.DataAnnotations;
 
     using ExpressEaglesCourier.Common;
-    using ExpressEaglesCourier.Common.ValidationAttributes;
     using ExpressEaglesCourier.Data.Models.Enums;
+    using ExpressEaglesCourier.Web.Infrastructure.ValidationAttributes;
     using Microsoft.AspNetCore.Http;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
