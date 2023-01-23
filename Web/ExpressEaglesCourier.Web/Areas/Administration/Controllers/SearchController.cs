@@ -23,7 +23,7 @@
 
         public async Task<IActionResult> EmployeeByPhoneNumber([FromQuery] string phoneNumber)
         {
-            EmployeeDetailsViewModel model = await this.searchService.SearchEmployeeByPhoneNumberAsync(phoneNumber);
+            EmployeeDetailsViewModel model = await this.searchService.SearchEmployeeByPhoneNumberAsync<EmployeeDetailsViewModel>(phoneNumber);
 
             if (model != null)
             {

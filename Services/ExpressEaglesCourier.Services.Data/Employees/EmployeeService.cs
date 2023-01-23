@@ -115,13 +115,13 @@
         public async Task AddRolesToEmployees(Employee employee)
         {
             if (employee.PositionId == 1 || employee.PositionId == 2
-                || employee.PositionId == 3 || employee.PositionId == 5)
+            || employee.PositionId == 3 || employee.PositionId == 5)
             {
-               ApplicationUser dbUser = await this.userManager.FindByNameAsync(employee.FirstName + employee.LastName);
-               ApplicationUser dbUserWithBirthDate = await this.userManager.FindByNameAsync(employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty));
-               ApplicationUser user;
-               if (dbUser == null)
-               {
+                ApplicationUser dbUser = await this.userManager.FindByNameAsync(employee.FirstName + employee.LastName);
+                ApplicationUser dbUserWithBirthDate = await this.userManager.FindByNameAsync(employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty));
+                ApplicationUser user;
+                if (dbUser == null)
+                {
                     user = new ApplicationUser()
                     {
                         UserName = employee.FirstName + employee.LastName,
@@ -140,90 +140,34 @@
                 {
                     user = new ApplicationUser()
                     {
-                        UserName = employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty) + employee.City,
-                        Email = employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty) + employee.City + "@" + "expresseagles.com",
+                        UserName = employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty) + employee.HiredOn.ToShortDateString().Replace("/", string.Empty),
+                        Email = employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty) + employee.HiredOn.ToShortDateString().Replace("/", string.Empty) + "@" + "expresseagles.com",
                     };
                 }
 
-               user.PhoneNumber = employee.PhoneNumber;
-               user.EmployeeId = employee.Id;
+                user.PhoneNumber = employee.PhoneNumber;
+                user.EmployeeId = employee.Id;
 
-               IdentityResult result = await this.userManager.CreateAsync(user);
+                IdentityResult result = await this.userManager.CreateAsync(user);
 
-               employee.ApplicationUserId = user.Id;
-               employee.ApplicationUser = user;
+                employee.ApplicationUserId = user.Id;
+                employee.ApplicationUser = user;
 
-               if (result.Succeeded)
-               {
+                if (result.Succeeded)
+                {
                     _ = employee.PositionId == 1 ? await this.userManager.AddToRoleAsync(user, ManagerRoleName) : await this.userManager.AddToRoleAsync(user, EmployeeRoleName);
-               }
+                }
             }
         }
 
-        public async Task<EmployeeDetailsViewModel> GetEmployeeDetails(string employeeId)
-        {
-            Employee employee = await this.employeeRepo
-                .AllAsNoTracking()
-                .Include(x => x.Vehicle)
-                .Include(x => x.Position)
-                .Include(x => x.ApplicationUser)
-                .Include(x => x.Office)
-                .ThenInclude(x => x.City)
-                .ThenInclude(x => x.Country)
-                .FirstOrDefaultAsync(x => x.Id == employeeId);
-
-            if (employee == null)
-            {
-                throw new NullReferenceException(EmployeeNotExist);
-            }
-
-            EmployeeDetailsViewModel model = new EmployeeDetailsViewModel()
-            {
-                Id = employee.Id,
-                FullName = $"{employee.FirstName} {employee.MiddleName} {employee.LastName}",
-                PhoneNumber = employee.PhoneNumber,
-                UserName = employee.ApplicationUser?.UserName ?? null,
-                CompanyEmail = employee.ApplicationUser?.Email ?? null,
-                Position = employee.Position.JobTitle,
-                OfficeDetails = $"{employee.Office.Address}, {employee.Office.City.Name}, {employee.Office.City.Country.Name}",
-                VehicleModel = employee.Vehicle?.Model ?? null,
-                VehiclePlateNumber = employee.Vehicle?.PlateNumber ?? null,
-            };
-
-            return model;
-        }
+        public async Task<T> GetEmployeeDetailsById<T>(string employeeId)
+        => await this.employeeRepo.AllAsNoTracking()
+                .Where(x => x.Id == employeeId)
+                .To<T>()
+                .FirstOrDefaultAsync();
 
         public async Task<Employee> GetEmployeeById(string employeeId)
        => await this.employeeRepo.All().FirstOrDefaultAsync(x => x.Id == employeeId);
-
-        public async Task<EmployeeFormModel> GetEmployeeForEditAsync(string employeeId)
-        {
-            Employee employee = await this.GetEmployeeById(employeeId);
-
-            if (employee == null)
-            {
-                throw new NullReferenceException(EmployeeNotExist);
-            }
-
-            return new EmployeeFormModel()
-            {
-                Id = employee.Id,
-                FirstName = employee.FirstName,
-                MiddleName = employee.MiddleName,
-                LastName = employee.LastName,
-                Address = employee.Address,
-                City = employee.City,
-                Country = employee.Country,
-                PhoneNumber = employee.PhoneNumber,
-                DateOfBirth = employee.DateOfBirth,
-                HiredOn = employee.HiredOn,
-                Salary = employee.Salary,
-                ResignOn = employee.ResignOn,
-                OfficeId = employee.OfficeId,
-                PositionId = employee.PositionId,
-                VehicleId = employee.VehicleId,
-            };
-        }
 
         public async Task EditEmployeeAsync(EmployeeFormModel model)
         {

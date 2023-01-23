@@ -18,11 +18,9 @@
 
         Task AddRolesToEmployees(Employee employee);
 
-        Task<EmployeeDetailsViewModel> GetEmployeeDetails(string employeeId);
+        Task<T> GetEmployeeDetailsById<T>(string employeeId);
 
         Task<Employee> GetEmployeeById(string employeeId);
-
-        Task<EmployeeFormModel> GetEmployeeForEditAsync(string employeeId);
 
         Task EditEmployeeAsync(EmployeeFormModel model);
 

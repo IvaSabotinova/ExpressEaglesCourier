@@ -25,18 +25,18 @@
 				<tr><td><u>Phone Number</u></td> </tr>
 				<tr><td>@Model.PhoneNumber</td> </tr>
 				<tr><td><u>Employee Position</u></td> </tr>
-				<tr><td>@Model.Position</td> </tr>
+				<tr><td>@Model.PositionJobTitle</td> </tr>
 				@if (this.User.Identity.IsAuthenticated && this.User.IsInRole(AdministratorRoleName))
 				{
-					@if (Model.UserName != null)
+					@if (Model.ApplicationUserUserName != null)
 					{
 						<tr><td><u>Employee Username</u></td> </tr>
-						<tr><td>@Model.UserName</td> </tr>
+						<tr><td>@Model.ApplicationUserUserName</td> </tr>
 					}
-					@if (Model.CompanyEmail != null)
+					@if (Model.ApplicationUserEmail != null)
 					{
 						<tr><td><u>Employee Email</u></td> </tr>
-						<tr><td>@Model.CompanyEmail</td> </tr>
+						<tr><td>@Model.ApplicationUserEmail</td> </tr>
 					}
 				}
 				<tr><td><u>Office Details</u></td> </tr>

@@ -15,9 +15,9 @@
 
         Task<ShipmentDetailsViewModel> SearchShipmentByTrackingNumberAsync(string trackingNumber);
 
-        Task<EmployeeDetailsViewModel> SearchEmployeeByPhoneNumberAsync(string phoneNumber);
+        Task<T> SearchEmployeeByPhoneNumberAsync<T>(string phoneNumber);
 
-        Task<CustomerDetailsViewModel> SearchCustomerByPhoneNumberAsync(string phoneNumber);
+        Task<T> SearchCustomerByPhoneNumberAsync<T>(string phoneNumber);
 
         Task<int> ShipmentsCountAsyncBySearchCriteria(string productType, string searchCustomerName, ShipmentSortingCriterion shipmentSortingCriterion);
 

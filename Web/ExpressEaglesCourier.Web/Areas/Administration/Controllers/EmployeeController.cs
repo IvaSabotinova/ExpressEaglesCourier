@@ -72,14 +72,21 @@
                 return this.NotFound();
             }
 
-            EmployeeDetailsViewModel model = await this.employeeService.GetEmployeeDetails(id);
+            EmployeeDetailsViewModel model = await this.employeeService.GetEmployeeDetailsById<EmployeeDetailsViewModel>(id);
             return this.View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            EmployeeFormModel model = await this.employeeService.GetEmployeeForEditAsync(id);
+            Employee employee = await this.employeeService.GetEmployeeById(id);
+
+            if (employee == null)
+            {
+                return this.NotFound();
+            }
+
+            EmployeeFormModel model = await this.employeeService.GetEmployeeDetailsById<EmployeeFormModel>(id);
 
             model.Offices = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
             model.Positions = this.employeeService.GetAllPositionsAsKeyValuePairs();

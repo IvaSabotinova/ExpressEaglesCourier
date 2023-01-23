@@ -81,7 +81,7 @@
            return null;
         }
 
-        public async Task<EmployeeDetailsViewModel> SearchEmployeeByPhoneNumberAsync(string phoneNumber)
+        public async Task<T> SearchEmployeeByPhoneNumberAsync<T>(string phoneNumber)
         {
             Employee employee = null;
             if (!string.IsNullOrWhiteSpace(phoneNumber))
@@ -107,14 +107,14 @@
 
             if (employee != null)
             {
-                EmployeeDetailsViewModel model = await this.employeeService.GetEmployeeDetails(employee.Id);
+                T model = await this.employeeService.GetEmployeeDetailsById<T>(employee.Id);
                 return model;
             }
 
-            return null;
+            return default;
         }
 
-        public async Task<CustomerDetailsViewModel> SearchCustomerByPhoneNumberAsync(string phoneNumber)
+        public async Task<T> SearchCustomerByPhoneNumberAsync<T>(string phoneNumber)
         {
             Customer customer = null;
             if (!string.IsNullOrWhiteSpace(phoneNumber))
@@ -139,11 +139,11 @@
 
             if (customer != null)
             {
-                CustomerDetailsViewModel model = await this.customerService.GetCustomerDetailsById(customer.Id);
+                T model = await this.customerService.GetCustomerDetailsById<T>(customer.Id);
                 return model;
             }
 
-            return null;
+            return default;
         }
 
         public async Task<int> ShipmentsCountAsyncBySearchCriteria(string productType = null, string searchCustomerName = null, ShipmentSortingCriterion shipmentSortingCriterion = 0)

@@ -1,23 +1,34 @@
 ﻿namespace ExpressEaglesCourier.Web.ViewModels.Employees
 {
-    public class EmployeeDetailsViewModel
+    using AutoMapper;
+    using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Services.Mapping;
+
+    public class EmployeeDetailsViewModel : IMapFrom<Employee>, IHaveCustomMappings
     {
         public string Id { get; set; }
 
-        public string FullName { get; set; }
+        public string FullName { get; set; } = null!;
 
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = null;
 
-        public string Position { get; set; }
+        public string PositionJobTitle { get; set; }
 
-        public string UserName { get; set; }
+        public string ApplicationUserUserName { get; set; } = null;
 
-        public string CompanyEmail { get; set; }
+        public string ApplicationUserEmail { get; set; } = null;
 
-        public string OfficeDetails { get; set; }
+        public string OfficeDetails { get; set; } = null!;
 
-        public string VehicleModel { get; set; }
+        public string VehicleModel { get; set; } = null;
 
-        public string VehiclePlateNumber { get; set; }
+        public string VehiclePlateNumber { get; set; } = null;
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Employee, EmployeeDetailsViewModel>()
+                .ForMember(x => x.FullName, opt => opt.MapFrom(x => x.FirstName + " " + x.MiddleName + " " + x.LastName))
+                .ForMember(x => x.OfficeDetails, opt => opt.MapFrom(x => x.Office.Address + ", " + x.Office.City.Name + ", " + x.Office.City.Country.Name));
+        }
     }
 }

@@ -111,7 +111,8 @@
 
               if (user != null)
               {
-                SignInResult result = await this.signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
+                SignInResult result = await this.signInManager.PasswordSignInAsync(
+                    user, loginViewModel.Password, false, false);
                 if (result.Succeeded)
                 {
                     if (await this.userManager.IsInRoleAsync(user, AdministratorRoleName)

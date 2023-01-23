@@ -3,11 +3,13 @@
     using System.ComponentModel.DataAnnotations;
 
     using ExpressEaglesCourier.Common;
+    using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Services.Mapping;
     using Microsoft.EntityFrameworkCore;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
-    public class CustomerFormModel
+    public class CustomerFormModel : IMapFrom<Customer>
     {
         public string Id { get; set; }
 

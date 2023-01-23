@@ -96,24 +96,24 @@
 
         public SearchService GetSearchService()
         {
-        EfDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo = new EfDeletableEntityRepository<ShipmentTrackingPath>(this.GetDbContext());
+            EfDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo = new EfDeletableEntityRepository<ShipmentTrackingPath>(this.GetDbContext());
 
-        EfDeletableEntityRepository<Shipment> shipmentRepo = new EfDeletableEntityRepository<Shipment>(this.GetDbContext());
+            EfDeletableEntityRepository<Shipment> shipmentRepo = new EfDeletableEntityRepository<Shipment>(this.GetDbContext());
 
-        EfDeletableEntityRepository<Employee> employeeRepo = new EfDeletableEntityRepository<Employee>(this.GetDbContext());
+            EfDeletableEntityRepository<Employee> employeeRepo = new EfDeletableEntityRepository<Employee>(this.GetDbContext());
 
-        EfDeletableEntityRepository<Customer> customerRepo = new EfDeletableEntityRepository<Customer>(this.GetDbContext());
+            EfDeletableEntityRepository<Customer> customerRepo = new EfDeletableEntityRepository<Customer>(this.GetDbContext());
 
-        SearchService searchService = new SearchService(
-            shipmentTrackingPathRepo,
-            this.GetShipmentTrackingPathService(),
-            shipmentRepo,
-            this.GetShipmentService(),
-            employeeRepo,
-            this.GetEmployeeService(),
-            customerRepo,
-            this.GetCustomerService());
-        return searchService;
+            SearchService searchService = new SearchService(
+                shipmentTrackingPathRepo,
+                this.GetShipmentTrackingPathService(),
+                shipmentRepo,
+                this.GetShipmentService(),
+                employeeRepo,
+                this.GetEmployeeService(),
+                customerRepo,
+                this.GetCustomerService());
+            return searchService;
         }
 
         public async Task<Customer> GetCustomer1()
@@ -268,7 +268,7 @@
 
         public async Task SearchEmployeeByPhoneNumberAsyncExceptionTest()
         {
-            EmployeeDetailsViewModel model = await this.GetSearchService().SearchEmployeeByPhoneNumberAsync("001001001001");
+            EmployeeDetailsViewModel model = await this.GetSearchService().SearchEmployeeByPhoneNumberAsync<EmployeeDetailsViewModel>("001001001001");
             Assert.Null(model);
         }
 
@@ -276,7 +276,7 @@
 
         public async Task SearchCustomerByPhoneNumberAsyncTest()
         {
-            CustomerDetailsViewModel model = await this.GetSearchService().SearchCustomerByPhoneNumberAsync(this.GetCustomer1().Result.PhoneNumber);
+            CustomerDetailsViewModel model = await this.GetSearchService().SearchCustomerByPhoneNumberAsync<CustomerDetailsViewModel>(this.GetCustomer1().Result.PhoneNumber);
 
             Assert.NotNull(model);
         }
@@ -285,7 +285,7 @@
 
         public async Task SearchCustomerByPhoneNumberAsyncExceptionTest()
         {
-            CustomerDetailsViewModel model = await this.GetSearchService().SearchCustomerByPhoneNumberAsync("01010101011");
+            CustomerDetailsViewModel model = await this.GetSearchService().SearchCustomerByPhoneNumberAsync<CustomerDetailsViewModel>("01010101011");
             Assert.Null(model);
         }
     }

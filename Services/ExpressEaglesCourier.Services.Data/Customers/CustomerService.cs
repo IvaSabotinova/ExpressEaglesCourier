@@ -1,10 +1,12 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Customers
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using Microsoft.EntityFrameworkCore;
 
@@ -39,55 +41,14 @@
             return newCustomer.Id;
         }
 
-        public async Task<CustomerDetailsViewModel> GetCustomerDetailsById(string id)
-        {
-            Customer customer = await this.customerRepo.AllAsNoTracking()
-                .Include(x => x.SentShipments)
-                .Include(x => x.ReceivedShipments)
-                .FirstOrDefaultAsync(x => x.Id == id);
-
-            if (customer == null)
-            {
-                throw new NullReferenceException(ClientNotExist);
-            }
-
-            return new CustomerDetailsViewModel()
-            {
-                Id = customer.Id,
-                FullName = $"{customer.FirstName} {customer.LastName}",
-                FullAddress = $"{customer.Address}, {customer.City}, {customer.Country}",
-                CompanyName = customer.CompanyName,
-                PhoneNumber = customer.PhoneNumber,
-                TotalNumberOfShipments = customer.SentShipments.Count + customer.ReceivedShipments.Count,
-            };
-        }
+        public async Task<T> GetCustomerDetailsById<T>(string id)
+        => await this.customerRepo.AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
 
         public async Task<Customer> GetCustomerById(string customerId)
             => await this.customerRepo.All().FirstOrDefaultAsync(x => x.Id == customerId);
-
-        public async Task<CustomerFormModel> GetCustomerForEditAsync(string customerId)
-        {
-            Customer customer = await this.GetCustomerById(customerId);
-
-            if (customer == null)
-            {
-                throw new NullReferenceException(ClientNotExist);
-            }
-
-            CustomerFormModel model = new CustomerFormModel()
-            {
-                Id = customerId,
-                FirstName = customer.FirstName,
-                MiddleName = customer.MiddleName,
-                LastName = customer.LastName,
-                Address = customer.Address,
-                City = customer.City,
-                Country = customer.Country,
-                CompanyName = customer.CompanyName,
-                PhoneNumber = customer.PhoneNumber,
-            };
-            return model;
-        }
 
         public async Task EditCustomerAsync(CustomerFormModel model)
         {

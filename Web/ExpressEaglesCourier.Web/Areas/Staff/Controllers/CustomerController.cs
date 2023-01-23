@@ -61,14 +61,20 @@
                 return this.NotFound();
             }
 
-            CustomerDetailsViewModel model = await this.customerService.GetCustomerDetailsById(id);
+            CustomerDetailsViewModel model = await this.customerService.GetCustomerDetailsById<CustomerDetailsViewModel>(id);
             return this.View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            CustomerFormModel model = await this.customerService.GetCustomerForEditAsync(id);
+            Customer customer = await this.customerService.GetCustomerById(id);
+            if (customer == null)
+            {
+                return this.NotFound();
+            }
+
+            CustomerFormModel model = await this.customerService.GetCustomerDetailsById<CustomerFormModel>(id);
             return this.View(model);
         }
 

@@ -9,9 +9,7 @@
     {
         Task<string> CreateCustomerAsync(CustomerFormModel createCustomerInputModel);
 
-        Task<CustomerDetailsViewModel> GetCustomerDetailsById(string id);
-
-        Task<CustomerFormModel> GetCustomerForEditAsync(string customerId);
+        Task<T> GetCustomerDetailsById<T>(string id);
 
         Task<Customer> GetCustomerById(string customerId);
 
