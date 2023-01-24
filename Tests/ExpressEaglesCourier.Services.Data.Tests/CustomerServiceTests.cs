@@ -2,12 +2,14 @@
 {
     using System;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Repositories;
     using ExpressEaglesCourier.Services.Data.Customers;
+    using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using Microsoft.EntityFrameworkCore;
     using Xunit;
@@ -84,6 +86,8 @@
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomerFormModel());
             Customer customer = await this.GetDbContext().Customers.FirstOrDefaultAsync();
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             CustomerDetailsViewModel model = await this.GetCustomerService().GetCustomerDetailsById<CustomerDetailsViewModel>(customer.Id);
 
             Assert.Equal(customer.Address + ", " + customer.City + ", " + customer.Country, model.FullAddress);
@@ -97,19 +101,14 @@
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomerFormModel());
             Customer customer = await this.GetDbContext().Customers.FirstOrDefaultAsync();
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             CustomerFormModel model = await this.GetCustomerService()
                   .GetCustomerDetailsById<CustomerFormModel>(customer.Id);
 
             Assert.Equal(customer.FirstName, model.FirstName);
             Assert.Equal(customer.Country, model.Country);
         }
-
-        //[Fact]
-        //public async Task GetCustomerForEditExceptionTest()
-        //{
-        //    await Assert.ThrowsAsync<NullReferenceException>(() =>
-        //          this.GetCustomerService().GetCustomerDetailsById<CustomerFormModel>("c987fb53-c533-468c-80c0-21fc1862ab76"));
-        //}
 
         [Fact]
         public async Task EditCustomerAsyncTest()
@@ -129,6 +128,8 @@
             await this.GetCustomerService().CreateCustomerAsync(model1);
 
             Customer customer = await this.GetDbContext().Customers.LastOrDefaultAsync();
+
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             CustomerFormModel model2 = await this.GetCustomerService().GetCustomerDetailsById<CustomerFormModel>(customer.Id);
 

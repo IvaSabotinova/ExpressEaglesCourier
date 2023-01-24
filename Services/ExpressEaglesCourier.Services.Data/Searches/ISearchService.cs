@@ -3,9 +3,6 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using ExpressEaglesCourier.Web.ViewModels.Customers;
-    using ExpressEaglesCourier.Web.ViewModels.Employees;
-    using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingSearchShipment;
 
@@ -13,7 +10,7 @@
     {
         Task<ShipmentTrackingPathDetailsModel> SearchTrackingPathAsync(string trackingNumber);
 
-        Task<ShipmentDetailsViewModel> SearchShipmentByTrackingNumberAsync(string trackingNumber);
+        Task<T> SearchShipmentByTrackingNumberAsync<T>(string trackingNumber);
 
         Task<T> SearchEmployeeByPhoneNumberAsync<T>(string phoneNumber);
 

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data;
@@ -13,6 +14,7 @@
     using ExpressEaglesCourier.Services.Data.Searches;
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
+    using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Employees;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
@@ -206,6 +208,8 @@
 
             await this.GetShipmentTrackingPathService().CreateShipmentTrackingPathAsync(shipmentTrackingPathModel);
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             ShipmentTrackingPathDetailsModel model = await this.GetSearchService().SearchTrackingPathAsync(shipment.TrackingNumber);
 
             Assert.NotNull(model);
@@ -251,7 +255,9 @@
             Shipment shipment = await this.GetDbContext().Shipments
                 .Where(x => x.TrackingNumber == shipmentModel.TrackingNumber).FirstOrDefaultAsync();
 
-            ShipmentDetailsViewModel model = await this.GetSearchService().SearchShipmentByTrackingNumberAsync(shipment.TrackingNumber);
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
+            ShipmentDetailsViewModel model = await this.GetSearchService().SearchShipmentByTrackingNumberAsync<ShipmentDetailsViewModel>(shipment.TrackingNumber);
 
             Assert.NotNull(model);
         }
@@ -259,7 +265,7 @@
         [Fact]
         public async Task SearchShipmentByTrackingNumberAsyncExceptionTest()
         {
-            ShipmentDetailsViewModel model = await this.GetSearchService().SearchShipmentByTrackingNumberAsync("001001001001");
+            ShipmentDetailsViewModel model = await this.GetSearchService().SearchShipmentByTrackingNumberAsync<ShipmentDetailsViewModel>("001001001001");
 
             Assert.Null(model);
         }
@@ -276,6 +282,8 @@
 
         public async Task SearchCustomerByPhoneNumberAsyncTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             CustomerDetailsViewModel model = await this.GetSearchService().SearchCustomerByPhoneNumberAsync<CustomerDetailsViewModel>(this.GetCustomer1().Result.PhoneNumber);
 
             Assert.NotNull(model);

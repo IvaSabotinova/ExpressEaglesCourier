@@ -1,10 +1,5 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Searches
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Models.Enums;
@@ -13,12 +8,13 @@
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Services.Mapping;
-    using ExpressEaglesCourier.Web.ViewModels.Customers;
-    using ExpressEaglesCourier.Web.ViewModels.Employees;
-    using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingSearchShipment;
     using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class SearchService : ISearchService
     {
@@ -59,7 +55,7 @@
             if (trackingPath != null)
             {
                 ShipmentTrackingPathDetailsModel model = await
-                    this.shipmentTrackingPathService.Details(trackingPath.Id);
+                    this.shipmentTrackingPathService.GetDetailsByTrackingPathId(trackingPath.Id);
 
                 return model;
             }
@@ -67,18 +63,18 @@
             return null;
         }
 
-        public async Task<ShipmentDetailsViewModel> SearchShipmentByTrackingNumberAsync(string trackingNumber)
+        public async Task<T> SearchShipmentByTrackingNumberAsync<T>(string trackingNumber)
         {
            Shipment shipment = await this.shipmentRepo.AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.TrackingNumber == trackingNumber);
 
            if (shipment != null)
             {
-                ShipmentDetailsViewModel model = await this.shipmentService.GetShipmentDetails(shipment.Id);
+                T model = await this.shipmentService.GetShipmentDetailsById<T>(shipment.Id);
                 return model;
             }
 
-           return null;
+           return default;
         }
 
         public async Task<T> SearchEmployeeByPhoneNumberAsync<T>(string phoneNumber)

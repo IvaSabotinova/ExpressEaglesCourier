@@ -59,7 +59,7 @@
                             <input type="hidden" asp-for="@employee.EmployeeId" />
                             <input type="hidden" asp-for="@Model.Id" />
                             <p><b>Name: </b>@employee.FullName</p>
-                            <p><b>Position: </b>@employee.Position, <b>Office: </b> @employee.OfficeCity</p>
+                            <p><b>Position: </b>@employee.EmployeePositionJobTitle, <b>Office: </b> @employee.EmployeeOfficeCityName</p>
                             @if (this.User.IsInRole(AdministratorRoleName)
                            || this.User.IsInRole(ManagerRoleName))
                             {

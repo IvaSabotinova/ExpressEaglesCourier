@@ -11,6 +11,7 @@
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
+    using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
@@ -404,10 +405,12 @@
 
             ShipmentTrackingPath shipmentTrackingPath = await this.GetDbContext().ShipmentsTrackingPath.FirstOrDefaultAsync(x => x.TrackingNumber == shipment.TrackingNumber);
 
-            ShipmentTrackingPathDetailsModel model = await this.GetShipmentTrackingPathService()
-                .Details(shipmentTrackingPath.Id);
+            AutoMapperConfig.RegisterMappings(typeof(ShipmentTrackingPathDetailsModel).Assembly);
 
-            Assert.Equal(shipmentTrackingPath.AcceptanceFromCustomer, model.DateTimeAcceptanceFromCustomer);
+            ShipmentTrackingPathDetailsModel model = await this.GetShipmentTrackingPathService()
+                .GetDetailsByTrackingPathId(shipmentTrackingPath.Id);
+
+            Assert.Equal(shipmentTrackingPath.AcceptanceFromCustomer, model.AcceptanceFromCustomer);
         }
 
         [Fact]
@@ -459,7 +462,9 @@
 
             ShipmentTrackingPath shipmentTrackingPath = await this.GetDbContext().ShipmentsTrackingPath.FirstOrDefaultAsync(x => x.TrackingNumber == shipment.TrackingNumber);
 
-            ShipmentTrackingPathFormModel model = await this.GetShipmentTrackingPathService().GetTrackingPathForUpdate(shipmentTrackingPath.Id);
+            AutoMapperConfig.RegisterMappings(typeof(ShipmentTrackingPathFormModel).Assembly);
+
+            ShipmentTrackingPathFormModel model = await this.GetShipmentTrackingPathService().GetDetailsById<ShipmentTrackingPathFormModel>(shipmentTrackingPath.Id);
 
             Assert.NotNull(model);
             Assert.Equal(shipment.TrackingNumber, model.TrackingNumber);
@@ -514,7 +519,9 @@
 
             ShipmentTrackingPath shipmentTrackingPath = await this.GetDbContext().ShipmentsTrackingPath.FirstOrDefaultAsync(x => x.TrackingNumber == shipment.TrackingNumber);
 
-            ShipmentTrackingPathFormModel editModel = await this.GetShipmentTrackingPathService().GetTrackingPathForUpdate(shipmentTrackingPath.Id);
+            AutoMapperConfig.RegisterMappings(typeof(ShipmentTrackingPathFormModel).Assembly);
+
+            ShipmentTrackingPathFormModel editModel = await this.GetShipmentTrackingPathService().GetDetailsById<ShipmentTrackingPathFormModel>(shipmentTrackingPath.Id);
 
             await this.GetShipmentTrackingPathService().UpdateShipmentTrackingPathAsync(new ShipmentTrackingPathFormModel()
             {

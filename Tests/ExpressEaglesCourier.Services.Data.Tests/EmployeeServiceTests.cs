@@ -246,6 +246,8 @@
             Employee employee = await this.GetDbContext().Employees
                 .Where(x => x.PhoneNumber == "00359888999999").FirstOrDefaultAsync();
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             EmployeeFormModel model = await this.GetEmployeeService()
             .GetEmployeeDetailsById<EmployeeFormModel>(employee.Id);
 
@@ -253,19 +255,6 @@
             Assert.Equal(employee.Country, model.Country);
         }
 
-        // [Fact]
-
-        // public async Task GetEmployeeForEditAsyncExceptionTest()
-        // {
-        //    await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
-
-        // Employee employeeDb = await this.GetDbContext().Employees
-        //        .Where(x => x.PhoneNumber == "00359888999999").FirstOrDefaultAsync();
-
-        // await Assert.ThrowsAsync<NullReferenceException>(() =>
-        //     this.GetEmployeeService().GetEmployeeDetailsById<EmployeeFormModel
-        //     >("d9096aa5-2c0a-414f-8050-5c8c73b3f17a"));
-        // }
         [Fact]
 
         public async Task EditEmployeeAsync()
@@ -291,6 +280,8 @@
 
             Employee employeeDb = await this.GetDbContext().Employees
                 .Where(x => x.PhoneNumber == "00111111111111").FirstOrDefaultAsync();
+
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             EmployeeFormModel model = await this.GetEmployeeService().GetEmployeeDetailsById<EmployeeFormModel>(employeeDb.Id);
 
@@ -322,6 +313,8 @@
         public async Task EditEmployeeAsyncExceptionTest()
         {
             Employee employee = await this.GetDbContext().Employees.Where(x => x.FirstName == "Boci").FirstOrDefaultAsync();
+
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             await Assert.ThrowsAsync<NullReferenceException>(() =>
             this.GetEmployeeService().GetEmployeeDetailsById<EmployeeFormModel>(employee.Id));

@@ -2,17 +2,21 @@
 {
     using System;
 
-    public class ShipmentTrackingPathDetailsModel
+    using AutoMapper;
+    using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Services.Mapping;
+
+    public class ShipmentTrackingPathDetailsModel : IMapFrom<ShipmentTrackingPath>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
-        public ShipmentView ShipmentDetails { get; set; }
+        public ShipmentView Shipment { get; set; }
 
         public string TrackingNumber { get; set; }
 
-        public DateTime? DateTimeAcceptanceFromCustomer { get; set; }
+        public DateTime? AcceptanceFromCustomer { get; set; } = null;
 
-        public DateTime? DateTimePickedUpByCourier { get; set; }
+        public DateTime? PickedUpByCourier { get; set; } = null;
 
         public string SendingOfficeAddress { get; set; }
 
@@ -20,7 +24,7 @@
 
         public string SendingOfficeCountry { get; set; }
 
-        public DateTime? DateTimeSentFromDispatchingOffice { get; set; }
+        public DateTime? SentFromDispatchingOffice { get; set; } = null;
 
         public string ReceivingOfficeAddress { get; set; }
 
@@ -28,10 +32,21 @@
 
         public string ReceivingOfficeCountry { get; set; }
 
-        public DateTime? DateTimeArrivalInReceivingOffice { get; set; }
+        public DateTime? ArrivalInReceivingOffice { get; set; } = null;
 
-        public DateTime? DateTimeFinalDeliveryPreparation { get; set; }
+        public DateTime? FinalDeliveryPreparation { get; set; } = null;
 
-        public DateTime? DateTimeFinalDelivery { get; set; }
+        public DateTime? FinalDelivery { get; set; } = null;
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<ShipmentTrackingPath, ShipmentTrackingPathDetailsModel>()
+                .ForMember(x => x.SendingOfficeAddress, opt => opt.Ignore())
+                .ForMember(x => x.SendingOfficeCity, opt => opt.Ignore())
+                .ForMember(x => x.SendingOfficeCountry, opt => opt.Ignore())
+                .ForMember(x => x.ReceivingOfficeAddress, opt => opt.Ignore())
+                .ForMember(x => x.ReceivingOfficeCity, opt => opt.Ignore())
+                .ForMember(x => x.ReceivingOfficeCountry, opt => opt.Ignore());
+        }
     }
 }

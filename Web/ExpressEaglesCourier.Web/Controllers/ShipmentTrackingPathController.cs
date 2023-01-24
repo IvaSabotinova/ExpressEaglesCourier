@@ -27,7 +27,7 @@
                 return this.NotFound();
             }
 
-            ShipmentTrackingPathDetailsModel model = await this.shipmentTrackingPathService.Details(id);
+            ShipmentTrackingPathDetailsModel model = await this.shipmentTrackingPathService.GetDetailsByTrackingPathId(id);
             return this.View(model);
         }
     }

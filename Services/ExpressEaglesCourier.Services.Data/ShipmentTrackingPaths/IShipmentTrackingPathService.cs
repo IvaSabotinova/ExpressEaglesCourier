@@ -13,9 +13,9 @@
 
         Task<ShipmentTrackingPath> GetTrackingPathById(int shipmentTrackingPathId);
 
-        Task<ShipmentTrackingPathDetailsModel> Details(int shipmentTrackPathId);
+        Task<ShipmentTrackingPathDetailsModel> GetDetailsByTrackingPathId(int shipmentTrackPathId);
 
-        Task<ShipmentTrackingPathFormModel> GetTrackingPathForUpdate(int shipmentTrackingPathId);
+        Task<TModel> GetDetailsById<TModel>(int shipmentTrackingPathId);
 
         Task UpdateShipmentTrackingPathAsync(ShipmentTrackingPathFormModel model);
     }

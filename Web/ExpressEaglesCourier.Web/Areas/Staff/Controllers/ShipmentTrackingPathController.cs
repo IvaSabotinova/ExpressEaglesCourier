@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
+    using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
@@ -67,7 +68,14 @@
         [HttpGet]
         public async Task<IActionResult> Update([FromRoute] int id)
         {
-            ShipmentTrackingPathFormModel model = await this.shipmentTrackingPathService.GetTrackingPathForUpdate(id);
+            ShipmentTrackingPath shipmentTrackingPath = await this.shipmentTrackingPathService.GetTrackingPathById(id);
+
+            if (shipmentTrackingPath == null)
+            {
+                return this.NotFound();
+            }
+
+            ShipmentTrackingPathFormModel model = await this.shipmentTrackingPathService.GetDetailsById<ShipmentTrackingPathFormModel>(id);
             model.Offices_Dispatch = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
             model.Offices_Receipt = this.employeeService.GetAllOfficesDetailsAsKeyValuePairs();
 

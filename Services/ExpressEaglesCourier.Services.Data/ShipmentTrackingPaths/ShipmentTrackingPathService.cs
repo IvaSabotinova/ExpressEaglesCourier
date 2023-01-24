@@ -1,10 +1,12 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.ShipmentTrackingPaths
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
     using Microsoft.EntityFrameworkCore;
 
@@ -79,7 +81,7 @@
         public async Task<ShipmentTrackingPath> GetTrackingPathById(int shipmentTrackingPathId)
             => await this.shipmentTrackingPathRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentTrackingPathId);
 
-        public async Task<ShipmentTrackingPathDetailsModel> Details(int shipmentTrackPathId)
+        public async Task<ShipmentTrackingPathDetailsModel> GetDetailsByTrackingPathId(int shipmentTrackPathId)
         {
             ShipmentTrackingPath shipmentTrackingPath = await this.GetTrackingPathById(shipmentTrackPathId);
 
@@ -93,66 +95,26 @@
                 .ThenInclude(x => x.Country)
                 .FirstOrDefaultAsync(x => x.Id == shipmentTrackingPath.ReceivingOfficeId);
 
-            Shipment shipment = await this.shipmentRepo.AllAsNoTracking()
-                .Include(x => x.Sender)
-                .Include(x => x.Receiver)
-                .FirstOrDefaultAsync(x => x.Id == shipmentTrackingPath.ShipmentId);
+            ShipmentTrackingPathDetailsModel model = await this.shipmentTrackingPathRepo.AllAsNoTracking()
+                .Where(x => x.Id == shipmentTrackPathId)
+                .To<ShipmentTrackingPathDetailsModel>()
+                .FirstOrDefaultAsync();
 
-            ShipmentTrackingPathDetailsModel model = new ShipmentTrackingPathDetailsModel()
-            {
-                Id = shipmentTrackPathId,
-                TrackingNumber = shipmentTrackingPath.TrackingNumber,
-                DateTimeAcceptanceFromCustomer = shipmentTrackingPath.AcceptanceFromCustomer ?? null,
-                DateTimePickedUpByCourier = shipmentTrackingPath.PickedUpByCourier ?? null,
-                SendingOfficeAddress = sendingOffice?.Address ?? null,
-                SendingOfficeCity = sendingOffice?.City.Name ?? null,
-                SendingOfficeCountry = sendingOffice?.City.Country.Name ?? null,
-                DateTimeSentFromDispatchingOffice = shipmentTrackingPath.SentFromDispatchingOffice ?? null,
-                ReceivingOfficeAddress = receivingOffice?.Address ?? null,
-                ReceivingOfficeCity = receivingOffice?.City.Name ?? null,
-                ReceivingOfficeCountry = receivingOffice?.City.Country.Name ?? null,
-                DateTimeArrivalInReceivingOffice = shipmentTrackingPath.ArrivalInReceivingOffice ?? null,
-                DateTimeFinalDeliveryPreparation = shipmentTrackingPath.FinalDeliveryPreparation ?? null,
-                DateTimeFinalDelivery = shipmentTrackingPath.FinalDelivery ?? null,
-                ShipmentDetails = new ShipmentView()
-                {
-                    ShipmentId = shipmentTrackingPath.ShipmentId,
-                    SenderName = $"{shipment.Sender.FirstName} {shipment.Sender.LastName}",
-                    PickUpAddressCityCountry = $"{shipment.PickupAddress}, {shipment.PickUpTown}, {shipment.PickUpCountry}",
-                    ReceiverName = $"{shipment.Receiver.FirstName} {shipment.Receiver.LastName}",
-                    DestinationAddressCityCountry = $"{shipment.DestinationAddress}, {shipment.DestinationTown}, {shipment.DestinationCountry}",
-                },
-            };
+            model.SendingOfficeAddress = sendingOffice?.Address ?? null;
+            model.SendingOfficeCity = sendingOffice?.City.Name ?? null;
+            model.SendingOfficeCountry = sendingOffice?.City.Country.Name ?? null;
+            model.ReceivingOfficeAddress = receivingOffice?.Address ?? null;
+            model.ReceivingOfficeCity = receivingOffice?.City.Name ?? null;
+            model.ReceivingOfficeCountry = receivingOffice?.City.Country.Name ?? null;
 
             return model;
         }
 
-        public async Task<ShipmentTrackingPathFormModel> GetTrackingPathForUpdate(int shipmentTrackingPathId)
-        {
-            ShipmentTrackingPath shipmentTrackingPath = await this.GetTrackingPathById(shipmentTrackingPathId);
-
-            if (shipmentTrackingPath == null)
-            {
-                throw new NullReferenceException(TrackingPathNotFound);
-            }
-
-            ShipmentTrackingPathFormModel model = new ShipmentTrackingPathFormModel()
-            {
-                Id = shipmentTrackingPath.Id,
-                TrackingNumber = shipmentTrackingPath.TrackingNumber,
-                ShipmentId = shipmentTrackingPath.ShipmentId,
-                AcceptanceFromCustomer = shipmentTrackingPath.AcceptanceFromCustomer,
-                PickedUpByCourier = shipmentTrackingPath.PickedUpByCourier,
-                SendingOfficeId = shipmentTrackingPath.SendingOfficeId,
-                SentFromDispatchingOffice = shipmentTrackingPath.SentFromDispatchingOffice,
-                ReceivingOfficeId = shipmentTrackingPath.ReceivingOfficeId,
-                ArrivalInReceivingOffice = shipmentTrackingPath.ArrivalInReceivingOffice,
-                FinalDeliveryPreparation = shipmentTrackingPath.FinalDeliveryPreparation,
-                FinalDelivery = shipmentTrackingPath.FinalDelivery,
-            };
-
-            return model;
-        }
+        public async Task<TModel> GetDetailsById<TModel>(int shipmentTrackingPathId)
+        => await this.shipmentTrackingPathRepo.AllAsNoTracking()
+                .Where(x => x.Id == shipmentTrackingPathId)
+                .To<TModel>()
+                .FirstOrDefaultAsync();
 
         public async Task UpdateShipmentTrackingPathAsync(ShipmentTrackingPathFormModel model)
         {

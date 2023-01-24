@@ -3,14 +3,17 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using AutoMapper;
     using ExpressEaglesCourier.Common;
+    using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Models.Enums;
+    using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.Infrastructure.ValidationAttributes;
     using Microsoft.AspNetCore.Http;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
-    public class ShipmentFormModel
+    public class ShipmentFormModel : IMapFrom<Shipment>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -102,5 +105,11 @@
         [MaxFileSize(30 * 1024 * 1024)]
         [AllowedExtensions(new string[] { ".jpg", ".webp", ".png" })]
         public IEnumerable<IFormFile> Images { get; set; } = new List<IFormFile>();
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Shipment, ShipmentFormModel>()
+                .ForMember(x => x.Images, d => d.Ignore());
+        }
     }
 }

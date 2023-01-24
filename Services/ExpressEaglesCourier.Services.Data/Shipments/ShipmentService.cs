@@ -8,8 +8,8 @@
 
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
-    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingShipmentImages;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
 
@@ -153,43 +153,17 @@
             return customer.Id;
         }
 
-        public async Task<ShipmentFormModel> GetShipmentForEditAsync(int shipmentId)
-        {
-            Shipment shipment = await this.shipmentRepo.All()
-                .Include(x => x.Sender)
-                .Include(x => x.Receiver)
-                .FirstOrDefaultAsync(x => x.Id == shipmentId);
+        /// <summary>
+        /// Gets the details of a particular shipment by id to be displayed.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
-            if (shipment == null)
-            {
-                throw new NullReferenceException(ShipmentNotExist);
-            }
-
-            ShipmentFormModel model = new ShipmentFormModel()
-            {
-                Id = shipment.Id,
-                TrackingNumber = shipment.TrackingNumber,
-                SenderFirstName = shipment.Sender.FirstName,
-                SenderLastName = shipment.Sender.LastName,
-                SenderPhoneNumber = shipment.Sender.PhoneNumber,
-                ReceiverFirstName = shipment.Receiver.FirstName,
-                ReceiverLastName = shipment.Receiver.LastName,
-                ReceiverPhoneNumber = shipment.Receiver.PhoneNumber,
-                PickUpAddress = shipment.PickupAddress,
-                PickUpTown = shipment.PickUpTown,
-                PickUpCountry = shipment.PickUpCountry,
-                DestinationAddress = shipment.DestinationAddress,
-                DestinationTown = shipment.DestinationTown,
-                DestinationCountry = shipment.DestinationCountry,
-                Weight = shipment.Weight,
-                DeliveryWay = shipment.DeliveryWay,
-                DeliveryType = shipment.DeliveryType,
-                ProductType = shipment.ProductType,
-                Price = shipment.Price,
-            };
-
-            return model;
-        }
+        public async Task<T> GetShipmentDetailsById<T>(int id)
+        => await this.shipmentRepo.AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
 
         public async Task EditShipmentAsync(ShipmentFormModel model, string imagePath)
         {
@@ -250,47 +224,6 @@
             }
 
             await this.shipmentRepo.SaveChangesAsync();
-        }
-
-        /// <summary>
-        /// Gets the details of a particular shipment by id to be displayed.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<ShipmentDetailsViewModel> GetShipmentDetails(int id)
-        {
-            return await this.shipmentRepo.AllAsNoTracking()
-                .Where(x => x.Id == id)
-                .Select(x => new ShipmentDetailsViewModel()
-                {
-                    Id = x.Id,
-                    TrackingNumber = x.TrackingNumber,
-                    SenderFullName = $"{x.Sender.FirstName} {x.Sender.LastName}",
-                    SenderPhoneNumber = x.Sender.PhoneNumber,
-                    ReceiverFullName = $"{x.Receiver.FirstName} {x.Receiver.LastName}",
-                    ReceiverPhoneNumber = x.Receiver.PhoneNumber,
-                    FullPickUpAddress = $"{x.PickupAddress}, {x.PickUpTown}, {x.PickUpCountry}",
-                    FullDestinationAddress = $"{x.DestinationAddress}, {x.DestinationTown}, {x.DestinationCountry}",
-                    DeliveryWay = x.DeliveryWay.ToString(),
-                    DeliveryType = x.DeliveryType.ToString(),
-                    ProductType = x.ProductType.ToString(),
-                    Weight = x.Weight,
-                    Price = x.Price,
-                    Images = x.Images.Select(im => new SingleShipmentImageViewModel()
-                    {
-                        Id = im.Id,
-                        ImageUrl = "/images/shipments/" + im.Id + "." + im.Extension,
-                        ShipmentTrackingNumber = im.Shipment.TrackingNumber,
-                    }),
-                    EmployeesShipments = x.EmployeesShipments.Select(es =>
-                    new EmployeeShipmentViewModel()
-                    {
-                        EmployeeId = es.EmployeeId,
-                        FullName = $"{es.Employee.FirstName} {es.Employee.LastName}",
-                        Position = es.Employee.Position.JobTitle,
-                        OfficeCity = es.Employee.Office.City.Name,
-                    }),
-                }).FirstOrDefaultAsync();
         }
 
         public async Task<Shipment> GetShipmentById(int id)

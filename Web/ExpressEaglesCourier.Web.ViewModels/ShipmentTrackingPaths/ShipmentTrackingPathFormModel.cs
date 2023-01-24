@@ -5,11 +5,13 @@
     using System.ComponentModel.DataAnnotations;
 
     using ExpressEaglesCourier.Common;
+    using ExpressEaglesCourier.Data.Models;
+    using ExpressEaglesCourier.Services.Mapping;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
     using static ExpressEaglesCourier.Common.GlobalConstants.ViewModelConstants;
 
-    public class ShipmentTrackingPathFormModel
+    public class ShipmentTrackingPathFormModel : IMapFrom<ShipmentTrackingPath>
     {
         public int Id { get; set; }
 

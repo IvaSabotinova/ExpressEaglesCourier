@@ -1,6 +1,5 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Stats
 {
-    using System;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;

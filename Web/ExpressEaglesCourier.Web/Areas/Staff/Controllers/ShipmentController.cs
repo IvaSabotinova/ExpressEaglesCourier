@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
-    using ExpressEaglesCourier.Services.Data.Employees;
+    using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using Microsoft.AspNetCore.Authorization;
@@ -63,7 +63,13 @@
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            ShipmentFormModel model = await this.shipmentService.GetShipmentForEditAsync(id);
+            Shipment shipment = await this.shipmentService.GetShipmentById(id);
+            if (shipment == null)
+            {
+                return this.NotFound();
+            }
+
+            ShipmentFormModel model = await this.shipmentService.GetShipmentDetailsById<ShipmentFormModel>(id);
             return this.View(model);
         }
 
@@ -98,7 +104,7 @@
                 return this.NotFound();
             }
 
-            ShipmentDetailsViewModel model = await this.shipmentService.GetShipmentDetails(id);
+            ShipmentDetailsViewModel model = await this.shipmentService.GetShipmentDetailsById<ShipmentDetailsViewModel>(id);
             return this.View(model);
         }
 

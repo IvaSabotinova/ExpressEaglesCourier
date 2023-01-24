@@ -26,7 +26,7 @@
 
         public async Task<IActionResult> ShipmentByTrackingNumber([FromQuery] string trackingNumber)
         {
-            ShipmentDetailsViewModel model = await this.searchService.SearchShipmentByTrackingNumberAsync(trackingNumber);
+            ShipmentDetailsViewModel model = await this.searchService.SearchShipmentByTrackingNumberAsync<ShipmentDetailsViewModel>(trackingNumber);
             if (model != null)
             {
                 return this.RedirectToAction("Details", "Shipment", new { id = model.Id });

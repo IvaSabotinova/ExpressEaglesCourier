@@ -17,11 +17,9 @@
 
         Task<bool> ShipmentExists(int id);
 
-        Task<ShipmentDetailsViewModel> GetShipmentDetails(int id);
+        Task<T> GetShipmentDetailsById<T>(int id);
 
         Task<Shipment> GetShipmentById(int id);
-
-        Task<ShipmentFormModel> GetShipmentForEditAsync(int shipmentId);
 
         Task EditShipmentAsync(ShipmentFormModel model, string imagePath);
 

@@ -27,34 +27,35 @@
     </thead>
     <tbody>
          <tr scope="row">          
-            <td>@Model.DateTimeAcceptanceFromCustomer</td>
-            <td>Acceptance From Sender: @Model.ShipmentDetails.SenderName</td>
-            <td>@Model.ShipmentDetails.PickUpAddressCityCountry</td>
+            <td>@Model.AcceptanceFromCustomer</td>
+            <td>Acceptance From Sender: @Model.Shipment.SenderName</td>
+            <td>@Model.Shipment.PickUpAddressCityCountry</td>
         </tr>
         <tr scope="row">         
-            <td>@Model.DateTimePickedUpByCourier</td>
+
+            <td>@Model.PickedUpByCourier</td>
             <td>Picked Up By Courier</td>
-            <td>@Model.ShipmentDetails.PickUpAddressCityCountry</td>
+            <td>@Model.Shipment.PickUpAddressCityCountry</td>
         </tr>
         <tr scope="row">          
-            <td>@Model.DateTimeSentFromDispatchingOffice</td>
+            <td>@Model.SentFromDispatchingOffice</td>
             <td>Sent From Office</td>
             <td>@(Model.SendingOfficeAddress ?? string.Empty) @(Model.SendingOfficeCity ?? string.Empty) @(Model.SendingOfficeCountry ?? string.Empty)</td>
         </tr>
         <tr scope="row">         
-            <td>@Model.DateTimeArrivalInReceivingOffice</td>
+            <td>@Model.ArrivalInReceivingOffice</td>
             <td>Arrival At Office</td>
             <td>@(Model.ReceivingOfficeAddress ?? string.Empty) @(Model.ReceivingOfficeCity ?? string.Empty) @(Model.ReceivingOfficeCountry ?? string.Empty)</td>
         </tr>
         <tr scope="row">         
-            <td>@Model.DateTimeFinalDeliveryPreparation</td>
+            <td>@Model.FinalDeliveryPreparation</td>
             <td>Preparation In Office For Delivery To Client</td>
             <td>@(Model.ReceivingOfficeAddress ?? string.Empty) @(Model.ReceivingOfficeCity ?? string.Empty) @(Model.ReceivingOfficeCountry ?? string.Empty)</td>
         </tr>
         <tr scope="row">     
-            <td>@Model.DateTimeFinalDelivery</td>
-            <td>Delivery To Customer: @Model.ShipmentDetails.ReceiverName</td>
-            <td>@Model.ShipmentDetails.DestinationAddressCityCountry</td>
+            <td>@Model.FinalDelivery</td>
+            <td>Delivery To Customer: @Model.Shipment.ReceiverName</td>
+            <td>@Model.Shipment.DestinationAddressCityCountry</td>
         </tr>
         
     </tbody>

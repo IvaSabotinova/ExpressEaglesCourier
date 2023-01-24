@@ -11,6 +11,7 @@
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Shipments;
+    using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Employees;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
@@ -271,8 +272,10 @@
 
             Shipment shipment = await this.GetDbContext().Shipments.LastOrDefaultAsync();
 
+            AutoMapperConfig.RegisterMappings(typeof(ShipmentFormModel).Assembly);
+
             ShipmentFormModel editModel = await this.GetShipmentService()
-                  .GetShipmentForEditAsync(shipment.Id);
+                  .GetShipmentDetailsById<ShipmentFormModel>(shipment.Id);
 
             Assert.Equal(shipment.TrackingNumber, editModel.TrackingNumber);
             Assert.Equal(shipment.PickupAddress, editModel.PickUpAddress);
@@ -283,8 +286,10 @@
         {
             Shipment shipment = await this.GetDbContext().Shipments.Where(x => x.TrackingNumber == "00100100100").FirstOrDefaultAsync();
 
+            AutoMapperConfig.RegisterMappings(typeof(ShipmentFormModel).Assembly);
+
             await Assert.ThrowsAsync<NullReferenceException>(() =>
-            this.GetShipmentService().GetShipmentForEditAsync(shipment.Id));
+            this.GetShipmentService().GetShipmentDetailsById<ShipmentFormModel>(shipment.Id));
         }
 
         [Fact]
@@ -323,8 +328,10 @@
 
             Shipment shipment = await this.GetDbContext().Shipments.Where(x => x.TrackingNumber == "11111111113").FirstOrDefaultAsync();
 
+            AutoMapperConfig.RegisterMappings(typeof(ShipmentFormModel).Assembly);
+
             ShipmentFormModel editModel = await this.GetShipmentService()
-                .GetShipmentForEditAsync(shipment.Id);
+                .GetShipmentDetailsById<ShipmentFormModel>(shipment.Id);
 
             await this.GetShipmentService().EditShipmentAsync(
                 new ShipmentFormModel()
@@ -423,7 +430,9 @@
             Shipment shipment = await this.GetDbContext().Shipments
                 .Where(x => x.TrackingNumber == "11111111114").FirstOrDefaultAsync();
 
-            ShipmentDetailsViewModel model = await this.GetShipmentService().GetShipmentDetails(shipment.Id);
+            AutoMapperConfig.RegisterMappings(typeof(ShipmentDetailsViewModel).Assembly);
+
+            ShipmentDetailsViewModel model = await this.GetShipmentService().GetShipmentDetailsById<ShipmentDetailsViewModel>(shipment.Id);
 
             Assert.Equal("Gosho Marinov", model.SenderFullName);
             Assert.Equal("Lazur block 33, Bourgas, Bulgaria", model.FullPickUpAddress);
