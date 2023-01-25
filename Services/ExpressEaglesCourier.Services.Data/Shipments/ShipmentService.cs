@@ -53,12 +53,18 @@
                 throw new InvalidOperationException(TrackingNumberExistsInDB);
             }
 
-            if (await this.CustomerWithPhoneNumberExists(model.SenderFirstName, model.SenderLastName, model.SenderPhoneNumber) == false)
+            if (await this.CustomerWithPhoneNumberExists(
+                model.SenderFirstName,
+                model.SenderLastName,
+                model.SenderPhoneNumber) == false)
             {
                 throw new NullReferenceException(SenderWithPhoneNumberDoesNotExit);
             }
 
-            if (await this.CustomerWithPhoneNumberExists(model.ReceiverFirstName, model.ReceiverLastName, model.ReceiverPhoneNumber) == false)
+            if (await this.CustomerWithPhoneNumberExists(
+                model.ReceiverFirstName,
+                model.ReceiverLastName,
+                model.ReceiverPhoneNumber) == false)
             {
                 throw new NullReferenceException(ReceiverWithPhoneNumberDoesNotExit);
             }
@@ -67,23 +73,10 @@
 
             string receiverId = await this.GetCustomerId(model.ReceiverFirstName, model.ReceiverLastName, model.ReceiverPhoneNumber);
 
-            Shipment newShipment = new Shipment()
-            {
-                TrackingNumber = model.TrackingNumber,
-                SenderId = senderId,
-                ReceiverId = receiverId,
-                PickupAddress = model.PickUpAddress,
-                PickUpTown = model.PickUpTown,
-                PickUpCountry = model.PickUpCountry,
-                DestinationAddress = model.DestinationAddress,
-                DestinationTown = model.DestinationTown,
-                DestinationCountry = model.DestinationCountry,
-                Weight = model.Weight,
-                DeliveryWay = model.DeliveryWay,
-                DeliveryType = model.DeliveryType,
-                ProductType = model.ProductType,
-                Price = model.Price,
-            };
+            Shipment newShipment = AutoMapperConfig.MapperInstance.Map<Shipment>(model);
+
+            newShipment.SenderId = senderId;
+            newShipment.ReceiverId = receiverId;
 
             Directory.CreateDirectory($"{imagePath}/shipments/");
 
@@ -118,7 +111,8 @@
         /// <returns></returns>
         public async Task<bool> TrackingNumberExists(string trackingNumber)
         {
-            return await this.shipmentRepo.AllAsNoTracking().AnyAsync(x => x.TrackingNumber == trackingNumber);
+            return await this.shipmentRepo.AllAsNoTracking()
+                .AnyAsync(x => x.TrackingNumber == trackingNumber);
         }
 
         /// <summary>
@@ -130,7 +124,8 @@
         /// <returns></returns>
         public async Task<bool> CustomerWithPhoneNumberExists(string firstName, string lastName, string phoneNumber)
         {
-            return await this.customerRepo.AllAsNoTracking().AnyAsync(x => x.FirstName == firstName && x.LastName == lastName && x.PhoneNumber == phoneNumber);
+            return await this.customerRepo.AllAsNoTracking()
+                .AnyAsync(x => x.FirstName == firstName && x.LastName == lastName && x.PhoneNumber == phoneNumber);
         }
 
         /// <summary>
@@ -143,7 +138,8 @@
         /// <exception cref="NullReferenceException">Client not exists.</exception>
         public async Task<string> GetCustomerId(string firstName, string lastName, string phoneNumber)
         {
-            Customer customer = await this.customerRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.FirstName == firstName && x.LastName == lastName && x.PhoneNumber == phoneNumber);
+            Customer customer = await this.customerRepo.AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.FirstName == firstName && x.LastName == lastName && x.PhoneNumber == phoneNumber);
 
             if (customer == null)
             {
@@ -167,12 +163,18 @@
 
         public async Task EditShipmentAsync(ShipmentFormModel model, string imagePath)
         {
-            if (await this.CustomerWithPhoneNumberExists(model.SenderFirstName, model.SenderLastName, model.SenderPhoneNumber) == false)
+            if (await this.CustomerWithPhoneNumberExists(
+                model.SenderFirstName,
+                model.SenderLastName,
+                model.SenderPhoneNumber) == false)
             {
                 throw new NullReferenceException(SenderWithPhoneNumberDoesNotExit);
             }
 
-            if (await this.CustomerWithPhoneNumberExists(model.ReceiverFirstName, model.ReceiverLastName, model.ReceiverPhoneNumber) == false)
+            if (await this.CustomerWithPhoneNumberExists(
+                model.ReceiverFirstName,
+                model.ReceiverLastName,
+                model.ReceiverPhoneNumber) == false)
             {
                 throw new NullReferenceException(ReceiverWithPhoneNumberDoesNotExit);
             }
@@ -181,7 +183,8 @@
 
             string receiverId = await this.GetCustomerId(model.ReceiverFirstName, model.ReceiverLastName, model.ReceiverPhoneNumber);
 
-            Shipment shipment = await this.shipmentRepo.All().FirstOrDefaultAsync(x => x.Id == model.Id);
+            Shipment shipment = await this.shipmentRepo.All()
+                .FirstOrDefaultAsync(x => x.Id == model.Id);
 
             if (shipment == null)
             {
@@ -232,7 +235,8 @@
                 .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<bool> ShipmentExists(int id)
-            => await this.shipmentRepo.AllAsNoTracking().AnyAsync(x => x.Id == id);
+            => await this.shipmentRepo.AllAsNoTracking()
+            .AnyAsync(x => x.Id == id);
 
         /// <summary>
         /// Defines whether the employee is assigned with a vehicle, mainly whether the employee is a driver-courier.
@@ -241,7 +245,8 @@
         /// <returns></returns>
         public async Task<bool> EmployeeHasVehicle(string employeeId)
         {
-            Employee employee = await this.employeeRepo.All().FirstOrDefaultAsync(x => x.Id == employeeId);
+            Employee employee = await this.employeeRepo.All()
+                .FirstOrDefaultAsync(x => x.Id == employeeId);
             return employee.VehicleId != null;
         }
 
@@ -254,7 +259,8 @@
         /// <exception cref="InvalidOperationException">Employee already assigned with this shipment!.</exception>
         public async Task AddEmployeeToShipment(int shipmentId, string employeeId)
         {
-            Employee employee = await this.employeeRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == employeeId);
+            Employee employee = await this.employeeRepo.AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == employeeId);
 
             if (employee == null)
             {
@@ -281,14 +287,16 @@
 
             if (await this.EmployeeHasVehicle(employeeId))
             {
-                Vehicle vehicle = await this.vehicleRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+                Vehicle vehicle = await this.vehicleRepo.AllAsNoTracking()
+                    .FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
 
                 if (vehicle == null)
                 {
                     throw new NullReferenceException(VehicleNotExist);
                 }
 
-                ShipmentVehicle shipmentVehicle = await this.shipmentVehicleRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.VehicleId == vehicle.Id);
+                ShipmentVehicle shipmentVehicle = await this.shipmentVehicleRepo.AllAsNoTracking()
+                    .FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.VehicleId == vehicle.Id);
 
                 if (shipmentVehicle != null)
                 {
@@ -305,7 +313,9 @@
         }
 
         /// <summary>
-        /// Withdrawing an employee from taking part in handling a shipment due to any reason - other obligations, changes in working schedule, other priorities etc. An entry in mapping table EmployeeShipment is therefore unnecessary hence the hard delete. If employee has vehicle, the vehicle is withdrawn from the shipment too, hence the hard delete in ShipmentVehicle table.
+        /// Withdrawing an employee from taking part in handling a shipment due to any reason - other obligations, changes in working schedule, other priorities etc.
+        /// An entry in mapping table EmployeeShipment is therefore unnecessary hence the hard delete.
+        /// If employee has vehicle, the vehicle is withdrawn from the shipment too, hence the hard delete in ShipmentVehicle table.
         /// </summary>
         /// <param name="shipmentId"></param>
         /// <param name="employeeId"></param>
@@ -313,7 +323,8 @@
         /// <exception cref="NullReferenceException">Shipment with that employee does not exist.</exception>
         public async Task RemoveEmployeeFromShipmentAsync(int shipmentId, string employeeId)
         {
-            EmployeeShipment employeeShipment = await this.shipmentEmployeeRepo.All().FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.EmployeeId == employeeId);
+            EmployeeShipment employeeShipment = await this.shipmentEmployeeRepo.All()
+                .FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.EmployeeId == employeeId);
 
             if (employeeShipment == null)
             {
@@ -326,14 +337,16 @@
 
             if (await this.EmployeeHasVehicle(employeeId))
             {
-                Vehicle vehicle = await this.vehicleRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+                Vehicle vehicle = await this.vehicleRepo.AllAsNoTracking()
+                    .FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
 
                 if (vehicle == null)
                 {
                     throw new NullReferenceException(VehicleNotExist);
                 }
 
-                ShipmentVehicle shipmentVehicle = await this.shipmentVehicleRepo.All().FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.VehicleId == vehicle.Id);
+                ShipmentVehicle shipmentVehicle = await this.shipmentVehicleRepo.All()
+                    .FirstOrDefaultAsync(x => x.ShipmentId == shipmentId && x.VehicleId == vehicle.Id);
 
                 if (shipmentVehicle == null)
                 {
@@ -346,7 +359,9 @@
         }
 
         /// <summary>
-        /// Deletion after cancelling a shipment or since shipment is obsolete. Corresponding employees and vehicles related to it (if any) deleted from mapping tables too (EmployeesShipments and ShipmentsVehicles). ShipmentTrackingPath (if any) deleted too.
+        /// Deletion after cancelling a shipment or since shipment is obsolete.
+        /// Corresponding employees and vehicles related to it (if any) deleted from mapping tables too (EmployeesShipments and ShipmentsVehicles).
+        /// ShipmentTrackingPath (if any) deleted too.
         /// </summary>
         /// <param name="shipmentId"></param>
         /// <returns></returns>
@@ -358,7 +373,9 @@
                 throw new NullReferenceException(ShipmentNotExist);
             }
 
-            List<EmployeeShipment> employeesShipment = await this.shipmentEmployeeRepo.All().Where(x => x.ShipmentId == shipmentId).ToListAsync();
+            List<EmployeeShipment> employeesShipment = await this.shipmentEmployeeRepo.All()
+                .Where(x => x.ShipmentId == shipmentId)
+                .ToListAsync();
 
             if (employeesShipment.Count > 0)
             {
@@ -370,7 +387,9 @@
                 await this.shipmentEmployeeRepo.SaveChangesAsync();
             }
 
-            List<ShipmentVehicle> shipmentVehicles = await this.shipmentVehicleRepo.All().Where(x => x.ShipmentId == shipmentId).ToListAsync();
+            List<ShipmentVehicle> shipmentVehicles = await this.shipmentVehicleRepo.All()
+                .Where(x => x.ShipmentId == shipmentId)
+                .ToListAsync();
 
             if (shipmentVehicles.Count > 0)
             {

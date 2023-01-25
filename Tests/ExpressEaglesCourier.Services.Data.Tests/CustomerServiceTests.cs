@@ -11,6 +11,7 @@
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
+    using ExpressEaglesCourier.Web.ViewModels.Shipments;
     using Microsoft.EntityFrameworkCore;
     using Xunit;
 
@@ -52,6 +53,7 @@
         [Fact]
         public async Task CheckWhetherNewCustomerIsAdded()
         {
+            AutoMapperConfig.RegisterMappings(typeof(CustomerFormModel).Assembly);
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomerFormModel());
 
             Assert.True(this.GetDbContext().Customers.Any(x => x.FirstName == "Gosho"));
@@ -60,6 +62,7 @@
         [Fact]
         public async Task GetCustomerByIdTest()
         {
+            AutoMapperConfig.RegisterMappings(typeof(CustomerFormModel).Assembly);
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomerFormModel());
 
             Customer customer = await this.GetDbContext().Customers.FirstOrDefaultAsync();
@@ -70,19 +73,11 @@
             Assert.Equal(customer.FirstName, customerService.FirstName);
         }
 
-        //[Fact]
-
-        //public async Task GetCustomerDetailsByIdExceptionTest()
-        //{
-        //    AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
-        //    await Assert.ThrowsAsync<NullReferenceException>(() =>
-        //        this.GetCustomerService().GetCustomerDetailsById<CustomerDetailsViewModel>("a6759ca2-fecc-41ee-ba8b-d39235584594"));
-        //}
-
         [Fact]
 
         public async Task GetCustomerDetailsByIdTest()
         {
+            AutoMapperConfig.RegisterMappings(typeof(CustomerFormModel).Assembly);
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomerFormModel());
             Customer customer = await this.GetDbContext().Customers.FirstOrDefaultAsync();
 
@@ -98,6 +93,7 @@
 
         public async Task GetCustomerForEditAsyncTest()
         {
+            AutoMapperConfig.RegisterMappings(typeof(CustomerFormModel).Assembly);
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomerFormModel());
             Customer customer = await this.GetDbContext().Customers.FirstOrDefaultAsync();
 
@@ -125,11 +121,11 @@
                 PhoneNumber = "00359888111111",
             };
 
+            AutoMapperConfig.RegisterMappings(typeof(CustomerFormModel).Assembly);
+
             await this.GetCustomerService().CreateCustomerAsync(model1);
 
             Customer customer = await this.GetDbContext().Customers.LastOrDefaultAsync();
-
-            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             CustomerFormModel model2 = await this.GetCustomerService().GetCustomerDetailsById<CustomerFormModel>(customer.Id);
 
@@ -185,6 +181,8 @@
                 PhoneNumber = "00359888111111",
             };
 
+            AutoMapperConfig.RegisterMappings(typeof(CustomerFormModel).Assembly);
+
             await this.GetCustomerService().CreateCustomerAsync(model);
 
             Customer customer = await this.GetDbContext().Customers.LastOrDefaultAsync();
@@ -206,6 +204,7 @@
 
         public async Task FindCustomerByPhoneNumberTest()
         {
+            AutoMapperConfig.RegisterMappings(typeof(CustomerFormModel).Assembly);
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomerFormModel());
 
             Customer customer = await this.GetCustomerService()

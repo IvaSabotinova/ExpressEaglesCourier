@@ -53,7 +53,11 @@
             return this.View();
         }
 
-        public async Task<IActionResult> GetAndSearchAllShipments(string productType, string searchCustomerName, ShipmentSortingCriterion shipmentSortingCriterion = 0, int page = 1)
+        public async Task<IActionResult> GetAndSearchAllShipments(
+            string productType,
+            string searchCustomerName,
+            ShipmentSortingCriterion shipmentSortingCriterion = 0,
+            int page = 1)
         {
             if (page < 1)
             {
@@ -66,7 +70,7 @@
                 ItemsPerPage = itemsPerPage,
                 CurrentPageNumber = page,
                 AllItemsCount = await this.searchService.ShipmentsCountAsyncBySearchCriteria(productType, searchCustomerName, shipmentSortingCriterion),
-                Shipments = await this.searchService.GetAllShipmentsBySearchCriteria<SingleShipmentSearchViewModel>(productType, searchCustomerName, shipmentSortingCriterion, page, itemsPerPage),
+                Shipments = await this.searchService.GetAllShipmentsBySearchCriteria<SingleShipmentSearchViewModel>(productType, searchCustomerName,                     shipmentSortingCriterion, page, itemsPerPage),
                 ProductType = productType,
                 SearchCustomerName = searchCustomerName,
                 ShipmentSortingCriterion = shipmentSortingCriterion,

@@ -34,3 +34,9 @@
 <vc:paging-shipment-image shipment-id="@Model.ShipmentId" page="@Model.CurrentPageNumber"></vc:paging-shipment-image>
 
 
+<div class="form-inline offset-5 mt-4 mb-3">
+<a asp-controller="Shipment" asp-action="Details" asp-route-id="@Model.ShipmentId"
+       class="btn btn-outline-warning btn-lg">Back To Shipment Info</a>
+   </div>
+
+

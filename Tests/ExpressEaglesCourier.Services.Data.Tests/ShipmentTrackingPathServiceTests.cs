@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data;
@@ -84,6 +85,8 @@
                 PhoneNumber = "00359999111111",
             };
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(customerModel1);
 
             Customer customer1 = await this.GetDbContext().Customers
@@ -104,6 +107,8 @@
                 CompanyName = string.Empty,
                 PhoneNumber = "00359999222222",
             };
+
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             await this.GetCustomerService().CreateCustomerAsync(customerModel2);
 
@@ -137,6 +142,8 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
+
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
@@ -179,6 +186,8 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
+
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
@@ -232,6 +241,8 @@
                 Price = 4.90m,
             };
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
@@ -282,6 +293,8 @@
                 Price = 4.90m,
             };
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
@@ -328,6 +341,8 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
+
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
@@ -382,6 +397,8 @@
                 Price = 4.90m,
             };
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
@@ -404,8 +421,6 @@
             await this.GetShipmentTrackingPathService().CreateShipmentTrackingPathAsync(shipmentTrackingPathModel);
 
             ShipmentTrackingPath shipmentTrackingPath = await this.GetDbContext().ShipmentsTrackingPath.FirstOrDefaultAsync(x => x.TrackingNumber == shipment.TrackingNumber);
-
-            AutoMapperConfig.RegisterMappings(typeof(ShipmentTrackingPathDetailsModel).Assembly);
 
             ShipmentTrackingPathDetailsModel model = await this.GetShipmentTrackingPathService()
                 .GetDetailsByTrackingPathId(shipmentTrackingPath.Id);
@@ -439,6 +454,8 @@
                 Price = 4.90m,
             };
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
@@ -461,8 +478,6 @@
             await this.GetShipmentTrackingPathService().CreateShipmentTrackingPathAsync(shipmentTrackingPathModel);
 
             ShipmentTrackingPath shipmentTrackingPath = await this.GetDbContext().ShipmentsTrackingPath.FirstOrDefaultAsync(x => x.TrackingNumber == shipment.TrackingNumber);
-
-            AutoMapperConfig.RegisterMappings(typeof(ShipmentTrackingPathFormModel).Assembly);
 
             ShipmentTrackingPathFormModel model = await this.GetShipmentTrackingPathService().GetDetailsById<ShipmentTrackingPathFormModel>(shipmentTrackingPath.Id);
 
@@ -496,6 +511,8 @@
                 Price = 4.90m,
             };
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
@@ -518,8 +535,6 @@
             await this.GetShipmentTrackingPathService().CreateShipmentTrackingPathAsync(shipmentTrackingPathModel);
 
             ShipmentTrackingPath shipmentTrackingPath = await this.GetDbContext().ShipmentsTrackingPath.FirstOrDefaultAsync(x => x.TrackingNumber == shipment.TrackingNumber);
-
-            AutoMapperConfig.RegisterMappings(typeof(ShipmentTrackingPathFormModel).Assembly);
 
             ShipmentTrackingPathFormModel editModel = await this.GetShipmentTrackingPathService().GetDetailsById<ShipmentTrackingPathFormModel>(shipmentTrackingPath.Id);
 

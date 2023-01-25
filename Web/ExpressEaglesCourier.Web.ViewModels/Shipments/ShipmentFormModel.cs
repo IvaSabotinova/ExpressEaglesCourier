@@ -13,7 +13,7 @@
 
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
-    public class ShipmentFormModel : IMapFrom<Shipment>, IHaveCustomMappings
+    public class ShipmentFormModel : IMapFrom<Shipment>, IMapTo<Shipment>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -110,6 +110,9 @@
         {
             configuration.CreateMap<Shipment, ShipmentFormModel>()
                 .ForMember(x => x.Images, d => d.Ignore());
+
+            configuration.CreateMap<ShipmentFormModel, Shipment>()
+                .ForMember(x => x.Id, d => d.Ignore());
         }
     }
 }

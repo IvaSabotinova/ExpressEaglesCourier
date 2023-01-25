@@ -77,23 +77,7 @@
 
         public async Task<string> CreateEmployeeAsync(EmployeeFormModel model)
         {
-            Employee newEmployee = new Employee()
-            {
-                FirstName = model.FirstName,
-                MiddleName = model.MiddleName,
-                LastName = model.LastName,
-                Address = model.Address,
-                City = model.City,
-                Country = model.Country,
-                PhoneNumber = model.PhoneNumber,
-                DateOfBirth = model.DateOfBirth,
-                HiredOn = model.HiredOn,
-                Salary = model.Salary,
-                ResignOn = model.ResignOn,
-                OfficeId = model.OfficeId,
-                PositionId = model.PositionId,
-                VehicleId = model.VehicleId,
-            };
+            Employee newEmployee = AutoMapperConfig.MapperInstance.Map<Employee>(model);
 
             await this.employeeRepo.AddAsync(newEmployee);
             await this.employeeRepo.SaveChangesAsync();
@@ -118,7 +102,9 @@
             || employee.PositionId == 3 || employee.PositionId == 5)
             {
                 ApplicationUser dbUser = await this.userManager.FindByNameAsync(employee.FirstName + employee.LastName);
-                ApplicationUser dbUserWithBirthDate = await this.userManager.FindByNameAsync(employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty));
+                ApplicationUser dbUserWithBirthDate = await this.userManager.FindByNameAsync(employee.FirstName +
+                    employee.LastName +
+                    employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty));
                 ApplicationUser user;
                 if (dbUser == null)
                 {
@@ -140,8 +126,12 @@
                 {
                     user = new ApplicationUser()
                     {
-                        UserName = employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty) + employee.HiredOn.ToShortDateString().Replace("/", string.Empty),
-                        Email = employee.FirstName + employee.LastName + employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty) + employee.HiredOn.ToShortDateString().Replace("/", string.Empty) + "@" + "expresseagles.com",
+                        UserName = employee.FirstName + employee.LastName +
+                        employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty) +
+                        employee.HiredOn.ToShortDateString().Replace("/", string.Empty),
+                        Email = employee.FirstName + employee.LastName +
+                        employee.DateOfBirth.ToShortDateString().Replace("/", string.Empty) +
+                        employee.HiredOn.ToShortDateString().Replace("/", string.Empty) + "@" + "expresseagles.com",
                     };
                 }
 
@@ -155,7 +145,8 @@
 
                 if (result.Succeeded)
                 {
-                    _ = employee.PositionId == 1 ? await this.userManager.AddToRoleAsync(user, ManagerRoleName) : await this.userManager.AddToRoleAsync(user, EmployeeRoleName);
+                    _ = employee.PositionId == 1 ? await this.userManager.AddToRoleAsync(user, ManagerRoleName)
+                        : await this.userManager.AddToRoleAsync(user, EmployeeRoleName);
                 }
             }
         }
@@ -167,7 +158,8 @@
                 .FirstOrDefaultAsync();
 
         public async Task<Employee> GetEmployeeById(string employeeId)
-       => await this.employeeRepo.All().FirstOrDefaultAsync(x => x.Id == employeeId);
+       => await this.employeeRepo.All()
+            .FirstOrDefaultAsync(x => x.Id == employeeId);
 
         public async Task EditEmployeeAsync(EmployeeFormModel model)
         {
@@ -226,7 +218,8 @@
 
             if (employee.VehicleId != null)
             {
-                Vehicle vehicle = await this.vehicleRepo.All().FirstOrDefaultAsync(x => x.Id == employee.VehicleId);
+                Vehicle vehicle = await this.vehicleRepo.All()
+                    .FirstOrDefaultAsync(x => x.Id == employee.VehicleId);
 
                 vehicle.EmployeeId = null;
                 await this.vehicleRepo.SaveChangesAsync();

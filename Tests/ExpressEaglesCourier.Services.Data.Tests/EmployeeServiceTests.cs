@@ -75,6 +75,8 @@
 
         public async Task CreateEmployeeAsyncTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
 
             Employee employee = await this.GetDbContext().Employees
@@ -170,7 +172,7 @@
         // Mock<IDeletableEntityRepository<Vehicle>> vehicleMockRepo = new Mock<IDeletableEntityRepository<Vehicle>>();
 
         // Mock<UserManager<ApplicationUser>> mockUserManager = new Mock<UserManager<ApplicationUser>>(
-        //             Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
+        //                Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
         //    List<Employee> employeesList = new List<Employee>()
         //    {
         //        new Employee()
@@ -183,42 +185,51 @@
         //            City = "Bourgas",
         //            Country = "Bulgaria",
         //            DateOfBirth = DateTime.Now.Date.AddYears(-21),
-        //            HiredOn = DateTime.Now.AddDays(-2),
+        //            HiredOn = DateTime.Now.Date.AddDays(-2),
         //            PhoneNumber = "00359111111111",
         //            VehicleId = null,
         //            ResignOn = null,
-        //            Salary = 1200,
+        //            Salary = 1200m,
+        //            Vehicle = null,
         //            Position = new Position()
         //            {
+        //                Id = 1,
         //                JobTitle = "Manager",
         //            },
         //            Office = new Office()
         //            {
+        //                Id = 1,
         //                Address = "Izgrev block 55",
         //                City = new City()
         //                {
+        //                    Id = 1,
         //                    Name = "Bourgas",
         //                    Country = new Country()
         //                    {
+        //                    Id = 1,
         //                    Name = "Bulgaria",
         //                    },
         //                },
         //            },
+        //            PositionId = 1,
+        //            OfficeId = 1,
+        //            ApplicationUser = null,
+        //            ApplicationUserId = null,
         //        },
         //    };
 
         // employeeMockRepo.Setup(x => x.AllAsNoTracking())
-        //              .Returns(employeesList.AsQueryable().BuildMock());
+        //                 .Returns(employeesList.AsQueryable().BuildMock());
 
         // //AutoMapperConfig.RegisterMappings(typeof(EmployeeDetailsViewModel).Assembly);
         //    AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
         // EmployeeService employeeService = new EmployeeService(
-        //              employeeMockRepo.Object,
-        //              officeMockRepo.Object,
-        //              positionMockRepo.Object,
-        //              vehicleMockRepo.Object,
-        //              mockUserManager.Object);
+        //                 employeeMockRepo.Object,
+        //                 officeMockRepo.Object,
+        //                 positionMockRepo.Object,
+        //                 vehicleMockRepo.Object,
+        //                 mockUserManager.Object);
 
         // EmployeeDetailsViewModel model = await employeeService.GetEmployeeDetailsById<EmployeeDetailsViewModel>("14a5cf87-ca5c-48b9-a84d-d72ceae42c18");
 
@@ -228,6 +239,8 @@
         [Fact]
         public async Task GetEmployeeByIdTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
 
             Employee employeeDb = await this.GetDbContext().Employees.FirstOrDefaultAsync();
@@ -241,12 +254,12 @@
 
         public async Task GetEmployeeForEditAsyncTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
 
             Employee employee = await this.GetDbContext().Employees
                 .Where(x => x.PhoneNumber == "00359888999999").FirstOrDefaultAsync();
-
-            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             EmployeeFormModel model = await this.GetEmployeeService()
             .GetEmployeeDetailsById<EmployeeFormModel>(employee.Id);
@@ -276,12 +289,12 @@
                 VehicleId = null,
             };
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetEmployeeService().CreateEmployeeAsync(inputModel);
 
             Employee employeeDb = await this.GetDbContext().Employees
                 .Where(x => x.PhoneNumber == "00111111111111").FirstOrDefaultAsync();
-
-            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             EmployeeFormModel model = await this.GetEmployeeService().GetEmployeeDetailsById<EmployeeFormModel>(employeeDb.Id);
 
@@ -340,6 +353,7 @@
                 ResignOn = null,
                 VehicleId = null,
             };
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             await this.GetEmployeeService().CreateEmployeeAsync(inputModel);
 

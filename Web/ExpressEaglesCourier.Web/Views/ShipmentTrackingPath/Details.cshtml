@@ -86,7 +86,8 @@
     || this.User.IsInRole(ManagerRoleName)))
     {
         <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index"
-       class="btn btn-outline-warning btn-lg">Back To Admin Dashboard</a>
+       class="btn btn-outline-warning btn-lg">Back To Admin <br>
+       Dashboard</a>
     }
     @if (this.User.Identity.IsAuthenticated && this.User.IsInRole(EmployeeRoleName))
     {

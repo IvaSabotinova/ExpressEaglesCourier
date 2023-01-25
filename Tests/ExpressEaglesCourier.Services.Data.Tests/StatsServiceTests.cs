@@ -2,6 +2,7 @@
 {
     using System.Globalization;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data;
@@ -11,6 +12,7 @@
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Services.Data.Stats;
+    using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.Administration.Dashboard;
     using ExpressEaglesCourier.Web.ViewModels.Customers;
     using ExpressEaglesCourier.Web.ViewModels.Shipments;
@@ -139,6 +141,8 @@
 
         public async Task CustomersCountAndShipmentsCountAndGetStatsAndGetProductTypeStatsTests()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
 
             Customer customer1 = await this.GetDbContext().Customers

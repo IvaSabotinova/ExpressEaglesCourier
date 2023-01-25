@@ -30,7 +30,8 @@
 
         public async Task<Shipment> GetShipmentById(int shipmentId)
         {
-            Shipment shipment = await this.shipmentRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentId);
+            Shipment shipment = await this.shipmentRepo.All()
+                .FirstOrDefaultAsync(x => x.Id == shipmentId);
 
             if (shipment == null)
             {
@@ -42,19 +43,8 @@
 
         public async Task<int> CreateShipmentTrackingPathAsync(ShipmentTrackingPathFormModel model)
         {
-            ShipmentTrackingPath shipmentTrackingPath = new ShipmentTrackingPath()
-            {
-                ShipmentId = model.ShipmentId,
-                TrackingNumber = model.TrackingNumber,
-                AcceptanceFromCustomer = model.AcceptanceFromCustomer,
-                PickedUpByCourier = model.PickedUpByCourier,
-                SendingOfficeId = model.SendingOfficeId,
-                SentFromDispatchingOffice = model.SentFromDispatchingOffice,
-                ReceivingOfficeId = model.ReceivingOfficeId,
-                ArrivalInReceivingOffice = model.ArrivalInReceivingOffice,
-                FinalDeliveryPreparation = model.FinalDeliveryPreparation,
-                FinalDelivery = model.FinalDelivery,
-            };
+            ShipmentTrackingPath shipmentTrackingPath = AutoMapperConfig.MapperInstance
+                   .Map<ShipmentTrackingPath>(model);
 
             Shipment shipment = await this.GetShipmentById(model.ShipmentId);
 
@@ -79,7 +69,8 @@
         }
 
         public async Task<ShipmentTrackingPath> GetTrackingPathById(int shipmentTrackingPathId)
-            => await this.shipmentTrackingPathRepo.All().FirstOrDefaultAsync(x => x.Id == shipmentTrackingPathId);
+            => await this.shipmentTrackingPathRepo.All()
+            .FirstOrDefaultAsync(x => x.Id == shipmentTrackingPathId);
 
         public async Task<ShipmentTrackingPathDetailsModel> GetDetailsByTrackingPathId(int shipmentTrackPathId)
         {

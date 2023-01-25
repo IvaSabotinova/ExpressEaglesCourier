@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using AutoMapper;
     using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Mapping;
@@ -11,7 +12,7 @@
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
     using static ExpressEaglesCourier.Common.GlobalConstants.ViewModelConstants;
 
-    public class ShipmentTrackingPathFormModel : IMapFrom<ShipmentTrackingPath>
+    public class ShipmentTrackingPathFormModel : IMapFrom<ShipmentTrackingPath>, IMapTo<ShipmentTrackingPath>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -47,5 +48,11 @@
 
         [Display(Name = DateTimeFinalDelivery)]
         public DateTime? FinalDelivery { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<ShipmentTrackingPathFormModel, ShipmentTrackingPath>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
+        }
     }
 }

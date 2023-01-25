@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using AutoMapper;
     using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Mapping;
@@ -11,7 +12,7 @@
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
     using static ExpressEaglesCourier.Common.GlobalConstants.ViewModelConstants;
 
-    public class EmployeeFormModel : IMapFrom<Employee>
+    public class EmployeeFormModel : IMapFrom<Employee>, IMapTo<Employee>, IHaveCustomMappings
     {
         public string Id { get; set; }
 
@@ -81,5 +82,11 @@
         public int? VehicleId { get; set; }
 
         public IEnumerable<KeyValuePair<string, string>> Vehicles { get; set; } = new List<KeyValuePair<string, string>>();
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<EmployeeFormModel, Employee>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
+        }
     }
 }

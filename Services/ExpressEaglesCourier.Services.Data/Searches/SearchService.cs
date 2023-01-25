@@ -1,5 +1,10 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Searches
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Models.Enums;
@@ -11,10 +16,6 @@
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingSearchShipment;
     using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class SearchService : ISearchService
     {
@@ -142,7 +143,10 @@
             return default;
         }
 
-        public async Task<int> ShipmentsCountAsyncBySearchCriteria(string productType = null, string searchCustomerName = null, ShipmentSortingCriterion shipmentSortingCriterion = 0)
+        public async Task<int> ShipmentsCountAsyncBySearchCriteria(
+            string productType = null,
+            string searchCustomerName = null,
+            ShipmentSortingCriterion shipmentSortingCriterion = 0)
         {
             IQueryable<Shipment> shipments = this.shipmentRepo.AllAsNoTracking().AsQueryable();
 

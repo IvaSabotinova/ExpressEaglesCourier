@@ -132,6 +132,8 @@
                 PhoneNumber = "00333333333333",
             };
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(customerModel1);
 
             Customer customer1 = await this.GetDbContext().Customers
@@ -152,6 +154,8 @@
                 CompanyName = string.Empty,
                 PhoneNumber = "00222222222222",
             };
+
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             await this.GetCustomerService().CreateCustomerAsync(customerModel2);
 
@@ -187,6 +191,8 @@
                 Price = 4.90m,
             };
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
@@ -207,8 +213,6 @@
             };
 
             await this.GetShipmentTrackingPathService().CreateShipmentTrackingPathAsync(shipmentTrackingPathModel);
-
-            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             ShipmentTrackingPathDetailsModel model = await this.GetSearchService().SearchTrackingPathAsync(shipment.TrackingNumber);
 
@@ -250,12 +254,12 @@
                 Price = 4.90m,
             };
 
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
                 .Where(x => x.TrackingNumber == shipmentModel.TrackingNumber).FirstOrDefaultAsync();
-
-            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             ShipmentDetailsViewModel model = await this.GetSearchService().SearchShipmentByTrackingNumberAsync<ShipmentDetailsViewModel>(shipment.TrackingNumber);
 

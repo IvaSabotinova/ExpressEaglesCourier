@@ -23,17 +23,7 @@
 
         public async Task<string> CreateCustomerAsync(CustomerFormModel model)
         {
-            Customer newCustomer = new Customer()
-            {
-                FirstName = model.FirstName,
-                MiddleName = model.MiddleName,
-                LastName = model.LastName,
-                Address = model.Address,
-                City = model.City,
-                Country = model.Country,
-                CompanyName = model.CompanyName,
-                PhoneNumber = model.PhoneNumber,
-            };
+            Customer newCustomer = AutoMapperConfig.MapperInstance.Map<Customer>(model);
 
             await this.customerRepo.AddAsync(newCustomer);
             await this.customerRepo.SaveChangesAsync();
@@ -48,7 +38,8 @@
                 .FirstOrDefaultAsync();
 
         public async Task<Customer> GetCustomerById(string customerId)
-            => await this.customerRepo.All().FirstOrDefaultAsync(x => x.Id == customerId);
+            => await this.customerRepo.All()
+            .FirstOrDefaultAsync(x => x.Id == customerId);
 
         public async Task EditCustomerAsync(CustomerFormModel model)
         {

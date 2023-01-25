@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using AutoMapper;
     using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Mapping;
@@ -9,7 +10,7 @@
 
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
-    public class CustomerFormModel : IMapFrom<Customer>
+    public class CustomerFormModel : IMapFrom<Customer>, IMapTo<Customer>, IHaveCustomMappings
     {
         public string Id { get; set; }
 
@@ -50,5 +51,11 @@
         [Display(Name = GlobalConstants.ViewModelConstants.PhoneNumber)]
         [Phone]
         public string PhoneNumber { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<CustomerFormModel, Customer>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
+        }
     }
 }

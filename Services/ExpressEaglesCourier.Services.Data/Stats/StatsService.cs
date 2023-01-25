@@ -82,26 +82,26 @@
         public async Task<ShipmentProductTypeViewModel> GetProductTypeStats()
         {
             double carParts = (double)await this.shipmentRepo.AllAsNoTracking()
-                .Where(x => x.ProductType == ProductType.CarParts).CountAsync()
-                / await this.ShipmentsCountAsync() * 100.00;
+                .Where(x => x.ProductType == ProductType.CarParts)
+                .CountAsync() / await this.ShipmentsCountAsync() * 100.00;
             double documents = (double)await this.shipmentRepo.AllAsNoTracking()
-                .Where(x => x.ProductType == ProductType.Documents).CountAsync()
-                / await this.ShipmentsCountAsync() * 100.00;
+                .Where(x => x.ProductType == ProductType.Documents)
+                .CountAsync() / await this.ShipmentsCountAsync() * 100.00;
             double stationeries = (double)await this.shipmentRepo.AllAsNoTracking()
-                .Where(x => x.ProductType == ProductType.Stationeries).CountAsync()
-                / await this.ShipmentsCountAsync() * 100.00;
+                .Where(x => x.ProductType == ProductType.Stationeries)
+                .CountAsync() / await this.ShipmentsCountAsync() * 100.00;
             double furniture = (double)await this.shipmentRepo.AllAsNoTracking()
-                .Where(x => x.ProductType == ProductType.Furniture).CountAsync()
-                / await this.ShipmentsCountAsync() * 100.00;
+                .Where(x => x.ProductType == ProductType.Furniture)
+                .CountAsync() / await this.ShipmentsCountAsync() * 100.00;
             double textile = (double)await this.shipmentRepo.AllAsNoTracking()
-                .Where(x => x.ProductType == ProductType.Textile).CountAsync()
-                / await this.ShipmentsCountAsync() * 100.00;
+                .Where(x => x.ProductType == ProductType.Textile)
+                .CountAsync() / await this.ShipmentsCountAsync() * 100.00;
             double medicaments = (double)await this.shipmentRepo.AllAsNoTracking()
-                .Where(x => x.ProductType == ProductType.Medicaments).CountAsync()
-                / await this.ShipmentsCountAsync() * 100.00;
+                .Where(x => x.ProductType == ProductType.Medicaments)
+                .CountAsync() / await this.ShipmentsCountAsync() * 100.00;
             double technique = (double)await this.shipmentRepo.AllAsNoTracking()
-                .Where(x => x.ProductType == ProductType.Technique).CountAsync()
-                / await this.ShipmentsCountAsync() * 100.00;
+                .Where(x => x.ProductType == ProductType.Technique)
+                .CountAsync() / await this.ShipmentsCountAsync() * 100.00;
 
             ShipmentProductTypeViewModel model = new ShipmentProductTypeViewModel()
             {

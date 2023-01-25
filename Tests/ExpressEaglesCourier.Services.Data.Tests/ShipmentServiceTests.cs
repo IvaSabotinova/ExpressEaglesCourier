@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data;
@@ -140,6 +141,8 @@
 
         public async Task CustomerWithPhoneNumberExistsTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
 
             Customer customer = await this.GetDbContext().Customers.FirstOrDefaultAsync();
@@ -180,6 +183,8 @@
         [Fact]
         public async Task CreateShipmentTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
 
             Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
@@ -213,6 +218,7 @@
                 ProductType = (ProductType)4,
                 Price = 4.90m,
             };
+
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments
@@ -239,6 +245,8 @@
 
         public async Task GetShipmentForEditAsyncTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
 
             Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
@@ -272,8 +280,6 @@
 
             Shipment shipment = await this.GetDbContext().Shipments.LastOrDefaultAsync();
 
-            AutoMapperConfig.RegisterMappings(typeof(ShipmentFormModel).Assembly);
-
             ShipmentFormModel editModel = await this.GetShipmentService()
                   .GetShipmentDetailsById<ShipmentFormModel>(shipment.Id);
 
@@ -286,7 +292,7 @@
         {
             Shipment shipment = await this.GetDbContext().Shipments.Where(x => x.TrackingNumber == "00100100100").FirstOrDefaultAsync();
 
-            AutoMapperConfig.RegisterMappings(typeof(ShipmentFormModel).Assembly);
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
 
             await Assert.ThrowsAsync<NullReferenceException>(() =>
             this.GetShipmentService().GetShipmentDetailsById<ShipmentFormModel>(shipment.Id));
@@ -295,6 +301,8 @@
         [Fact]
         public async Task EditShipmentAsyncTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
 
             Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
@@ -327,8 +335,6 @@
             await this.GetShipmentService().CreateShipmentAsync(shipmentModel, null);
 
             Shipment shipment = await this.GetDbContext().Shipments.Where(x => x.TrackingNumber == "11111111113").FirstOrDefaultAsync();
-
-            AutoMapperConfig.RegisterMappings(typeof(ShipmentFormModel).Assembly);
 
             ShipmentFormModel editModel = await this.GetShipmentService()
                 .GetShipmentDetailsById<ShipmentFormModel>(shipment.Id);
@@ -396,6 +402,8 @@
 
         public async Task GetShipmentDetailsTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
 
             Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
@@ -430,8 +438,6 @@
             Shipment shipment = await this.GetDbContext().Shipments
                 .Where(x => x.TrackingNumber == "11111111114").FirstOrDefaultAsync();
 
-            AutoMapperConfig.RegisterMappings(typeof(ShipmentDetailsViewModel).Assembly);
-
             ShipmentDetailsViewModel model = await this.GetShipmentService().GetShipmentDetailsById<ShipmentDetailsViewModel>(shipment.Id);
 
             Assert.Equal("Gosho Marinov", model.SenderFullName);
@@ -442,6 +448,8 @@
 
         public async Task ShipmentExistsTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
 
             Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
@@ -485,6 +493,8 @@
 
         public async Task EmployeeHasVehicleTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
 
             Employee employee = await this.GetDbContext().Employees
@@ -499,6 +509,8 @@
         [Fact]
         public async Task AddEmployeeToShipmentTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
 
             Employee employee = await this.GetDbContext().Employees
@@ -516,6 +528,8 @@
 
         public async Task AddEmployeeToShipmentExceptionTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
 
             Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
@@ -557,6 +571,8 @@
 
         public async Task AddEmployeeToShipmentArgumentExceptionTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetEmployeeService().CreateEmployeeAsync(this.GetEmployeeFormModel());
             Employee employee = await this.GetDbContext().Employees
                 .Where(x => x.PhoneNumber == "00359987654314")
@@ -572,6 +588,8 @@
 
         public async Task RemoveEmployeeFromShipmentAsyncExceptionTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
 
             Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
@@ -652,6 +670,8 @@
         [Fact]
         public async Task DeleteShipmentAsyncTest()
         {
+            AutoMapperConfig.RegisterMappings(Assembly.Load("ExpressEaglesCourier.Web.ViewModels"));
+
             await this.GetCustomerService().CreateCustomerAsync(this.GetCustomer1FormModel());
 
             Customer customer1 = await this.GetDbContext().Customers.FirstOrDefaultAsync();
