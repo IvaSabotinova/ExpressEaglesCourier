@@ -18,6 +18,11 @@
             return this.View();
         }
 
+        public IActionResult Privacy()
+        {
+            return this.View();
+        }
+
         public IActionResult FindUs()
         {
             return this.View();
@@ -40,6 +45,11 @@
             {
                 return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
             }
+        }
+
+        public IActionResult Temp()
+        {
+            return this.View();
         }
     }
 }

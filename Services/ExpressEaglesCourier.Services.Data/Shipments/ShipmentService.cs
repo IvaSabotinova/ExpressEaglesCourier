@@ -154,7 +154,6 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         public async Task<T> GetShipmentDetailsById<T>(int id)
         => await this.shipmentRepo.AllAsNoTracking()
                 .Where(x => x.Id == id)
