@@ -10,6 +10,7 @@
     using ExpressEaglesCourier.Data.Seeding;
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Data.Employees;
+    using ExpressEaglesCourier.Services.Data.Feedbacks;
     using ExpressEaglesCourier.Services.Data.Searches;
     using ExpressEaglesCourier.Services.Data.ShipmentImages;
     using ExpressEaglesCourier.Services.Data.Shipments;
@@ -82,6 +83,8 @@
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
+
+            // services.AddTransient<IEmailSender>(x => new SendGridEmailSender(configuration["SendGrid:ApiKey"]));
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IShipmentService, ShipmentService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
@@ -89,6 +92,7 @@
             services.AddTransient<IStatsService, StatsService>();
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IShipmentImageService, ShipmentImageService>();
+            services.AddTransient<IFeedbackService, FeedbackService>();
         }
 
         private static void Configure(WebApplication app)

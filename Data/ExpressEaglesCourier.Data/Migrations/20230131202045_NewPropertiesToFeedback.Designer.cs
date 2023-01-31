@@ -4,6 +4,7 @@ using ExpressEaglesCourier.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpressEaglesCourier.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230131202045_NewPropertiesToFeedback")]
+    partial class NewPropertiesToFeedback
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -442,7 +444,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("FeedbackType")
+                    b.Property<int>("FeedbackType")
                         .HasColumnType("int")
                         .HasComment("A value indicating whether feedback is positive, negative, neutral or just recommendation.");
 
@@ -453,8 +455,7 @@ namespace ExpressEaglesCourier.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SenderName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ShipmentId")
                         .HasColumnType("int")

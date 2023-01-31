@@ -18,7 +18,6 @@ namespace ExpressEaglesCourier.Data.Models
             this.Id = Guid.NewGuid().ToString();
             this.SentShipments = new HashSet<Shipment>();
             this.ReceivedShipments = new HashSet<Shipment>();
-            this.Feedbacks = new HashSet<Feedback>();
         }
 
         [Required]
@@ -70,12 +69,6 @@ namespace ExpressEaglesCourier.Data.Models
         [Comment("Collection of customer's received shipments.")]
         [InverseProperty(nameof(Shipment.Receiver))]
         public virtual ICollection<Shipment> ReceivedShipments { get; set; }
-
-        /// <summary>
-        /// Gets or sets collection of customer's feedback, recommendations, complains.
-        /// </summary>
-        [Comment("Collection of customer's feedback, recommendations, complains.")]
-        public virtual ICollection<Feedback> Feedbacks { get; set; }
 
         /// <summary>
         /// Gets or sets the Customer should he/she becomes user of the site.

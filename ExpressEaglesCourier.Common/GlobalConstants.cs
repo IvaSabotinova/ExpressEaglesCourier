@@ -50,7 +50,15 @@
 
             public const int CompanyNameMaxLength = 100;
 
-            public const int FeedbackLengthMaxLength = 7000;
+            public const int FeedbackTitleMinLength = 3;
+
+            public const int FeedbackTitleMaxLength = 100;
+
+            public const int FeedbackContentMinLength = 15;
+
+            public const int FeedbackContentMaxLength = 7000;
+
+            public const int FeedbackSenderNameMaxLength = 100;
 
             public const int PhoneNumberMaxLenght = 20;
 
@@ -239,6 +247,12 @@
             public const string CannotFindImages = "Images cannot be found!";
 
             public const string ImageNotFound = "Image not found!";
+
+            public const string InvalidTrackingNumber = "You have entered invalid tracking number!";
+
+            public const string FeedbackSuccessfullySent = "Thank you for your feedback! It will be dealt with shortly!";
+
+            public const string SmthWentWrong = "Something went wrong! Please try again!";
         }
     }
 }

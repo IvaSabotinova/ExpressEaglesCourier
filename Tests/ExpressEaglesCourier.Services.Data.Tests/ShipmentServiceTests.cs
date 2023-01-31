@@ -440,8 +440,8 @@
 
             ShipmentDetailsViewModel model = await this.GetShipmentService().GetShipmentDetailsById<ShipmentDetailsViewModel>(shipment.Id);
 
-            Assert.Equal("Gosho Marinov", model.SenderFullName);
-            Assert.Equal("Lazur block 33, Bourgas, Bulgaria", model.FullPickUpAddress);
+            Assert.Equal("Gosho Marinov", model.SenderFirstName + " " + model.SenderLastName);
+            Assert.Equal("Lazur block 33, Bourgas, Bulgaria", model.PickUpAddress);
         }
 
         [Fact]

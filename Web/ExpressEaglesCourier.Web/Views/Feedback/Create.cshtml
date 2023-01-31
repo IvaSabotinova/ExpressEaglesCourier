@@ -1,0 +1,125 @@
+﻿@model FeedbackCreateModel
+
+@{
+	ViewData["Title"] = "Please write your feedback!";
+}
+
+@if (this.TempData.ContainsKey(Message))
+{
+    <div class="alert alert-danger">@this.TempData[Message]</div>
+}
+
+<h1 class="text-center mt-5">@ViewData["Title"]</h1>
+
+<hr />
+
+@if (this.User.Identity.IsAuthenticated)
+{
+	<h6 class="text-center mb-4">If feedback is related to a particular shipment please enter its tracking number in relevant box below.</h6>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6 col-lg-5 col-xl-4">
+				<img src="~/img/illustrations/callback.png" alt="..." />
+				<h5 class="text-danger">REQUEST A CALLBACK</h5>
+				<h2>We will contact in the shortest time.</h2>
+				<p class="text-muted">Monday to Friday, 9am-5pm.</p>
+			</div>
+			<div class="col-md-6 col-lg-5 col-xl-4">
+				<form method="post" asp-action="Create" class="row">
+					<div class="mb-3">
+						<label asp-for="Title" class="form-label visually-hidden" for="title">Subject</label>
+                        <input asp-for="Title" class="form-control form-quriar-control" id="title" type="text" placeholder="Subject" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="ShipmentTrackingNumber" class="form-label visually-hidden">Shipment Tracking Number</label>
+						<input asp-for="ShipmentTrackingNumber" class="form-control form-quriar-control" placeholder="Enter shipment tracking number" />
+						<span asp-validation-for="ShipmentTrackingNumber" class="text-danger"></span>
+					</div>
+					<div class="mb-5">
+						<label asp-for="Content" class="form-label visually-hidden">Message</label>
+						<textarea class="form-control form-quriar-control is-invalid border-400" asp-for="Content" placeholder="Message" style="height: 150px" required="required"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+                        <label asp-for="SenderName" class="form-label visually-hidden" for="YourName">YourName</label>
+                        <input asp-for="SenderName" class="form-control form-quriar-control" id="YourName" type="text" placeholder="Your Name" />
+                        <span asp-validation-for="SenderName" class="text-danger"></span>
+					</div>
+					<div class="d-grid">
+						<button class="btn btn-primary" type="submit" asp-controller="Feedback" asp-action="Create">Send Message<i class="fas fa-paper-plane ms-2"></i></button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+}
+else
+{
+	<h5 class="text-center mb-4">Please register and/or sign-in to enable you write your feedback!</h5>
+	<div class="text-center fw-bolder mb-4">For registered users: <a asp-area="" asp-controller="User" asp-action="Login">Log in</a></div>
+	<div class="text-center fw-bolder mb-7">For not-registered users: <a asp-area="" asp-controller="User" asp-action="Register">Register</a></div>
+}
+
+<div>
+    <a asp-action="All">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+@*<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FeedbackType" class="control-label"></label>
+                <select asp-for="FeedbackType" class="form-control"></select>
+                <span asp-validation-for="FeedbackType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShipmentId" class="control-label"></label>
+                <select asp-for="ShipmentId" class ="form-control" asp-items="ViewBag.ShipmentId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUserId" class="control-label"></label>
+                <select asp-for="ApplicationUserId" class ="form-control" asp-items="ViewBag.ApplicationUserId"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeletedOn" class="control-label"></label>
+                <input asp-for="DeletedOn" class="form-control" />
+                <span asp-validation-for="DeletedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedOn" class="control-label"></label>
+                <input asp-for="CreatedOn" class="form-control" />
+                <span asp-validation-for="CreatedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifiedOn" class="control-label"></label>
+                <input asp-for="ModifiedOn" class="form-control" />
+                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>*@
+
+

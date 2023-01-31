@@ -36,13 +36,13 @@
         <div class="row">          
             <div class="card col-5 border-2 bg-soft-warning text-900 ms-3 me-5">
                 <p class="text-center" style="font-size:26px;">Tracking Number: @Model.TrackingNumber</p>
-                <p><b>Sender: </b>@Model.SenderFullName - <b>Phone number: </b>@Model.SenderPhoneNumber</p>
-                <p><b>Receiver: </b>@Model.ReceiverFullName - <b>Phone number: </b>@Model.ReceiverPhoneNumber</p>
-                <p><b>Origin: </b>@Model.FullPickUpAddress</p>
-                <p><b>Destination: </b>@Model.FullDestinationAddress</p>
-                <p><b>Delivery: </b>@dropDownEnums[Model.DeliveryWay]</p>
-                <p><b>Product Type: </b>@dropDownEnums[Model.ProductType]</p>
-                <p><b>Delivery Type: </b>@dropDownEnums[Model.DeliveryType]</p>
+                <p><b>Sender: </b>@Model.SenderFirstName @Model.SenderLastName- <b>Phone number: </b>@Model.SenderPhoneNumber</p>
+                <p><b>Receiver: </b>@Model.ReceiverFirstName @Model.ReceiverLastName - <b>Phone number: </b>@Model.ReceiverPhoneNumber</p>
+                <p><b>Origin: </b>@Model.PickUpAddress</p>
+                <p><b>Destination: </b>@Model.DestinationAddress</p>
+                <p><b>Delivery: </b>@dropDownEnums[Model.DeliveryWay.ToString()]</p>
+                <p><b>Product Type: </b>@dropDownEnums[Model.ProductType.ToString()]</p>
+                <p><b>Delivery Type: </b>@dropDownEnums[Model.DeliveryType.ToString()]</p>
                 <p><b>Weight: </b>@Model.Weight kg</p>
                 <p><b>Price: </b>@Model.Price lv</p>
                 @if (Model.Images.Count() > 0)
