@@ -178,6 +178,10 @@
             public const string DateTimeFinalDelivery = "Date and time of final delivery";
 
             public const string OrderByHighestPrice = "Highest Price";
+
+            public const int FirstAndLastNameMinLength = 5;
+
+            public const int FirstAndLastNameMaxLength = 61;
         }
 
         public static class ServicesConstants

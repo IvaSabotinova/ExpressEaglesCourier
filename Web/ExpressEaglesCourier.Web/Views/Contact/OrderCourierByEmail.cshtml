@@ -1,0 +1,116 @@
+﻿@model OrderCourierFormModel
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+	ViewData["Title"] = "Request A Courier Form";
+}
+<div class="container">
+	<main role="main" class="pb-3">
+		@if (this.User.Identity.IsAuthenticated)
+		{
+			<h2 class="h1-responsive font-weight-bold text-center mb-3">@ViewData["Title"]</h2>
+			<p class="h5 text-center w-responsive mx-auto mb-5">
+				Most of the fields in this form require your personal data. You need to provide them in order to use EEC's service.
+			</p>
+			<div class="row">
+				<div class="col-md-9 mb-md-0 mb-5 d-inline-block">
+					<form method="post" id="requestcourier-form" name="requestcourier-form">
+						<div class="row">
+							<div class="col-md-12">								
+									<div class="md-form mb-2">
+									<label asp-for="FirstAndLastName" for="FirstAndLastName">First name and username</label>
+									<input asp-for="FirstAndLastName" type="text" class="form-control" data-val="true" data-val-required="The field is required." id="FirstAndLastName" name="FirstAndLastName" value="" placeholder="Your first name and surname" />
+									<span asp-validation-for="FirstAndLastName" class="text-danger field-validation-valid" data-valmsg-for="FirstAndLastName" data-valmsg-replace="true"></span>
+									</div>								
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="md-form mb-2">
+									<label asp-for="PhoneNumber" for="PhoneNumber">Phone number</label>
+									<input asp-for="PhoneNumber" type="text" class="form-control" data-val="true" data-val-required="The field is required." id="PhoneNumber" name="PhoneNumber" value="@this.UserManager.FindByNameAsync(this.User.Identity.Name).Result.PhoneNumber" placeholder="Your phone number" />
+									<span asp-validation-for="PhoneNumber" class="text-danger field-validation-valid" data-valmsg-for="PhoneNumber" data-valmsg-replace="true"></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="md-form mb-4">
+									<label asp-for="Email" for="Email">Email</label>
+									<input asp-for="Email" type="text" class="form-control" data-val="true" data-val-required="The field is required." id="Email" name="Email" value="@this.UserManager.FindByNameAsync(this.User.Identity.Name).Result.Email" placeholder="Your email" />
+									<span asp-validation-for="Email" class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+								</div>
+							</div>
+						</div>
+						<p class="h5 md-form mb-2">Where should the courier come?</p>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="md-form mb-2">
+									<label asp-for="PickUpCity" for="PickUpCity">City</label>
+									<input asp-for="PickUpCity" type="text" class="form-control" data-val="true" data-val-required="The field is required." id="PickUpCity" name="PickUpCity" value="" placeholder="City name" />
+									<span asp-validation-for="PickUpCity" class="text-danger field-validation-valid" data-valmsg-for="PickUpCity" data-valmsg-replace="true"></span>
+								</div>
+							</div>
+							<div class="col-md-9">
+								<div class="md-form mb-4">
+									<label asp-for="PickUpAddress" for="PickUpAddress">Address</label>
+									<input asp-for="PickUpAddress" type="text" class="form-control" data-val="true" data-val-required="The field is required." id="PickUpAddress" name="PickUpAddress" value="" placeholder="Full address" />
+									<span asp-validation-for="PickUpAddress" class="text-danger field-validation-valid" data-valmsg-for="PickUpAddress" data-valmsg-replace="true"></span>
+								</div>
+							</div>
+						</div>
+						<p class="h5 md-form mb-3">When should the courier come?</p>
+						<div class="row">
+							<div class="col-md-1">
+								<p class="align-middle mt-2">Between</p>
+							</div>
+							<div class="col-md-5">
+								<div class="md-form mb-2 ms-4">
+									<input asp-for="StartTime" class="form-control" data-val="true" data-val-required="The field is required." id="StartTime" name="StartTime" value="@DateTime.Now.ToString("F")" />
+									<span asp-validation-for="StartTime" class="text-danger field-validation-valid" data-valmsg-for="StartTime" data-valmsg-replace="true"></span>
+								</div>
+							</div>
+							<div class="col-md-1">
+								<p class="align-middle mt-1">and</p>
+							</div>
+							<div class="col-md-5">
+								<div class="md-form mb-4">
+									<input asp-for="EndTime" class="form-control" data-val="true" data-val-required="The field is required." id="EndTime" name="EndTime" value="@DateTime.Now.ToString("F")" />
+									<span asp-validation-for="EndTime" class="text-danger field-validation-valid" data-valmsg-for="EndTime" data-valmsg-replace="true"></span>
+								</div>
+							</div>
+						</div>
+						<div class="text-center text-md-left">
+							<button type="submit" class="btn btn-primary" style="margin-top:3%">Submit Form</button>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-3 text-center d-inline-block">
+					<ul class="list-unstyled mb-0">
+						<li>
+							<i class="fas fa-map-marker-alt mt-4 fa-2x"></i>
+							<p>Izgrev Quarter, block 94, floor 1, Bourgas, Bulgaria</p>
+						</li>
+						<li>
+							<i class="fas fa-phone mt-4 fa-2x"></i>
+							<p>+359 56 122112</p>
+						</li>
+
+						<li>
+							<i class="fas fa-envelope mt-4 fa-2x"></i>
+							<p>expressEaglesBourgas@gmail.com</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		}
+		else
+		{
+			<h4 class="text-center mt-7 mb-4">Please register and/or sign-in to enable you order a courier!</h4>
+			<div class="text-center fw-bolder mb-4">For registered users: <a class="text-warning" asp-area="" asp-controller="User" asp-action="Login">Log in</a></div>
+			<div class="text-center fw-bolder mb-7">For not-registered users: <a class="text-warning" asp-area="" asp-controller="User" asp-action="Register">Register</a></div>
+		}
+	</main>
+</div>
+
+
+
+

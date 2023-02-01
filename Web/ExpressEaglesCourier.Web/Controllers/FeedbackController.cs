@@ -10,7 +10,7 @@
 
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
-    public class FeedbackController : Controller
+    public class FeedbackController : BaseController
     {
         private readonly IFeedbackService feedbackService;
 
