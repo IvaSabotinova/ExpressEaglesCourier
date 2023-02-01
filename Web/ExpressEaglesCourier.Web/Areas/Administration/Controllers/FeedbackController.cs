@@ -1,6 +1,7 @@
 ﻿namespace ExpressEaglesCourier.Web.Areas.Administration.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -9,9 +10,12 @@
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Services.Data.Feedbacks;
     using ExpressEaglesCourier.Web.ViewModels.Feedbacks;
+    using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingEmployee;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
+    using Newtonsoft.Json.Linq;
 
     public class FeedbackController : AdministrationController
     {
@@ -24,7 +28,7 @@
             this.context = context;
         }
 
-        // TO AMEND
+        // PENDING AMENDMENT
         // GET: Administration/Feedback/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -45,7 +49,7 @@
             return this.View(feedback);
         }
 
-        // TO AMEND
+        // PENDING AMENDMENT
         // GET: Administration/Feedback/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -65,7 +69,7 @@
             return this.View(feedback);
         }
 
-        // TO AMEND
+        // PENDING AMENDMENT
         // POST: Administration/Feedback/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -105,15 +109,13 @@
             return this.View(feedback);
         }
 
-        // TO AMEND
-        // GET: Administration/Feedback
         public async Task<IActionResult> All()
         {
-            var applicationDbContext = this.context.Feedbacks.Include(f => f.ApplicationUser).Include(f => f.Shipment);
-            return this.View(await applicationDbContext.ToListAsync());
+           IEnumerable<FeedbackAllViewModel> model = await this.feedbackService.GetAll<FeedbackAllViewModel>();
+           return this.View(model);
         }
 
-        // TO AMEND
+        // PENDING AMENDMENT
         // GET: Administration/Feedback/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -134,7 +136,7 @@
             return this.View(feedback);
         }
 
-        // TO AMEND
+        // PENDING AMENDMENT
         // POST: Administration/Feedback/Delete/5
         [HttpPost]
         [ActionName("Delete")]

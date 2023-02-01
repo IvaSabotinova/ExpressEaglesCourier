@@ -1,77 +1,51 @@
-﻿@model IEnumerable<ExpressEaglesCourier.Data.Models.Feedback>
+﻿@model IEnumerable<FeedbackAllViewModel>
 
 @{
-    ViewData["Title"] = "All";
+	ViewData["Title"] = "All Feedbacks";
 }
 
-<h1>Index</h1>
+<h1 class="text-center mb-4">@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FeedbackType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Shipment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDeleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedOn)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedbackType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Shipment.DestinationAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedOn)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@if (!Model.Any())
+{
+	<p>No feedback to display!</p>
 }
-    </tbody>
-</table>
+else
+{
+	<table class="table" id="DataTable">
+		<thead>
+			<tr>
+				<th>@Html.DisplayNameFor(model => model.Title)</th>
+				<th width="30%">@Html.DisplayNameFor(model => model.Content)</th>
+				<th>Type</th>
+				<th>From UserName</th>
+				<th>@Html.DisplayNameFor(model => model.CreatedOn)</th>
+				<th>Options</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (FeedbackAllViewModel item in Model)
+			{
+				<tr>
+					<td>@Html.DisplayFor(modelItem => item.Title)</td>
+					<td width="30%">@Html.DisplayFor(modelItem => item.Content)</td>
+					<td>@Html.DisplayFor(modelItem => item.FeedbackType)</td>
+					<td>@Html.DisplayFor(modelItem => item.ApplicationUserUserName)</td>
+					<td>@Html.DisplayFor(modelItem => item.CreatedOn)</td>
+					<td width="15%"><a class="text-warning" asp-action="Edit" asp-route-id="@item.Id">Edit |</a><a class="text-warning" asp-action="Details" asp-route-id="@item.Id">Details |</a><a class="text-warning" asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+
+
+@*@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $('#DataTable').DataTable();
+        });
+    </script>
+}*@

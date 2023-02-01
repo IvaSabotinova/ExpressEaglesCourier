@@ -1,6 +1,7 @@
 ﻿namespace ExpressEaglesCourier.Services.Data.Feedbacks
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -37,12 +38,12 @@
                 throw new NullReferenceException(InvalidTrackingNumber);
             }
 
-            Shipment shipment = await this.shipmentRepo.AllAsNoTracking()
-                .FirstOrDefaultAsync(x => x.TrackingNumber == model.ShipmentTrackingNumber);
-
             Feedback newFeedback = AutoMapperConfig.MapperInstance.Map<Feedback>(model);
 
             newFeedback.ApplicationUserId = userId;
+
+            Shipment shipment = await this.shipmentRepo.AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.TrackingNumber == model.ShipmentTrackingNumber);
 
             if (shipment != null)
             {
@@ -52,5 +53,11 @@
             await this.feedbackRepo.AddAsync(newFeedback);
             await this.feedbackRepo.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<T>> GetAll<T>()
+        => await this.feedbackRepo.AllAsNoTracking()
+                .OrderByDescending(x => x.CreatedOn)
+                .To<T>()
+                .ToListAsync();
     }
 }
