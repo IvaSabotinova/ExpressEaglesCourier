@@ -37,7 +37,7 @@
 							<div class="col-md-6">
 								<div class="md-form mb-4">
 									<label asp-for="Email" for="Email">Email</label>
-									<input asp-for="Email" type="text" class="form-control" data-val="true" data-val-required="The field is required." id="Email" name="Email" value="" placeholder="Your email" />
+									<input asp-for="Email" type="text" class="form-control" data-val="true" data-val-required="The field is required." id="Email" name="Email" value="@this.UserManager.FindByNameAsync(this.User.Identity.Name).Result.Email" placeholder="Your email" />
 									<span asp-validation-for="Email" class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
 								</div>
 							</div>

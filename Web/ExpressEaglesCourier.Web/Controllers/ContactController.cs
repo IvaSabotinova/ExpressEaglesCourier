@@ -1,10 +1,11 @@
 ﻿namespace ExpressEaglesCourier.Web.Controllers
 {
+    using System.Text;
+    using System.Threading.Tasks;
+
     using ExpressEaglesCourier.Services.Messaging;
     using ExpressEaglesCourier.Web.ViewModels.Contacts;
     using Microsoft.AspNetCore.Mvc;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class ContactController : BaseController
     {
@@ -33,7 +34,7 @@
             html.AppendLine($"<p><u>Type Of Shipment</u>: {model.ShipmentType}</p>");
             html.AppendLine($"<p><u>Additional Information</u>: {model.AdditionalInformation}</p>");
             html.AppendLine($"<p><u>Pick-up time</u> from {model.StartTime} to {model.EndTime}</p>");
-            await this.emailSender.SendEmailAsync(model.Email, model.FirstAndLastName, "aziva@yahoo.com", "Order A Courier", html.ToString());
+            await this.emailSender.SendEmailAsync("ivasabotinova@students.softuni.bg", model.FirstAndLastName, "aziva@yahoo.com", "Order A Courier", html.ToString());
 
             return this.RedirectToAction("Index", "Home");
         }
