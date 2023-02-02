@@ -8,6 +8,7 @@
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Repositories;
     using ExpressEaglesCourier.Data.Seeding;
+    using ExpressEaglesCourier.Services.Data.Contacts;
     using ExpressEaglesCourier.Services.Data.Customers;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Data.Feedbacks;
@@ -92,6 +93,7 @@
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IShipmentImageService, ShipmentImageService>();
             services.AddTransient<IFeedbackService, FeedbackService>();
+            services.AddTransient<IContactService, ContactService>();
         }
 
         private static void Configure(WebApplication app)

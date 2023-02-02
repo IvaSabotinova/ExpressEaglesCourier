@@ -1,19 +1,18 @@
 ﻿namespace ExpressEaglesCourier.Web.Controllers
 {
-    using System.Text;
     using System.Threading.Tasks;
 
-    using ExpressEaglesCourier.Services.Messaging;
+    using ExpressEaglesCourier.Services.Data.Contacts;
     using ExpressEaglesCourier.Web.ViewModels.Contacts;
     using Microsoft.AspNetCore.Mvc;
 
     public class ContactController : BaseController
     {
-        private readonly IEmailSender emailSender;
+        private readonly IContactService contactService;
 
-        public ContactController(IEmailSender emailSender)
+        public ContactController(IContactService contactService)
         {
-            this.emailSender = emailSender;
+            this.contactService = contactService;
         }
 
         [HttpGet]
@@ -25,16 +24,7 @@
         [HttpPost]
         public async Task<IActionResult> OrderCourierByEmail(OrderCourierFormModel model)
         {
-            StringBuilder html = new StringBuilder();
-            html.AppendLine($"<h3>Client name: {model.FirstAndLastName}</h3>");
-            html.AppendLine($"<p><u><b>Client details:</b></u></p>");
-            html.AppendLine($"<p><u>Phone number</u>: {model.PhoneNumber}</p>");
-            html.AppendLine($"<p><u>Email</u>: {model.Email}</p>");
-            html.AppendLine($"<p><u>Address</u>: {model.PickUpAddress}, {model.PickUpCity}</p>");
-            html.AppendLine($"<p><u>Type Of Shipment</u>: {model.ShipmentType}</p>");
-            html.AppendLine($"<p><u>Additional Information</u>: {model.AdditionalInformation}</p>");
-            html.AppendLine($"<p><u>Pick-up time</u> from {model.StartTime} to {model.EndTime}</p>");
-            await this.emailSender.SendEmailAsync("ivasabotinova@students.softuni.bg", model.FirstAndLastName, "aziva@yahoo.com", "Order A Courier", html.ToString());
+            await this.contactService.OrderCourierByEmail(model);
 
             return this.RedirectToAction("Index", "Home");
         }

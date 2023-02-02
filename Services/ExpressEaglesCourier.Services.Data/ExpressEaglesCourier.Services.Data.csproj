@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\ExpressEaglesCourier.Common\ExpressEaglesCourier.Common.csproj" />
     <ProjectReference Include="..\..\Web\ExpressEaglesCourier.Web.ViewModels\ExpressEaglesCourier.Web.ViewModels.csproj" />
     <ProjectReference Include="..\ExpressEaglesCourier.Services.Mapping\ExpressEaglesCourier.Services.Mapping.csproj" />
+    <ProjectReference Include="..\ExpressEaglesCourier.Services.Messaging\ExpressEaglesCourier.Services.Messaging.csproj" />
   </ItemGroup>
 
 </Project>
