@@ -1,4 +1,5 @@
-﻿@model OrderCourierFormModel
+﻿@using ExpressEaglesCourier.Data.Models.Enums;
+@model OrderCourierFormModel
 @inject UserManager<ApplicationUser> UserManager
 
 @{
@@ -12,19 +13,20 @@
 			<p class="h5 text-center w-responsive mx-auto mb-5">
 				Most of the fields in this form require your personal data. You need to provide them in order to use EEC's service.
 			</p>
-			<div class="row">
+			<div class="row">				
 				<div class="col-md-9 mb-md-0 mb-5 d-inline-block">
 					<form method="post" id="requestcourier-form" name="requestcourier-form">
 						<div class="row">
-							<div class="col-md-12">								
-									<div class="md-form mb-2">
-									<label asp-for="FirstAndLastName" for="FirstAndLastName">First name and username</label>
+							<p class="h5 md-form mb-3">Your personal information</p>
+							<div class="col-md-12">
+								<div class="md-form mb-2">
+									<label asp-for="FirstAndLastName" for="FirstAndLastName">First name and surname</label>
 									<input asp-for="FirstAndLastName" type="text" class="form-control" data-val="true" data-val-required="The field is required." id="FirstAndLastName" name="FirstAndLastName" value="" placeholder="Your first name and surname" />
 									<span asp-validation-for="FirstAndLastName" class="text-danger field-validation-valid" data-valmsg-for="FirstAndLastName" data-valmsg-replace="true"></span>
-									</div>								
+								</div>
 							</div>
 						</div>
-						<div class="row">
+						<div class="row mb-3">
 							<div class="col-md-6">
 								<div class="md-form mb-2">
 									<label asp-for="PhoneNumber" for="PhoneNumber">Phone number</label>
@@ -35,13 +37,13 @@
 							<div class="col-md-6">
 								<div class="md-form mb-4">
 									<label asp-for="Email" for="Email">Email</label>
-									<input asp-for="Email" type="text" class="form-control" data-val="true" data-val-required="The field is required." id="Email" name="Email" value="@this.UserManager.FindByNameAsync(this.User.Identity.Name).Result.Email" placeholder="Your email" />
+									<input asp-for="Email" type="text" class="form-control" data-val="true" data-val-required="The field is required." id="Email" name="Email" value="" placeholder="Your email" />
 									<span asp-validation-for="Email" class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
 								</div>
 							</div>
 						</div>
 						<p class="h5 md-form mb-2">Where should the courier come?</p>
-						<div class="row">
+						<div class="row mb-3">
 							<div class="col-md-3">
 								<div class="md-form mb-2">
 									<label asp-for="PickUpCity" for="PickUpCity">City</label>
@@ -56,9 +58,32 @@
 									<span asp-validation-for="PickUpAddress" class="text-danger field-validation-valid" data-valmsg-for="PickUpAddress" data-valmsg-replace="true"></span>
 								</div>
 							</div>
+						</div>						
+						<div class="row">							
+							<p class="h5 md-form mb-2">What do you want to send?</p>
+							<p class="md-form mb-3">To send the appropriate transport for you</p>
+							<div class="form-check">
+								<input asp-for="ShipmentType" class="form-check-input mx-2" type="radio" name="ShipmentType" id="StandardShipment" value="StandardShipment" checked>
+								<label asp-for="ShipmentType" class="form-check-label" for="StandardShipment">
+									Standard shipment (documents or parcel up to 90 x 90 x 90 cm and up to 50 kg)
+								</label>
+							</div>
+							<div class="form-check">
+								<input asp-for="ShipmentType" class="form-check-input mx-2" type="radio" name="ShipmentType" id="LargeShipment" value="LargeShipment">
+								<label asp-for="ShipmentType" class="form-check-label" for="LargeShipment">
+									Large shipment (one or more parcels - over 90 x 90 x 90 cm and over 50 kg)
+								</label>
+							</div>
 						</div>
-						<p class="h5 md-form mb-3">When should the courier come?</p>
 						<div class="row">
+							<div class="col-md-12 mb-3">
+								<div class="md-form mb-4 mt-3">
+									<label asp-for="AdditionalInformation" for="AdditionalInformation">Additional Information</label>
+									<textarea asp-for="AdditionalInformation" type="text" class="form-control" value="" placeholder="Please describe in details what the shipment is so that we can send the appropriate transportation"></textarea>
+									<span asp-validation-for="AdditionalInformation" class="text-danger field-validation-valid" data-valmsg-for="AdditionalInformation" data-valmsg-replace="true"></span>
+								</div>
+							</div>
+							<p class="h5 md-form mb-3">When should the courier come?</p>
 							<div class="col-md-1">
 								<p class="align-middle mt-2">Between</p>
 							</div>

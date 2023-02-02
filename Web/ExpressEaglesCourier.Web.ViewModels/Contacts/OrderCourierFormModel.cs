@@ -3,8 +3,6 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    using ExpressEaglesCourier.Data.Models.Enums;
-
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
     using static ExpressEaglesCourier.Common.GlobalConstants.ViewModelConstants;
 
@@ -19,6 +17,7 @@
         public string Email { get; set; }
 
         [Required]
+        [StringLength(PhoneNumberMaxLenght, MinimumLength = PhoneNumberMinLenght)]
         [Phone]
         public string PhoneNumber { get; set; }
 
@@ -30,7 +29,11 @@
         [StringLength(CityNameMaxLength, MinimumLength = CityNameMinLength)]
         public string PickUpCity { get; set; }
 
-        // public ProductType ProductType { get; set; }
+        public string ShipmentType { get; set; }
+
+        [MaxLength(AdditionalInfoForOrder)]
+        public string AdditionalInformation { get; set; }
+
         public DateTime StartTime { get; set; }
 
         public DateTime EndTime { get; set; }

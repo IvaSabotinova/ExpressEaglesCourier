@@ -182,6 +182,8 @@
             public const int FirstAndLastNameMinLength = 5;
 
             public const int FirstAndLastNameMaxLength = 61;
+
+            public const int AdditionalInfoForOrder = 220;
         }
 
         public static class ServicesConstants
