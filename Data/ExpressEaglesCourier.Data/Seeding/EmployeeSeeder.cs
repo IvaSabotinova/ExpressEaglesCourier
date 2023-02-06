@@ -6,11 +6,17 @@
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class EmployeeSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (await dbContext.Employees.AnyAsync())
+            {
+                return;
+            }
+
             List<Employee> employees = new List<Employee>()
             {
                  // Bourgas

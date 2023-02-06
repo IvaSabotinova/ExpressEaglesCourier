@@ -10,6 +10,11 @@
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (await dbContext.Vehicles.AnyAsync())
+            {
+                return;
+            }
+
             Employee driverBs = await dbContext.Employees.FirstOrDefaultAsync(x => x.PhoneNumber == "00359888121210");
             Employee driverVn = await dbContext.Employees.FirstOrDefaultAsync(x => x.PhoneNumber == "00359888656565");
 

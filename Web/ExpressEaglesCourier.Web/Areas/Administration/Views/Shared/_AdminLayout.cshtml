@@ -2,139 +2,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />   
-    <meta name="msapplication-TileImage" content="~/img/favicons/mstile-150x150.png">
-    <meta name="theme-color" content="#ffffff">
-    <link href="~/css/theme.css" rel="stylesheet" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+	<link href="~/lib/datatables/media/css/jquery.datatables.min.css" rel="stylesheet" asp-append-version="true" />
+	<meta name="msapplication-TileImage" content="~/img/favicons/mstile-150x150.png">
+	<meta name="theme-color" content="#ffffff">
+	<link href="~/css/theme.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>
-                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index"
-                           class="btn btn-outline-warning btn-lg me-3">To Admin Dashboard</a>
-                    </li>
-                    <li>
-                        <a asp-area="Staff" asp-controller="Board" asp-action="Index"
-                           class="btn btn-outline-warning btn-lg me-3">To Staff Board</a>
-                    </li>
-                    <li class="nav-item dropdown me-3">
-                        <a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Customers</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" asp-area="Staff" asp-controller="Customer" asp-action="Add">Add Customer</a>
-                            <a class="dropdown-item" asp-area="Staff" asp-controller="Search" asp-action="SearchCustomer">Search Customer</a></>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown me-3">
-                        <a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Shipments</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" asp-area="Staff" asp-controller="Shipment" asp-action="Add">Create Shipment</a>
-                            <a class="dropdown-item" asp-area="Staff" asp-controller="Search" asp-action="SearchShipment">Search By Tracking Number</a></>
-                            <a class="dropdown-item" asp-area="Staff" asp-controller="Search" asp-action="GetAndSearchAllShipments">See All And Search</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Employees</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" asp-area="Administration" asp-controller="Employee" asp-action="Add">Add New Employee</a>
-                            <a class="dropdown-item" asp-area="Administration" asp-controller="Search" asp-action="SearchEmployee">Search Employee</a></>                           
-                        </div>
-                    </li>
-                </ul>
-                <partial name="_LoginPartial" />
-            </div>
-            <div class="dropdown d-none d-lg-block">
-            </div><a class="btn btn-outline-primary order-1 order-lg-0 ms-lg-3" asp-area="" asp-controller="Home" asp-action="FindUs">Contact Us</a>
-        </nav>
-    </header>
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+				<ul class="navbar-nav flex-grow-1">
+					<li>
+						<a asp-area="Administration" asp-controller="Dashboard" asp-action="Index"
+						   class="btn btn-outline-warning btn-lg me-3">To Admin Dashboard</a>
+					</li>
+					<li>
+						<a asp-area="Staff" asp-controller="Board" asp-action="Index"
+						   class="btn btn-outline-warning btn-lg me-3">To Staff Board</a>
+					</li>
+					<li class="nav-item dropdown me-3">
+						<a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Customers</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" asp-area="Staff" asp-controller="Customer" asp-action="Add">Add Customer</a>
+							<a class="dropdown-item" asp-area="Staff" asp-controller="Search" asp-action="SearchCustomer">Search Customer</a></>
+						</div>
+					</li>
+					<li class="nav-item dropdown me-3">
+						<a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Shipments</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" asp-area="Staff" asp-controller="Shipment" asp-action="Add">Create Shipment</a>
+							<a class="dropdown-item" asp-area="Staff" asp-controller="Search" asp-action="SearchShipment">Search By Tracking Number</a></>
+							<a class="dropdown-item" asp-area="Staff" asp-controller="Search" asp-action="GetAndSearchAllShipments">See All And Search</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" has aria-expanded="false">Employees</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" asp-area="Administration" asp-controller="Employee" asp-action="Add">Add New Employee</a>
+							<a class="dropdown-item" asp-area="Administration" asp-controller="Search" asp-action="SearchEmployee">Search Employee</a></>
+						</div>
+					</li>
+				</ul>
+				<partial name="_LoginPartial" />
+			</div>
+			<div class="dropdown d-none d-lg-block">
+			</div><a class="btn btn-outline-primary order-1 order-lg-0 ms-lg-3" asp-area="" asp-controller="Home" asp-action="FindUs">Contact Us</a>
+		</nav>
+	</header>
 
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @this.RenderBody()
-        </main>
-    </div>
+	<div class="container">
+		<partial name="_CookieConsentPartial" />
+		<main role="main" class="pb-3">
+			@this.RenderBody()
+		</main>
+	</div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <main>     
-        <section class="bg-900 pb-0 pt-5">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0">
-                        <a class="text-decoration-none" href="#"><img src="~/img/gallery/net.png" height="51" alt="" /></a>
-                        <p class="text-500 my-4">The most trusted Courier<br />company in your area.</p>
-                    </div>
-                    <div class="col-6 col-sm-4 col-lg-2 mb-3 order-2 order-sm-1">
-                    </div>
-                    <div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
-                        <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif">Other links</h5>
-                        <ul class="list-unstyled mb-md-4 mb-lg-0">
-                            <li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Home" asp-action="Testimonial">Testimonials</a></li>
-                            <li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Feedback" asp-action="Create">Feedback</a></li>
-                            <li class="lh-lg"><a class="text-500" href="#!"></a></li>
-                        </ul>
-                    </div>
-                    <div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
-                        <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif"> Customer Care</h5>
-                        <ul class="list-unstyled mb-md-4 mb-lg-0">
-                            <li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a></li>
-                            <li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Home" asp-action="FindUs">Contact US</a></li>
-                            <li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Contact" asp-action="OrderCourierByEmail">Order Courier</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>           
-        </section>       
-        <section class="py-0 bg-1000">
+	<footer class="border-top footer text-muted">
+		<div class="container">
+			&copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+		</div>
+	</footer>
+	<main>
+		<section class="bg-900 pb-0 pt-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0">
+						<a class="text-decoration-none" href="#"><img src="~/img/gallery/net.png" height="51" alt="" /></a>
+						<p class="text-500 my-4">The most trusted Courier<br />company in your area.</p>
+					</div>
+					<div class="col-6 col-sm-4 col-lg-2 mb-3 order-2 order-sm-1">
+					</div>
+					<div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
+						<h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif">Other links</h5>
+						<ul class="list-unstyled mb-md-4 mb-lg-0">
+							<li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Home" asp-action="Testimonial">Testimonials</a></li>
+							<li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Feedback" asp-action="Create">Feedback</a></li>
+							<li class="lh-lg"><a class="text-500" href="#!"></a></li>
+						</ul>
+					</div>
+					<div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
+						<h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif"> Customer Care</h5>
+						<ul class="list-unstyled mb-md-4 mb-lg-0">
+							<li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a></li>
+							<li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Home" asp-action="FindUs">Contact US</a></li>
+							<li class="lh-lg"><a class="text-500" asp-area="" asp-controller="Contact" asp-action="OrderCourierByEmail">Order Courier</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="py-0 bg-1000">
 
-            <div class="container">
-                <div class="row justify-content-md-between justify-content-evenly py-4">
-                    <div class="col-12 col-sm-8 col-md-6 col-lg-auto text-center text-md-start">
-                        <p class="fs--1 my-2 fw-bold text-200">All rights Reserved &copy; Your Company, 2022</p>
-                    </div>
-                    <div class="col-12 col-sm-8 col-md-6">
-                        <p class="fw-bold text-primary fs--1 my-2 text-center text-md-end ">
-                            EEC&nbsp;
-                            <svg class="bi bi-suit-heart-fill" width="12" height="12" fill="#F95C19" viewBox="0 0 16 16">
-                                <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
-                            </svg>&nbsp;
-                            <a class="fw-bold text-primary">Express Eagles Courier </a>
+			<div class="container">
+				<div class="row justify-content-md-between justify-content-evenly py-4">
+					<div class="col-12 col-sm-8 col-md-6 col-lg-auto text-center text-md-start">
+						<p class="fs--1 my-2 fw-bold text-200">All rights Reserved &copy; Your Company, 2022</p>
+					</div>
+					<div class="col-12 col-sm-8 col-md-6">
+						<p class="fw-bold text-primary fs--1 my-2 text-center text-md-end ">
+							EEC&nbsp;
+							<svg class="bi bi-suit-heart-fill" width="12" height="12" fill="#F95C19" viewBox="0 0 16 16">
+								<path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
+							</svg>&nbsp;
+							<a class="fw-bold text-primary">Express Eagles Courier </a>
 
-                    </div>
-                </div>
-            </div>       
-        </section>      
-    </main> 
-    <script src="~/popperjs/popper.min.js"></script>
-    <script src="vendors/bootstrap/bootstrap.min.js"></script>
-    <script src="~/lib/is/is.min.js"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-    <script src="~/fontawesome/all.min.js"></script>
-    <script src="assets/js/theme.js"></script>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<script src="~/popperjs/popper.min.js"></script>
+	<script src="vendors/bootstrap/bootstrap.min.js"></script>
+	<script src="~/lib/is/is.min.js"></script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+	<script src="~/fontawesome/all.min.js"></script>
+	<script src="assets/js/theme.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
 
-    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>   
-    <script src="~/lib/jquery-validation/dist/jquery.override-validator.js" asp-append-version="true"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
-    <script src="~/js/site.min.js" asp-append-version="true"></script>
-    @await this.RenderSectionAsync("Scripts", required: false)
+	<script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.override-validator.js" asp-append-version="true"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+	<script src="~/js/site.min.js" asp-append-version="true"></script>
+	<script src="~/lib/datatables/media/js/jquery.datatables.min.js" asp-append-version="true"></script>
+	@await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 

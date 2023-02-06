@@ -4,11 +4,17 @@
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class ShipmentVehicleSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (await dbContext.ShipmentsVehicles.AnyAsync())
+            {
+                return;
+            }
+
             await dbContext.ShipmentsVehicles.AddAsync(new ShipmentVehicle
             {
                 ShipmentId = 1,

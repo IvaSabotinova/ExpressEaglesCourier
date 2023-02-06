@@ -12,6 +12,11 @@
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (await dbContext.ShipmentsTrackingPath.AnyAsync())
+            {
+                return;
+            }
+
             Shipment shipment1 = await dbContext.Shipments.FirstOrDefaultAsync(x => x.TrackingNumber == "11111011010");
             Shipment shipment2 = await dbContext.Shipments.FirstOrDefaultAsync(x => x.TrackingNumber == "11111011012");
             Shipment shipment3 = await dbContext.Shipments.FirstOrDefaultAsync(x => x.TrackingNumber == "11111011013");

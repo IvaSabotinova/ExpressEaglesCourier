@@ -5,11 +5,17 @@
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class CitySeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (await dbContext.Cities.AnyAsync())
+            {
+                return;
+            }
+
             City city1 = new City()
             {
                 Name = "Bourgas",

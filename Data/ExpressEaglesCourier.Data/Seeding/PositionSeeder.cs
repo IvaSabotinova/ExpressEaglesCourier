@@ -2,16 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class PositionSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (await dbContext.Positions.AnyAsync())
+            {
+                return;
+            }
+
             List<Position> positions = new List<Position>()
             {
              new Position()

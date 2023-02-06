@@ -5,11 +5,17 @@
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class EmployeeShipmentSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (await dbContext.EmployeesShipments.AnyAsync())
+            {
+                return;
+            }
+
             string employee1BsId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359898331456").Id;
             string employee2BsId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359888658974").Id;
             string driverBsId = dbContext.Employees.FirstOrDefault(x => x.PhoneNumber == "00359888121210").Id;

@@ -1,12 +1,12 @@
 ﻿namespace ExpressEaglesCourier.Data.Seeding
 {
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Common;
     using ExpressEaglesCourier.Data.Models;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
     public class AdminSeeder : ISeeder
@@ -15,7 +15,7 @@
         {
             UserManager<ApplicationUser> adminSeeder = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            if (adminSeeder.Users.Any(u => u.Email == "admin@expresseagles.com"))
+            if (await adminSeeder.Users.AnyAsync(u => u.Email == "admin@expresseagles.com"))
             {
                 return;
             }

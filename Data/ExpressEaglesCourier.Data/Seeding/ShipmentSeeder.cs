@@ -12,6 +12,11 @@
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (await dbContext.Shipments.AnyAsync())
+            {
+                return;
+            }
+
             Customer customer1 = await dbContext.Customers.FirstOrDefaultAsync(x => x.PhoneNumber == "00359877111111");
             Customer customer2 = await dbContext.Customers.FirstOrDefaultAsync(x => x.PhoneNumber == "00359877334334");
             Customer customer3 = await dbContext.Customers.FirstOrDefaultAsync(x => x.PhoneNumber == "00359877222222");
@@ -121,6 +126,57 @@
                 DeliveryWay = DeliveryWay.DoorToDoor,
                 Weight = 2.80,
                 Price = 5.90M,
+            },
+            new Shipment()
+            {
+                TrackingNumber = "11111011017",
+                SenderId = customer1.Id,
+                PickupAddress = customer1.Address,
+                PickUpTown = customer1.City,
+                PickUpCountry = customer1.Country,
+                ReceiverId = customer4.Id,
+                DestinationAddress = customer4.Address,
+                DestinationTown = customer4.City,
+                DestinationCountry = customer4.Country,
+                DeliveryType = DeliveryType.SamedayCourier,
+                ProductType = ProductType.CarParts,
+                DeliveryWay = DeliveryWay.DoorToDoor,
+                Weight = 10.00,
+                Price = 15.20M,
+            },
+            new Shipment()
+            {
+                TrackingNumber = "11111011018",
+                SenderId = customer2.Id,
+                PickupAddress = customer2.Address,
+                PickUpTown = customer2.City,
+                PickUpCountry = customer2.Country,
+                ReceiverId = customer5.Id,
+                DestinationAddress = customer5.Address,
+                DestinationTown = customer5.City,
+                DestinationCountry = customer5.Country,
+                DeliveryType = DeliveryType.OvernightShipping,
+                ProductType = ProductType.Stationeries,
+                DeliveryWay = DeliveryWay.DoorToDoor,
+                Weight = 3.00,
+                Price = 5.80M,
+            },
+            new Shipment()
+            {
+                TrackingNumber = "11111011019",
+                SenderId = customer3.Id,
+                PickupAddress = customer3.Address,
+                PickUpTown = customer3.City,
+                PickUpCountry = customer3.Country,
+                ReceiverId = customer6.Id,
+                DestinationAddress = customer6.Address,
+                DestinationTown = customer6.City,
+                DestinationCountry = customer6.Country,
+                DeliveryType = DeliveryType.StandardDeliveryService,
+                ProductType = ProductType.Furniture,
+                DeliveryWay = DeliveryWay.DoorToDoor,
+                Weight = 15.20,
+                Price = 33.50M,
             },
             };
 

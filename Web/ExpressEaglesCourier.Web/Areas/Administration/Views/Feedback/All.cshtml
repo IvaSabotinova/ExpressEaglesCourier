@@ -26,7 +26,7 @@ else
 		<tbody>
 			@foreach (FeedbackAllViewModel item in Model)
 			{
-				<tr>
+				<tr class="table-warning">
 					<td>@Html.DisplayFor(modelItem => item.Title)</td>
 					<td width="30%">@Html.DisplayFor(modelItem => item.Content)</td>
 					<td>@Html.DisplayFor(modelItem => item.FeedbackType)</td>
@@ -40,12 +40,11 @@ else
 }
 
 
-
-@*@section Scripts
+@section Scripts
     {
     <script>
         $(document).ready(function () {
             $('#DataTable').DataTable();
         });
     </script>
-}*@
+}

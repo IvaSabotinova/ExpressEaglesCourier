@@ -1,15 +1,20 @@
 ﻿namespace ExpressEaglesCourier.Data.Seeding
 {
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class OfficeSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (await dbContext.Offices.AnyAsync())
+            {
+                return;
+            }
+
             Office office1Bs = new Office()
             {
                 Address = "Izgrev Quarter, block 94, floor 1",

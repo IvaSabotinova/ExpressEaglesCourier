@@ -4,11 +4,17 @@
     using System.Threading.Tasks;
 
     using ExpressEaglesCourier.Data.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class CustomerSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (await dbContext.Customers.AnyAsync())
+            {
+                return;
+            }
+
             Customer customer1 = new Customer()
             {
                 FirstName = "Yasen",
