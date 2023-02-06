@@ -265,7 +265,6 @@
             public const string FeedbackUpdated = "Feedback details updated successfully!";
 
             public const string InvalidFeedback = "Invalid feedback details!";
-
         }
     }
 }

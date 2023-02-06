@@ -75,7 +75,9 @@
 
                 EfDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo = new EfDeletableEntityRepository<ShipmentTrackingPath>(this.GetDbContext());
 
-                StatsService statsService = new StatsService(officeRepo, employeeRepo, vehicleRepo, customerRepo, shipmentRepo, shipmentTrackingPathRepo);
+                EfDeletableEntityRepository<Feedback> feedbackRepo = new EfDeletableEntityRepository<Feedback>(this.GetDbContext());
+
+                StatsService statsService = new StatsService(officeRepo, employeeRepo, vehicleRepo, customerRepo, shipmentRepo, shipmentTrackingPathRepo, feedbackRepo);
 
                 return statsService;
             }

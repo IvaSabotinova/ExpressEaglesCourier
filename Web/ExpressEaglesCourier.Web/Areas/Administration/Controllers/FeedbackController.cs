@@ -2,26 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
-    using ExpressEaglesCourier.Data;
     using ExpressEaglesCourier.Services.Data.Feedbacks;
     using ExpressEaglesCourier.Web.ViewModels.Feedbacks;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
 
     public class FeedbackController : AdministrationController
     {
         private readonly IFeedbackService feedbackService;
-        private readonly ApplicationDbContext context;
 
-        public FeedbackController(IFeedbackService feedbackService, ApplicationDbContext context)
+        public FeedbackController(IFeedbackService feedbackService)
         {
             this.feedbackService = feedbackService;
-            this.context = context;
         }
 
         [HttpGet]
@@ -84,52 +79,43 @@
             return this.View(model);
         }
 
-        // PENDING AMENDMENT
-        // GET: Administration/Feedback/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || this.context.Feedbacks == null)
+            if (await this.feedbackService.GetFeedbackById(id) == null)
             {
                 return this.NotFound();
             }
 
-            var feedback = await this.context.Feedbacks
-                .Include(f => f.ApplicationUser)
-                .Include(f => f.Shipment)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (feedback == null)
-            {
-                return this.NotFound();
-            }
+            FeedbackDeleteViewModel model = await this.feedbackService.GetById<FeedbackDeleteViewModel>(id);
 
-            return this.View(feedback);
+            return this.View(model);
         }
 
-        // PENDING AMENDMENT
-        // POST: Administration/Feedback/Delete/5
         [HttpPost]
-        [ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> SoftDelete(int id)
         {
-            if (this.context.Feedbacks == null)
+            if (await this.feedbackService.GetFeedbackById(id) == null)
             {
-                return this.Problem("Entity set 'ApplicationDbContext.Feedbacks'  is null.");
+                return this.NotFound();
             }
 
-            var feedback = await this.context.Feedbacks.FindAsync(id);
-            if (feedback != null)
-            {
-                this.context.Feedbacks.Remove(feedback);
-            }
+            await this.feedbackService.SoftDeleteAsync(id);
 
-            await this.context.SaveChangesAsync();
             return this.RedirectToAction(nameof(this.All));
         }
 
-        private bool FeedbackExists(int id)
+        [HttpPost]
+        public async Task<IActionResult> HardDelete(int id)
         {
-            return this.context.Feedbacks.Any(e => e.Id == id);
+            if (await this.feedbackService.GetFeedbackById(id) == null)
+            {
+                return this.NotFound();
+            }
+
+            await this.feedbackService.HardDeleteAsync(id);
+
+            return this.RedirectToAction(nameof(this.All));
         }
     }
 }

@@ -88,7 +88,7 @@
 
            feedback.Id = model.Id;
            feedback.SenderName = model.SenderName ?? null;
-           feedback.Title = model.Title ?? null;
+           feedback.Title = model.Title;
            feedback.Content = model.Content;
            feedback.FeedbackType = model.FeedbackType ?? null;
            feedback.ShipmentId = shipment?.Id ?? null;
@@ -101,5 +101,21 @@
                 .OrderByDescending(x => x.CreatedOn)
                 .To<T>()
                 .ToListAsync();
+
+        public async Task SoftDeleteAsync(int id)
+        {
+            Feedback feedback = await this.GetFeedbackById(id);
+
+            this.feedbackRepo.Delete(feedback);
+            await this.feedbackRepo.SaveChangesAsync();
+        }
+
+        public async Task HardDeleteAsync(int id)
+        {
+            Feedback feedback = await this.GetFeedbackById(id);
+
+            this.feedbackRepo.HardDelete(feedback);
+            await this.feedbackRepo.SaveChangesAsync();
+        }
     }
 }
