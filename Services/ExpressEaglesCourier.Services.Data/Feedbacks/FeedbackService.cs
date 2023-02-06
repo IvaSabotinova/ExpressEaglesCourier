@@ -60,6 +60,10 @@
                 .To<T>()
                 .FirstOrDefaultAsync();
 
+        public async Task<Feedback> GetFeedbackById(int id)
+       => await this.feedbackRepo.AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
         public async Task EditAsync(FeedbackEditModel model)
         {
            Shipment shipment = null;

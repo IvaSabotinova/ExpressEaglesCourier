@@ -27,7 +27,7 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            if (id < 1)
+            if (await this.feedbackService.GetFeedbackById(id) == null)
             {
                 return this.NotFound();
             }
@@ -41,7 +41,7 @@
 
         public async Task<IActionResult> Edit(FeedbackEditModel model)
         {
-            if (model.Id < 1)
+            if (await this.feedbackService.GetFeedbackById(model.Id) == null)
             {
                 return this.NotFound();
             }
@@ -55,7 +55,7 @@
             {
                 await this.feedbackService.EditAsync(model);
                 this.TempData[Message] = FeedbackUpdated;
-                return this.RedirectToAction(nameof(this.All));
+                return this.RedirectToAction(nameof(this.Details), new { model.Id });
             }
             catch (Exception ex)
             {
@@ -65,26 +65,17 @@
             }
         }
 
-
-        // PENDING AMENDMENT
-        // GET: Administration/Feedback/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Details([FromRoute]int id)
         {
-            if (id == null || this.context.Feedbacks == null)
+            if (await this.feedbackService.GetFeedbackById(id) == null)
             {
                 return this.NotFound();
             }
 
-            var feedback = await this.context.Feedbacks
-                .Include(f => f.ApplicationUser)
-                .Include(f => f.Shipment)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (feedback == null)
-            {
-                return this.NotFound();
-            }
+            SingleFeedbackViewModel model = await this.feedbackService.GetById<SingleFeedbackViewModel>(id);
 
-            return this.View(feedback);
+            return this.View(model);
         }
 
         public async Task<IActionResult> All()

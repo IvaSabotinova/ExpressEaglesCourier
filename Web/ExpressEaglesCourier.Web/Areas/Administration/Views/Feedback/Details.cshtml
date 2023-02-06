@@ -1,66 +1,54 @@
-﻿@model Feedback
+﻿@model SingleFeedbackViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Feedback no. " + Model.Id + " Details";
 }
 
-<h1>Details</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 
 <div>
-    <h4>Feedback</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FeedbackType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FeedbackType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Shipment)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Shipment.DestinationAddress)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ApplicationUser)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ApplicationUser.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeletedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedOn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedOn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedOn)
-        </dd>
-    </dl>
+
+    <table class="table table-striped table-bordered mt-4">        
+        <tbody>
+            <tr scope="row">
+                <td class="fw-bold">Title</td>
+                <td>@Model.Title</td>               
+            </tr>
+            <tr scope="row">
+                <td class="fw-bold">Sender Name</td>
+                <td>@(Model.SenderName ?? string.Empty)</td>                
+            </tr>
+            <tr scope="row">
+                <td class="fw-bold">Content</td>
+                <td>@Model.Content</td>
+            </tr>
+            <tr scope="row">
+                <td class="fw-bold">Feedback Type</td>
+                <td>@Model.FeedbackType</td>                
+            </tr>
+            <tr scope="row">
+                <td class="fw-bold">Shipment Tracking Number</td>
+                <td>@(Model.ShipmentTrackingNumber ?? string.Empty)</td>                
+            </tr>
+            <tr scope="row">
+                <td class="fw-bold">User Name</td>
+                <td>@Model.ApplicationUserUserName</td>                
+            </tr>
+            <tr scope="row">
+                <td class="fw-bold">Customer Name</td>
+                <td>@Model.ApplicationUserCustomerFullName</td>
+            </tr>
+            <tr scope="row">
+                <td class="fw-bold">User Phone Number</td>
+                <td>@Model.ApplicationUserCustomerPhoneNumber</td>
+            </tr>
+
+        </tbody>
+    </table>   
+       
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="text-center">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="text-warning fw-bold">Edit</a> |
+    <a asp-action="All" class="text-warning fw-bold">Back to List</a>
 </div>
