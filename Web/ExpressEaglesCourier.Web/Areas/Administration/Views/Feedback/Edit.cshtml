@@ -1,67 +1,47 @@
-﻿@model Feedback
+﻿@model FeedbackEditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Feedback no. " + Model.Id;
 }
 
-<h1>Edit</h1>
-
-<h4>Feedback</h4>
+<h1 class="text-center">@this.ViewData["Title"]</h1>
 <hr />
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-4">
         <form asp-action="Edit">
+             <input type="hidden" asp-for="@Model.Id" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
+                <label asp-for="Title" class="control-label">Title</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="SenderName" class="control-label">Sender Name</label>
+                <input asp-for="SenderName" class="form-control"/>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FeedbackType" class="control-label"></label>
-                <select asp-for="FeedbackType" class="form-control"></select>
-                <span asp-validation-for="FeedbackType" class="text-danger"></span>
+            <div class="form-group mt-2">
+                <label asp-for="ShipmentTrackingNumber" class="control-label">Shipment Tracking Number</label>
+                <input asp-for="ShipmentTrackingNumber" class="form-control"/>
+                <span asp-validation-for="ShipmentTrackingNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ShipmentId" class="control-label"></label>
-                <select asp-for="ShipmentId" class="form-control" asp-items="ViewBag.ShipmentId"></select>
-                <span asp-validation-for="ShipmentId" class="text-danger"></span>
+            <div class="form-group mt-2">
+                <label asp-for="Content" class="control-label">Content</label>                
+                <textarea asp-for="Content" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>          
+               <div class="form-group mt-2">
+                <label asp-for="FeedbackType" class="control-label">Choose Feedback Type</label>
+                <select asp-for="FeedbackType" class="form-select" asp-items="@Html.GetEnumSelectList<FeedbackType>()" name="FeedbackType">            <option value="" selected>Select Feedback Type</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label asp-for="ApplicationUserId" class="control-label"></label>
-                <select asp-for="ApplicationUserId" class="form-control" asp-items="ViewBag.ApplicationUserId"></select>
-                <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeletedOn" class="control-label"></label>
-                <input asp-for="DeletedOn" class="form-control" />
-                <span asp-validation-for="DeletedOn" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CreatedOn" class="control-label"></label>
-                <input asp-for="CreatedOn" class="form-control" />
-                <span asp-validation-for="CreatedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedOn" class="control-label"></label>
-                <input asp-for="ModifiedOn" class="form-control" />
-                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                     <div class="form-group text-center mt-2">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="All" class="text-warning ms-2">Back to List</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

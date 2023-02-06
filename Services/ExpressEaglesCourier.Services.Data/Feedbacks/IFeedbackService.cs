@@ -9,6 +9,10 @@
     {
         Task CreateAsync(string userId, FeedbackCreateModel model);
 
+        Task<T> GetById<T>(int id);
+
+        Task EditAsync(FeedbackEditModel model);
+
         Task<IEnumerable<T>> GetAll<T>();
     }
 }

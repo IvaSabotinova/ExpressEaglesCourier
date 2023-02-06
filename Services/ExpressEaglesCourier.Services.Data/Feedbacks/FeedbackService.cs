@@ -54,6 +54,44 @@
             await this.feedbackRepo.SaveChangesAsync();
         }
 
+        public async Task<T> GetById<T>(int id)
+        => await this.feedbackRepo.AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+
+        public async Task EditAsync(FeedbackEditModel model)
+        {
+           Shipment shipment = null;
+
+           if (model.ShipmentTrackingNumber != null)
+           {
+                shipment = await this.shipmentRepo.AllAsNoTracking()
+               .FirstOrDefaultAsync(x => x.TrackingNumber == model.ShipmentTrackingNumber);
+                if (shipment == null)
+                {
+                    throw new NullReferenceException(ShipmentNotExist);
+                }
+           }
+
+           Feedback feedback = await this.feedbackRepo.All()
+                 .FirstOrDefaultAsync(x => x.Id == model.Id);
+
+           if (feedback == null)
+           {
+                throw new NullReferenceException(FeedbackNotFound);
+           }
+
+           feedback.Id = model.Id;
+           feedback.SenderName = model.SenderName ?? null;
+           feedback.Title = model.Title ?? null;
+           feedback.Content = model.Content;
+           feedback.FeedbackType = model.FeedbackType ?? null;
+           feedback.ShipmentId = shipment?.Id ?? null;
+
+           await this.feedbackRepo.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<T>> GetAll<T>()
         => await this.feedbackRepo.AllAsNoTracking()
                 .OrderByDescending(x => x.CreatedOn)

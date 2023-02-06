@@ -13,5 +13,7 @@
         public int ShipmentsCount { get; set; }
 
         public int TrackingPathsCount { get; set; }
+
+        public int FeedbacksCount { get; set; }
     }
 }

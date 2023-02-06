@@ -259,6 +259,13 @@
             public const string FeedbackSuccessfullySent = "Thank you for your feedback! It will be dealt with shortly!";
 
             public const string SmthWentWrong = "Something went wrong! Please try again!";
+
+            public const string FeedbackNotFound = "Feedback not found!";
+
+            public const string FeedbackUpdated = "Feedback details updated successfully!";
+
+            public const string InvalidFeedback = "Invalid feedback details!";
+
         }
     }
 }

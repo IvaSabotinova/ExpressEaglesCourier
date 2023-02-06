@@ -19,6 +19,8 @@
 
         Task<int> ShipmentsTrackingPathsCountAsync();
 
+        Task<int> FeedbacksCountAsync();
+
         Task<DashboardViewModel> GetStatsAsync();
 
         Task<ShipmentProductTypeViewModel> GetProductTypeStats();

@@ -19,6 +19,7 @@
         private readonly IDeletableEntityRepository<Customer> customerRepo;
         private readonly IDeletableEntityRepository<Shipment> shipmentRepo;
         private readonly IDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo;
+        private readonly IDeletableEntityRepository<Feedback> feedbackRepo;
 
         public StatsService(
             IDeletableEntityRepository<Office> officeRepo,
@@ -26,7 +27,8 @@
             IDeletableEntityRepository<Vehicle> vehicleRepo,
             IDeletableEntityRepository<Customer> customerRepo,
             IDeletableEntityRepository<Shipment> shipmentRepo,
-            IDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo)
+            IDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo,
+            IDeletableEntityRepository<Feedback> feedbackRepo)
         {
             this.officeRepo = officeRepo;
             this.employeeRepo = employeeRepo;
@@ -34,6 +36,7 @@
             this.customerRepo = customerRepo;
             this.shipmentRepo = shipmentRepo;
             this.shipmentTrackingPathRepo = shipmentTrackingPathRepo;
+            this.feedbackRepo = feedbackRepo;
         }
 
         public async Task<int> OfficesCountAsync()
@@ -66,6 +69,11 @@
             return await this.shipmentTrackingPathRepo.AllAsNoTracking().CountAsync();
         }
 
+        public async Task<int> FeedbacksCountAsync()
+        {
+            return await this.feedbackRepo.AllAsNoTracking().CountAsync();
+        }
+
         public async Task<DashboardViewModel> GetStatsAsync()
         {
             return new DashboardViewModel()
@@ -76,6 +84,7 @@
                 CustomersCount = await this.CustomersCountAsync(),
                 ShipmentsCount = await this.ShipmentsCountAsync(),
                 TrackingPathsCount = await this.ShipmentsTrackingPathsCountAsync(),
+                FeedbacksCount = await this.FeedbacksCountAsync(),
             };
         }
 

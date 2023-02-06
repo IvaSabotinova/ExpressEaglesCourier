@@ -63,6 +63,15 @@
                 </form>
             </td>
         </tr>
+        <tr class="table-warning">
+            <td><label>Feedbacks</label></td>
+            <td><label>@Model.FeedbacksCount</label></td>
+            <td>
+                <form asp-area="Administration" asp-controller="Feedback" asp-action="All" method="get">
+                    <button type="submit" class="btn btn-danger">See All</button>
+                </form>
+            </td>
+        </tr>
     </tbody>
 </table>
 
