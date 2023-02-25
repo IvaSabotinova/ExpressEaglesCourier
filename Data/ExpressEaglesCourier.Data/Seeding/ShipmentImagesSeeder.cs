@@ -136,28 +136,28 @@
             },
             new ShipmentImage()
             {
-                Id = "3c7b2029-6b39-4664-a924-4219ec35f8b1",
+                Id = "2434efeb-e5b6-42ab-bfa3-b06f5f671f8f",
                 Extension = "png",
                 Size = 471952,
                 ShipmentId = shipmentTextile.Id,
             },
             new ShipmentImage()
             {
-                Id = "3dbe6b95-1965-4b41-8479-779b620db74b",
+                Id = "7fa45f91-6855-44c8-a22a-198b8976de0c",
                 Extension = "jpg",
                 Size = 58699,
                 ShipmentId = shipmentTextile.Id,
             },
             new ShipmentImage()
             {
-                Id = "8241ca32-7bd3-4819-b1f2-039614d61d36",
+                Id = "9d7ff867-53c4-46e2-9932-bc3ca842fa3a",
                 Extension = "webp",
                 Size = 3234,
                 ShipmentId = shipmentTextile.Id,
             },
             new ShipmentImage()
             {
-                Id = "9dad55d0-e8db-4a2e-bebe-1286202b6eef",
+                Id = "004e9899-6e3b-408d-a13c-71819c568218",
                 Extension = "jpg",
                 Size = 11691,
                 ShipmentId = shipmentTechnique.Id,

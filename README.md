@@ -17,6 +17,24 @@
 
 - Quick access to details of a shipment, shipment tracking path, customer or employee can be done through relevant search buttons. 
 
+:black_square_button: Usage: 
+
+1. Download the project
+2. Write your own connection string in appsettings.json in both Web and Data layers
+3. Open or download and open MSSQLServer instance
+4. On request I will provide SendGrid ApiKey to enable you start the app
+5. Start the app and database will be seeded with few data
+6. You can use the app by logging in as preliminarily seeded admininstrator, employee, customer or you can register as new user.
+
+ 
+| Role  | Username |Password  | 
+| ------------- | ------------- | ------------- | 
+| Admin / Manager  | Admin  |admin200115 | 
+| Employee  | IvaStoyanova  |IS123456## | 
+| Customer  | Denislav2001  |DK123456## | 
+
+
+
 
 
 
