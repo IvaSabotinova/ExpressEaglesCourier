@@ -1,16 +1,24 @@
 # ExpressEaglesCourier
 
 
-- Database Diagram
+**Database Diagram**
 
 ![Diagram](Database-Diagram.png)
+
+**Home And Contact Us Pages**
 
 ![HomePage](https://user-images.githubusercontent.com/96121572/221383436-84e48c8a-787a-4bd2-959b-9d585a121110.png)
 ![ContactUsPage](https://user-images.githubusercontent.com/96121572/221383461-9ca1babf-0dea-469f-b415-887123e2913c.png)
 
-- Before creating a new shipment record you must have registered as clients the sender and the receiver of the goods. After doing so and the shipment is created by an employee then he/she can edit details, create / update tracking path for the shipment. The manager can assign employees responsible for handling the shipment.
+## :lab_coat: **Roles**
 
-- The administrator and the person on manager's position have full access to all areas. Some main data is included in administration dashboard.
+**Administrator and Manager**
+
+- Both have full access to all areas starting from Administration Dashboard including overview and CRUD operations in Feedback area, deletions are only their privilege. The manager can assign employees responsible for handling a shipment.
+
+**Employee**
+
+- Before creating a new shipment record you must have registered as clients the sender and the receiver of the goods. After doing so and the shipment is created by an employee then he/she can edit details, create / update tracking path for the shipment.
 
 - The employee can create, edit customers', shipments', shipment tracking paths'details. Staff have their own board with information regarding their activities.
 
