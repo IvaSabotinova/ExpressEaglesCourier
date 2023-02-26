@@ -10,6 +10,7 @@
     using ExpressEaglesCourier.Services.Data.Shipments;
     using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.Feedbacks;
+    using Ganss.Xss;
     using Microsoft.EntityFrameworkCore;
 
     using static ExpressEaglesCourier.Common.GlobalConstants.ServicesConstants;
@@ -19,6 +20,7 @@
         private readonly IDeletableEntityRepository<Feedback> feedbackRepo;
         private readonly IDeletableEntityRepository<Shipment> shipmentRepo;
         private readonly IShipmentService shipmentService;
+        private readonly HtmlSanitizer sanitizer = new HtmlSanitizer();
 
         public FeedbackService(
             IDeletableEntityRepository<Feedback> feedbackRepo,
@@ -32,18 +34,25 @@
 
         public async Task CreateAsync(string userId, FeedbackCreateModel model)
         {
-            if (model.ShipmentTrackingNumber != null
-                && await this.shipmentService.TrackingNumberExists(model.ShipmentTrackingNumber) == false)
+            string sanitizedTrackingNumber = this.sanitizer.Sanitize(model.ShipmentTrackingNumber);
+
+            if (!string.IsNullOrWhiteSpace(sanitizedTrackingNumber)
+                && await this.shipmentService.TrackingNumberExists(sanitizedTrackingNumber) == false)
             {
                 throw new NullReferenceException(InvalidTrackingNumber);
             }
 
-            Feedback newFeedback = AutoMapperConfig.MapperInstance.Map<Feedback>(model);
+            Shipment shipment = await this.shipmentRepo.AllAsNoTracking()
+              .FirstOrDefaultAsync(x => x.TrackingNumber == sanitizedTrackingNumber);
+
+            Feedback newFeedback = new Feedback()
+            {
+                Title = this.sanitizer.Sanitize(model.Title),
+                Content = this.sanitizer.Sanitize(model.Content),
+                SenderName = this.sanitizer.Sanitize(model.SenderName),
+            };
 
             newFeedback.ApplicationUserId = userId;
-
-            Shipment shipment = await this.shipmentRepo.AllAsNoTracking()
-                .FirstOrDefaultAsync(x => x.TrackingNumber == model.ShipmentTrackingNumber);
 
             if (shipment != null)
             {

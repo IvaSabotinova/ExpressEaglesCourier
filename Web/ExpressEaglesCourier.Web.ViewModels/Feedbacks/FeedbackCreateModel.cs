@@ -7,7 +7,7 @@
 
     using static ExpressEaglesCourier.Common.GlobalConstants.EntitiesConstants;
 
-    public class FeedbackCreateModel : IMapTo<Feedback>
+    public class FeedbackCreateModel
     {
         [Required]
         [StringLength(FeedbackTitleMaxLength, MinimumLength = FeedbackTitleMinLength)]

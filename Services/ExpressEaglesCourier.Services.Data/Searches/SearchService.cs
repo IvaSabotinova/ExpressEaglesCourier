@@ -15,6 +15,7 @@
     using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.ShipmentTrackingPaths;
     using ExpressEaglesCourier.Web.ViewModels.ViewComponents.PagingSearchShipment;
+    using Ganss.Xss;
     using Microsoft.EntityFrameworkCore;
 
     public class SearchService : ISearchService
@@ -27,6 +28,7 @@
         private readonly IEmployeeService employeeService;
         private readonly IDeletableEntityRepository<Customer> customerRepo;
         private readonly ICustomerService customerService;
+        private readonly HtmlSanitizer sanitizer = new HtmlSanitizer();
 
         public SearchService(
             IDeletableEntityRepository<ShipmentTrackingPath> shipmentTrackingPathRepo,
@@ -50,8 +52,9 @@
 
         public async Task<ShipmentTrackingPathDetailsModel> SearchTrackingPathAsync(string trackingNumber = null)
         {
+            string sanitizedTrackingNumber = this.sanitizer.Sanitize(trackingNumber);
             ShipmentTrackingPath trackingPath = await this.shipmentTrackingPathRepo.AllAsNoTracking()
-                   .FirstOrDefaultAsync(x => x.TrackingNumber == trackingNumber);
+                   .FirstOrDefaultAsync(x => x.TrackingNumber == sanitizedTrackingNumber);
 
             if (trackingPath != null)
             {

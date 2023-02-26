@@ -2,7 +2,7 @@
 
 ## :speech_balloon: Short Description
 
-The app is a site of a courier company where staff can perform part of their duties and customers can get in contact with the courier and / or provide their feedback regarding received services.
+The app is a site of a courier company where staff can perform part of their duties, customers can get in contact with the courier and / or provide their feedback regarding received services and also can track status of their shipment processing.
 
 ## :package: **Home And Contact Us Pages**
 
@@ -29,7 +29,7 @@ The app is a site of a courier company where staff can perform part of their dut
 
 - Staff have their own board with information regarding courier company activities.
 
-- The employee can create / edit customers', shipments' (including shipment photos), shipment tracking paths'details. 
+- The employee can create / edit customers', shipments' (including shipment photos), shipment tracking paths' details. 
 
 - Before creating a new shipment record the employee must have registered as clients the sender and the receiver of the goods. After creating new shipment the employee can edit it, create / update tracking path for the shipment. The manager can assign employees for handling the shipment or delete details related to shipment.
 
@@ -61,15 +61,29 @@ The app is a site of a courier company where staff can perform part of their dut
 
 ![SearchShipmentBy3Criteria](https://user-images.githubusercontent.com/96121572/221406158-0b4977db-0d3c-4e6d-b5a7-fc536cf319da.png)
 
-![ShipmentDetailsPage](https://user-images.githubusercontent.com/96121572/221406184-8a8798b8-7467-413d-be69-57ee1b2edddd.png)
-
 ![ShipmentImages](https://user-images.githubusercontent.com/96121572/221406182-c8406302-a0ed-49d0-b810-bd6e11529547.png)
+
+![ShipmentDetailsPage](https://user-images.githubusercontent.com/96121572/221406184-8a8798b8-7467-413d-be69-57ee1b2edddd.png)
 
 ![ShipmentTrackingPathPage](https://user-images.githubusercontent.com/96121572/221406908-0c9ed203-6c0e-4e34-991c-c4e6bf4b19fc.png)
 
 ![RequestCourierPage](https://user-images.githubusercontent.com/96121572/221406172-7a18b7a7-6627-4e07-9161-0e5753edcf66.png)
 
 ![SendFeedbackPage](https://user-images.githubusercontent.com/96121572/221406194-6f45b0b3-4b7a-4186-809d-ee16a7a94b2b.png)
+
+## :notebook_with_decorative_cover: Built With
+
+- ASP.NET Core Template prepared by: Nikolay Kostov, Vladislav Kramfilov, Stoyan Shopov
+- ASP.NET Core MVC
+- Entity Framework Core
+- Microsoft SQL Server
+- AutoMapper
+- StyleCop
+- HTML Sanitizer
+- xUnit
+- SendGrid
+- Bootstrap 5, HTML, CSS and Font Awesome
+- JavaScript
 
 ## :open_file_folder: Usage: 
 
@@ -83,7 +97,7 @@ The app is a site of a courier company where staff can perform part of their dut
  
 | Role  | Username |Password  | 
 | ------------- | ------------- | ------------- | 
-| Admin / Manager  | Admin  |admin200115 | 
+| Admin   | Admin  |admin200115 | 
 | Employee  | IvaStoyanova  |IS123456## | 
 | Customer  | Denislav2001  |DK123456## | 
 
