@@ -47,11 +47,11 @@ The app is a site of a courier company where staff can perform part of their dut
 
 - Can provide feedback be it positive or negative or neutral after registering.
 
-## :film_strip: Screenshots
+## :camera: Screenshots
 
 ![AdminDashboard](https://user-images.githubusercontent.com/96121572/221406149-b7bdd044-bb5a-4a9b-a259-3be6c70e26a1.png)
 
-![AllFeedbacksPage01](https://user-images.githubusercontent.com/96121572/221406958-2e56c4a1-e4a2-4606-b642-c5db6562cf9f.png)
+![AllFeedbacksPage01](https://user-images.githubusercontent.com/96121572/221407742-f8aec9ab-1c5e-4a52-b24a-0a8065c33c3a.png)
 
 ![AssignEmployeeToShipment](https://user-images.githubusercontent.com/96121572/221406963-d2333e52-43bf-471e-94b5-a7f56a282b17.png)
 
@@ -71,7 +71,7 @@ The app is a site of a courier company where staff can perform part of their dut
 
 ![SendFeedbackPage](https://user-images.githubusercontent.com/96121572/221406194-6f45b0b3-4b7a-4186-809d-ee16a7a94b2b.png)
 
-## :desktop_computer: Usage: 
+## :open_file_folder: Usage: 
 
 1. Download the project
 2. Write your own connection string in appsettings.json in both Web and Data layers
