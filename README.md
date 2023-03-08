@@ -73,11 +73,7 @@ The app is a site of a courier company where staff can perform part of their dut
 
 ## :notebook_with_decorative_cover: Built With
 
-<<<<<<< HEAD
 - ASP.NET Core Template prepared by: Nikolay Kostov, Vladislav Kаramfilov, Stoyan Shopov
-=======
-- ASP.NET Core Template prepared by: Nikolay Kostov, Vladislav Karamfilov, Stoyan Shopov
->>>>>>> d3559a2ef47855102d2aae6d684ba3f989babdc0
 - ASP.NET Core MVC
 - Entity Framework Core
 - Microsoft SQL Server
