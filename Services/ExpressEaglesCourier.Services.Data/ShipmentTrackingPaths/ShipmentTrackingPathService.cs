@@ -33,12 +33,7 @@
             Shipment shipment = await this.shipmentRepo.All()
                 .FirstOrDefaultAsync(x => x.Id == shipmentId);
 
-            if (shipment == null)
-            {
-                throw new NullReferenceException(ShipmentNotExist);
-            }
-
-            return shipment;
+            return shipment ?? throw new NullReferenceException(ShipmentNotExist);
         }
 
         public async Task<int> CreateShipmentTrackingPathAsync(ShipmentTrackingPathFormModel model)

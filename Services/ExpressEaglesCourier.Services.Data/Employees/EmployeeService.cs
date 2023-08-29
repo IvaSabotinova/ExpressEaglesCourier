@@ -255,9 +255,9 @@
             }
         }
 
-        public Task<int> GetEmployeesCountAsync()
+        public async Task<int> GetEmployeesCountAsync()
         {
-            return this.employeeRepo.AllAsNoTracking().CountAsync();
+            return await this.employeeRepo.AllAsNoTracking().CountAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync<T>(int page = 1, int itemsPerPage = 3)

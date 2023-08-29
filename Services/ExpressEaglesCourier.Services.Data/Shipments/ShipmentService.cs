@@ -235,7 +235,7 @@
 
         public async Task<bool> ShipmentExists(int id)
             => await this.shipmentRepo.AllAsNoTracking()
-            .AnyAsync(x => x.Id == id);
+                    .AnyAsync(x => x.Id == id);
 
         /// <summary>
         /// Defines whether the employee is assigned with a vehicle, mainly whether the employee is a driver-courier.

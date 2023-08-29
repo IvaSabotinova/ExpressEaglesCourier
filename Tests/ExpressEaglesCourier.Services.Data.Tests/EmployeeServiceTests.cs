@@ -10,6 +10,7 @@
     using ExpressEaglesCourier.Data.Common.Repositories;
     using ExpressEaglesCourier.Data.Models;
     using ExpressEaglesCourier.Data.Repositories;
+    using ExpressEaglesCourier.Data.Seeding;
     using ExpressEaglesCourier.Services.Data.Employees;
     using ExpressEaglesCourier.Services.Mapping;
     using ExpressEaglesCourier.Web.ViewModels.Employees;
