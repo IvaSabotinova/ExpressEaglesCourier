@@ -162,6 +162,16 @@
 
         public async Task EditShipmentAsync(ShipmentFormModel model, string imagePath)
         {
+            Shipment otherShipmentWithSameTrackingNumber = await this.shipmentRepo.AllAsNoTracking()
+             .Where(x => x.Id != model.Id)
+             .Where(x => x.TrackingNumber == model.TrackingNumber)
+             .FirstOrDefaultAsync();
+
+            if (otherShipmentWithSameTrackingNumber != null)
+            {
+                throw new InvalidOperationException(DuplicateTrackingNumbersNotAllowed);
+            }
+
             if (await this.CustomerWithPhoneNumberExists(
                 model.SenderFirstName,
                 model.SenderLastName,

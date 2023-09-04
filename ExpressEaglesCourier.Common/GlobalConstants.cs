@@ -206,6 +206,8 @@
 
             public const string ReceiverWithPhoneNumberDoesNotExit = "Receiver with this phone number does not exist! Please register as customer first or amend where necessary!!";
 
+            public const string DuplicateTrackingNumbersNotAllowed = "There is another shipment with same tracking number in the database! Please check / amend as necessary!";
+
             public const string ShipmentNotExist = "Shipment not found!";
 
             public const string EmployeeNotExist = "Employee not found!";
